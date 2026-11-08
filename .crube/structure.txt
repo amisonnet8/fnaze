@@ -55,6 +55,8 @@ internal/	Packages used only inside this module
 		| Title, entries, details; format errors, empty title and empty descs. Reading and writing follow crube's structure.txt
 		format.go	Parse, the canonical writer, the skeleton for fnaze new, and the path lines for the language check
 		format_test.go	Tests of reading and writing, against the examples in docs/ and the cases of the spec
+		edit.go	Changing the tree of a file: CheckPath, Find, Set (fnaze set), Remove (fnaze rm) and Count
+		edit_test.go	Tests of where set adds an entry, of the detail lines, and of what rm removes
 	lang/	Checks the names of languages, and reads FNAZE_LANG
 		| A language is ASCII letters and digits. The languages of one group cannot repeat or differ only in case
 		lang.go	Check, CheckGroup, FromEnv, and One (the language of a command that takes one)
@@ -65,6 +67,11 @@ internal/	Packages used only inside this module
 	project/	Finds the root (the directory that holds .fnaze/) and makes .fnaze/ (fnaze init)
 		project.go	Find, ChangesDir and Init
 		project_test.go	Tests of finding the root and of init, in temporary directories
+	core/	Every decision of fnaze; the CLI and the MCP server wrap it
+		| new, set, rm, status, show and log, choosing the group and the language, and the results that are also the JSON of --json and of MCP
+		core.go	Open and Init, reading .fnaze/changes/ into groups, and finding a group from a start of its name
+		commands.go	The commands and their results (the JSON types)
+		core_test.go	Tests of the commands in temporary roots, with the examples of docs/ and a fixed clock and randomness
 .gitattributes	Line endings (LF everywhere)
 .gitignore	Files kept out of git; dot entries in the root are an allowlist
 .golangci.yaml	golangci-lint settings

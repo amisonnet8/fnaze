@@ -69,3 +69,46 @@ FNAZE_LANG: 1つを取るコマンドで最初でなく最後の言語を使う 
 ルート: .fnaze という名前のファイルもルートの印にする | internal/project/project.go | err == nil && fi.IsDir() | err == nil && fi != nil
 init: 上に .fnaze/ があっても作る | internal/project/project.go | if root, err := Find(abs); err == nil { | if root, err := Find(abs); false && err == nil {
 init: changes/ を作らない | internal/project/project.go | if err := os.Mkdir(ChangesDir(abs), 0o755); err != nil { | if err := error(nil); err != nil {
+
+# ファイルの書き換え（internal/format/edit.go。commands.md「fnaze set」「fnaze rm」、q b86656cc97・b471d9b783・0ec3d92098）
+set: 兄弟の末尾でなく先頭に足す | internal/format/edit.go | *siblings = append(*siblings, e) | *siblings = append([]*Entry{e}, *siblings...)
+set: いちばん深い祖先でなく最初に当たった祖先の下に足す | internal/format/edit.go | if next == nil || len(e.Path) > len(next.Path) { | if next == nil {
+set: 足りない途中のディレクトリを骨組みの行にせず1行で書く | internal/format/edit.go | dirs := strings.SplitAfter(rest, "/") | dirs := []string{rest}
+set: --detail が無くても detail を置き換える | internal/format/edit.go | if setDetail { | if true {
+set: desc の改行を許す | internal/format/edit.go | if strings.ContainsAny(desc, "\n\r") { | if false {
+set: パスを検査しない | internal/format/edit.go | if err := CheckPath(path); err != nil { | if err := CheckPath(path); false && err != nil {
+set: 空の行だけの detail を消さない | internal/format/edit.go | if empty {⏎⇥⇥return nil | if false {⏎⇥⇥return nil
+set: --detail の値の改行で行を分けない | internal/format/edit.go | strings.SplitSeq(v, "\n") | strings.SplitSeq(v, "\x00")
+set のパス: 空白で始まる・終わる部分を許す | internal/format/edit.go | if part != strings.TrimSpace(part) { | if false {
+set のパス: 縦棒だけの部分、縦棒と空白で始まる部分を許す | internal/format/edit.go | if part == "|" || strings.HasPrefix(part, "| ") { | if false {
+set のパス: タブと改行を許す | internal/format/edit.go | if strings.ContainsAny(path, "\t\n\r") { | if false {
+rm: 子の無くなった骨組みの行を消さない | internal/format/edit.go | for i := len(chain) - 1; i >= 0; i-- { | for i := len(chain) - 1; i >= len(chain)-1; i-- {
+rm: desc のある上のディレクトリも消す | internal/format/edit.go | len(e.Children) > 0 || e.Desc != "" || len(e.Detail) > 0 | len(e.Children) > 0 || len(e.Detail) > 0
+rm: detail のある上のディレクトリも消す | internal/format/edit.go | len(e.Children) > 0 || e.Desc != "" || len(e.Detail) > 0 | len(e.Children) > 0 || e.Desc != ""
+rm: 消した数に子を数えない | internal/format/edit.go | removed += count(e) | removed++
+log: エントリの数に子を数えない | internal/format/edit.go | n += count(e) | n += min(count(e), 1)
+
+# コア（internal/core。commands.md）
+new: 言語を省いたとき、いちばん新しい組の言語を使わない | internal/core/commands.go | case len(ch.groups) > 0: | case false:
+new: 組が無く言語を省いたとき、FNAZE_LANG を使わない | internal/core/commands.go | case len(lang.FromEnv(c.EnvLang)) > 0: | case false:
+new: 組の言語を検査しない | internal/core/commands.go | if err := lang.CheckGroup(langs); err != nil { | if err := lang.CheckGroup(langs); false && err != nil {
+new: 骨組みでなく中身ごと写す | internal/core/commands.go | return f.Skeleton().Bytes(), nil | return f.Bytes(), nil
+new: その言語のいちばん新しいファイルでなく、いちばん古いファイルから作る | internal/core/commands.go | for i := len(ch.groups) - 1; i >= 0; i-- {⏎⇥⇥if n, ok := ch.groups[i].file(l) | for i := 0; i < len(ch.groups); i++ {⏎⇥⇥if n, ok := ch.groups[i].file(l)
+new: すでにあるファイルを上書きする | internal/core/commands.go | os.O_WRONLY|os.O_CREATE|os.O_EXCL | os.O_WRONLY|os.O_CREATE|os.O_TRUNC
+new: 途中で失敗したとき、作ったファイルを消さない | internal/core/commands.go | _ = ch.dir.Remove(m) | _ = m
+組: 省いたとき、いちばん新しい組でなく、いちばん古い組を使う | internal/core/core.go | return ch.groups[len(ch.groups)-1], nil | return ch.groups[0], nil
+# 意味が同じなので残す：組の名前は長さが決まっているので、組の名前そのものは、ほかの組の先頭の一部にならない。完全一致を先に見なくても、先頭の一部として1つに決まる
+# 組: 完全一致を優先しない | internal/core/core.go | if g.ID == spec {⏎⇥⇥⇥return g, nil | if false {⏎⇥⇥⇥return g, nil
+組: 2つ以上の組に当たる先頭の一部を許す | internal/core/core.go | case 1:⏎⇥⇥return found[0], nil | default:⏎⇥⇥return found[0], nil
+set・rm: 形の誤りのあるファイルにも書く | internal/core/core.go | if p.Kind == format.KindFormat { | if false {
+set・rm: 空の desc のあるファイルに書かない | internal/core/core.go | if p.Kind == format.KindFormat { | if p.Kind == format.KindFormat || p.Kind == format.KindEmptyDesc {
+status: 名前の形に合わないファイルを報告しない | internal/core/commands.go | for _, b := range ch.bad { | for _, b := range ch.bad[:0] {
+status: 言語ごとのずれを報告しない | internal/core/commands.go | } else if !slices.Equal(lines, first) { | } else if len(first) < 0 {
+status: 組の言語の大文字と小文字だけの違いを報告しない | internal/core/commands.go | if err := lang.CheckGroup(g.langs()); err != nil { | if err := lang.CheckGroup(g.langs()); false && err != nil {
+status: --all でも、いちばん新しい組だけを見る | internal/core/commands.go | groups := ch.groups | groups := ch.groups[len(ch.groups)-1:]
+status: --all と組を一緒に許す | internal/core/commands.go | if all && groupSpec != "" { | if false {
+status: ファイルの順に並べない | internal/core/commands.go | return strings.Compare(a.File, b.File) | return 0
+status: 1つのファイルの中で行の順に並べない | internal/core/commands.go | return a.Line - b.Line | return 0
+show: detail の行を改行でつながない | internal/core/commands.go | Detail: strings.Join(e.Detail, "\n"), Children | Detail: strings.Join(e.Detail, " "), Children
+log: 新しい順でなく古い順に並べる | internal/core/commands.go | for i := len(ch.groups) - 1; i >= 0; i-- {⏎⇥⇥g := ch.groups[i] | for i := 0; i < len(ch.groups); i++ {⏎⇥⇥g := ch.groups[i]
+log: 日時を UTC でなく利用者のタイムゾーンで返す | internal/core/commands.go | name.Datetime(g.ID).UTC() | name.Datetime(g.ID).Local()

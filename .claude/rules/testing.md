@@ -39,6 +39,10 @@
   - `internal/format`の題の`line[2:]`→`line[1:]`：直後の`TrimSpace`が、`#`の後ろの空白をまとめて取る
   - `internal/format`の detail の`len(body) > 1`→`> 2`：行末の空白を先に取るので、`| `だけ（長さ2）の行は来ない
   - `spec.txt`の「先頭の / を許す」：先頭の`/`は「空の部分」でも形の誤りになり、違うのはメッセージだけ
+  - `internal/format`の`chain`の`len(e.Path) > len(next.Path)`→`>=`：長さが同じ祖先が2つあるのは、同じパスが2つあるとき（形の誤り）だけで、そのファイルには`set`・`rm`が書かない
+  - `internal/format`の`Remove`がエラーと一緒に返す`0`：エラーのときに添える値
+  - `internal/core`の`ReadDir(-1)`→`-2`・`0`：0以下は、どれも全部を読む
+  - `internal/core`の組の指定の`case 0:`と、言語ごとのずれのメッセージの`g.Files[0]`：変わるのはメッセージだけ。文言は見え方の了承（todo `4838f9a5f0`）で決め、e2e（todo `f61854d051`）で確かめる
 
 ## Trivy：既知の脆弱性とライセンス
 

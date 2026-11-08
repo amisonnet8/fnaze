@@ -34,7 +34,7 @@ The file format is in `file-format.md`. "Group" and "root" in this document have
 |---|---|
 | `new` | `{"group", "files": [{"lang", "path"}]}` |
 | `set` | `{"group", "lang", "path", "desc", "detail"}`: the entry after writing. Without `--json`, `set` prints nothing |
-| `rm` | `{"group", "lang", "path", "removed"}`: `removed` is the number of entries removed, children included. Without `--json`, `rm` prints nothing |
+| `rm` | `{"group", "lang", "path", "removed"}`: `removed` is the number of entries removed, children and skeleton lines above included. Without `--json`, `rm` prints nothing |
 | `status` | `{"items": [{"group", "file", "line", "kind", "message"}]}`: `kind` is `format`, `empty-title`, `empty-desc` or `lang-mismatch`; `line` is `0` when the item is not about one line |
 | `show` | `{"group", "lang", "file", "title", "entries": [{"name", "path", "desc", "detail", "children": [...]}]}` |
 | `log` | `{"groups": [{"group", "datetime", "langs", "title", "entries"}]}`: newest first; `entries` is the number of entries |
@@ -86,16 +86,21 @@ src/
 Writes one entry to the target group's file in the language (see "Language" under "Common").
 
 - `--group <group>` names the group (default: the newest group)
+- The path is taken as written, from the root: it is a directory when it ends with `/`. It must be a path that `file-format.md` allows. A desc cannot have a newline
 - If an entry for the path exists, its desc is replaced, and its detail too when `--detail` is given
-- If not, the entry is added. Missing intermediate directory entries are added as skeleton lines
-- Fails if the group has no file in that language
+- If not, the entry is added under the deepest directory entry above it in the file, after its siblings. Missing intermediate directory entries are added as skeleton lines, one per level
+- Each `--detail` is one line of the detail, and a newline in a value starts another line. If every value is empty, the detail is removed
+- Fails if the group has no file in that language, or the file has a format error
+- The file is written again in the canonical form (`file-format.md`, "Content")
 - The group's files in other languages are not changed (`status` reports the path lines that no longer match)
 
 ## `fnaze rm [--lang <language>] [--group <group>] <path>`
 
 Removes one entry, with its children and details, from the target group's file in the language. `--group` works as in `set`.
 
-- Fails if the group has no file in that language, or the file has no entry for the path
+- Directory entries above it that are left with no children and have neither a desc nor a detail (skeleton lines) are removed too
+- Fails if the group has no file in that language, the file has a format error, or the file has no entry for the path
+- The file is written again in the canonical form
 
 ## `fnaze status [--require] [--all | group]`
 
