@@ -26,12 +26,13 @@ Where fnaze keeps its description files, how they are named, and how they are wr
 |---|---|---|
 | datetime | `YYYYMMDDTHHMMSSZ` (16 characters) | When `fnaze new` created the file (UTC) |
 | UUID | `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` (36 characters, lowercase hex) | A random UUID that `fnaze new` makes each time |
-| language | One or more of letters, digits, `-`, `_` | Any string. For `en`, it is left out together with its `_` |
+| language | One or more ASCII letters (upper or lower case) and digits | Any string. For `en`, it is left out together with its `_` |
 
-- **Sorting the names (by byte) puts the files in the order they were created.** Files with the same datetime are ordered by UUID
+- **Sorting the names (by byte) puts the files in the order they were created.** Files with the same datetime are ordered by UUID, so two groups created in the same second are not always in the order they were created
 - **Files that share the same `<datetime>_<UUID>`** are the descriptions of one set of changes, one per language. This document calls them a "group"
-- **Reading the language**: the datetime and the UUID at the start have fixed lengths, so the language is everything from the `_` after them up to `.txt`. It may contain `_` (the language of `…_zh_hant.txt` is `zh_hant`)
+- **Reading the language**: the datetime and the UUID at the start have fixed lengths, so the language is everything from the `_` after them up to `.txt`
 - **To fnaze, a language is just a string.** fnaze does not know that `ja` means Japanese. Only `en` is special: it has no suffix
+- Upper and lower case are different languages (`ja` and `JA`), and only the lower-case `en` is special. Two languages that differ only in case cannot be in one group, because their file names would be the same file on a file system that ignores case (macOS, Windows)
 - A name ending in `_en.txt` is not allowed (`en` is written without a suffix)
 - Files in `.fnaze/changes/` whose names do not match this form are not read (`status` reports them)
 
@@ -48,6 +49,9 @@ Example:
 ## Content
 
 UTF-8 text with LF line endings. The first line is the title. Each following line is an entry or a detail.
+
+- A blank line, a CR (so a CRLF line ending too) and a BOM are format errors
+- The last line may end with LF or not. fnaze ends it with LF when it writes the file
 
 ```
 # Extend the session lifetime on access instead of fixing it
@@ -67,6 +71,7 @@ docs/old.md	Removed; its content moved to docs/auth.md
 - Starts with `# `, followed by one line saying what this set of changes is
 - Written in the file's language
 - A line that is only `#` or `# ` is an empty title
+- A first line that does not start with `#`, or has something other than a space right after the `#` (`#Title`), is a format error
 
 ### Entries
 

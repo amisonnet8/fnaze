@@ -42,7 +42,7 @@ fnaze は、変更のまとまりごとに、変えたファイルそれぞれ�
 - **`.claude/rules/directory-structure.md`** — ディレクトリ構成と、ファイルの置き場所の判断基準。**新しいファイルを追加するときに読む**
 - **`.claude/rules/datetime.md`** — 日時の扱い（データは UTC で持ち、表示だけ利用者のタイムゾーンに直す。瞬間で比べる、時計を差し替える）。**日時を保存・表示・比較するコードを書くときに読む**
 - **`.claude/rules/working-with-human.md`** — 人間とのやり取り（頼み方の3種類、小さなつまずきの頼み方、確認の自動化、見え方を変えるときの了承）。**人間に何かを頼む前に読む**
-- **`.claude/rules/naming.md`** — 命名規則（未記入。決まったら書く）
+- **`.claude/rules/naming.md`** — 命名規則（製品名、用語の表（英語と CLI・JSON での表記）、コマンドと MCP の道具の名前）。**用語を使う・足すときに読む**
 - **`.claude/rules/distribution.md`** — 配布方法（goreleaserでの配布物の作り方とリリースの流れ。そのほかは未記入で、決まったら書く）
 - **`.claude/rules/documentation.md`** — ドキュメントの書き方（例の値は道具で求める、`docs/design/`に書く経緯の線引き。そのほかは未記入で、決まったら書く）
 

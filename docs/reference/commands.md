@@ -13,11 +13,14 @@ The file format is in `file-format.md`. "Group" and "root" in this document have
   - The other commands take one language (`--lang <language>`). With none, they use `FNAZE_LANG`; if that is not set, `en`
   - `FNAZE_LANG` can hold several languages separated by `,` (`FNAZE_LANG=ja,en`). Spaces around a name and empty names are ignored. `new` uses all of them, and the other commands use the first one
   - A command works only on the language it is given. It does not keep the files of the other languages in step: `status` reports the files of one group whose path lines differ
+  - A language that does not have the form in `file-format.md` (ASCII letters and digits) is an error
 - **Target group**: when a command that takes a group is given none, it uses the newest group (the last one in name order). A group is given as its `<datetime>_<UUID>`, or a prefix of it long enough to name only one group
+  - When there is no group at all, `status` and `log` print nothing (`status` still reports the file names that do not match the form), and `show`, `set` and `rm` fail
 - **`-C <dir>`**: every command except `completion` works as if run in `<dir>` (it looks for `.fnaze/` from there upward; `init` creates it there)
 - **`--json`**: `new`, `set`, `rm`, `status`, `show` and `log` print their result as JSON (see "JSON" below). The MCP tools return the same JSON
 - `-C` and `--json` are not repeated in the usage lines of the commands below
 - **Help and version**: `fnaze --help` (and `fnaze <command> --help`) prints the usage, and `fnaze --version` prints the version
+- **Exit code**: `0` on success, `1` only when `status --require` reports something, and `2` on any error (a wrong command line included)
 - fnaze writes nothing outside `.fnaze/`. It runs no other program (git included)
 
 ## JSON
@@ -52,6 +55,7 @@ fnaze new              # the same languages as the newest group
 
 - **With no language**, it uses the languages of the newest group. If there is no group yet, it uses the languages in `FNAZE_LANG`, or `en` if that is not set
 - **`en` is created only when it is given**, like any other language
+- Fails if two of the languages differ only in case (`ja` and `JA`): see `file-format.md`
 - **Content**: for each language, it takes the newest file in that language and removes the title, descs and details
   - Kept: the path lines and their indentation
   - Removed: the title text (only `# ` remains), the descs (with their tabs), and the detail lines
@@ -101,13 +105,13 @@ It reports:
 
 | Kind | Meaning |
 |---|---|
-| Format error | No title line, broken indentation, the same path twice, a path that is not allowed, a file entry with children, a file in `.fnaze/changes/` whose name does not match the form |
-| Empty title | A title that is only `# ` |
+| Format error | No title line, broken indentation, the same path twice, a path that is not allowed, a file entry with children, a blank line, a CR, a BOM, a file in `.fnaze/changes/` whose name does not match the form |
+| Empty title | A title that is only `#` or `# ` |
 | Empty desc | An entry without children and without a desc |
 | Language mismatch | Files of one group whose path lines (the paths and their order) differ |
 
 - It prints nothing when there is nothing to report
-- Without `--require`, the exit code is always 0. With `--require`, it is 1 if anything is reported
+- Without `--require`, the exit code is 0 whatever is reported. With `--require`, it is 1 if anything is reported. An error is 2, as in every command
 - `--all` checks every group. A group cannot be given with it
 - A file in `.fnaze/changes/` whose name does not match the form is reported whichever group is checked (its `group` is `""` in JSON)
 

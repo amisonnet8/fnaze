@@ -4,7 +4,7 @@
 
 ## 配布物の作り方（goreleaser）
 
-実行ファイルを配るときは、テンプレートに入っている`.goreleaser.yaml`・`.github/workflows/release.yml`・`tools/licenses`を使う。見本は crube（https://github.com/amisonnet8/crube ）。
+実行ファイルを配るときは、リポジトリにある`.goreleaser.yaml`・`.github/workflows/release.yml`・`tools/licenses`を使う。見本は crube（https://github.com/amisonnet8/crube ）。
 
 - **始めるとき**：`cmd/<名前>/`に実行ファイルを置いたら、`.goreleaser.yaml`の`yourproject`（`project_name`・`main`・`binary`と、`tools/licenses`に渡す main パッケージ）を書き換え、`tools/licenses`の`TestRun`を、その実行ファイルのライセンスを集めるテストに書き換える（テストのコメント）。それまでは`qsoku snapshot`とリリースは、作るものが無く失敗する（`goreleaser check`は、GitHub の remote があるリポジトリなら通る）
 - **cgo を使わない**（`CGO_ENABLED=0`）。どの OS でも、ほかのライブラリなしに動く
