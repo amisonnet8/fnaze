@@ -72,6 +72,13 @@ internal/	このモジュールの中だけで使うパッケージ
 		core.go	Open と Init、.fnaze/changes/ を組に分けて読むこと、組を名前の先頭の一部から見つけること
 		commands.go	各コマンドと、その結果（JSON の型）
 		core_test.go	一時ディレクトリのルートで、docs の例と、固定した時計と乱数を使ってコマンドを確かめる
+	cli/	fnaze のコマンドライン。internal/core の薄い包み
+		| 引数を core の呼び出しに、結果をテキストか JSON にする。終了コード 0・1・2
+		args.go	1つのコマンドのオプションと引数を読む
+		cli.go	Run：コマンド、使い方、--version、-C、--json、終了コード
+		text.go	new・status・show・log のテキストの出力。表示幅でそろえる
+		cli_test.go	一時的なルートでコマンドラインを動かすテスト
+		text_test.go	テキストの出力、表示幅、組の短い名前のテスト
 .gitattributes	改行（すべて LF）
 .gitignore	git に入れないもの。ルート直下のドットで始まる名前は許可リスト方式
 .golangci.yaml	golangci-lint の設定
@@ -89,3 +96,7 @@ tools/	プロジェクトを作るための道具（実行ファイルには組�
 		| go run ./tools/licenses <dir> <main パッケージ>。goreleaser がビルドの前に動かす。ライセンスのファイルが無いモジュールがあれば失敗する。
 		main.go	実行ファイルに組み込まれるモジュールを go list -deps で求め、ライセンス文を写す
 		main_test.go	ライセンス文を集める処理のテスト。TestRun はプロジェクトの実行ファイルのテストに書き換える
+cmd/	実行ファイル
+	fnaze/	fnaze のコマンド
+		main.go	main：引数と版を internal/cli に渡す
+go.sum	依存のチェックサム

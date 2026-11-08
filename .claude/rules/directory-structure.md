@@ -18,7 +18,8 @@
 ├── trivy.yaml              ← 脆弱性・ライセンス検査の設定
 ├── .mcp.json               ← mtqgとcrube（英語の`crube`・日本語の`crube-ja`）のMCPサーバーの配線
 ├── .crube/                 ← このリポジトリのファイルの説明（crube。`structure.txt`は英語、`structure_ja.txt`は日本語、`ignore`は`.gitignore`に合わせて手で保つ）。**コミットする**
-├── internal/               ← このモジュールの中だけで使うコード
+├── cmd/fnaze/              ← 実行ファイル fnaze の main（引数を internal/cli に渡すだけ）
+├── internal/               ← このモジュールの中だけで使うコード（cli がコマンドライン、core がすべての判定）
 ├── tools/licenses/         ← 配布物に入れる依存のライセンス文を集める道具（goreleaser が`go run`で動かす。実行ファイルには組み込まれない）
 ├── docs/                   ← 文書
 ├── .devcontainer/          ← 開発環境（devcontainer.json、postCreate.sh）
@@ -33,7 +34,7 @@
 
 ## 各ファイル・ディレクトリの補足
 
-- **`cmd/`**: 実行ファイル`fnaze`を`cmd/fnaze/`に置く（まだ無い）。`cmd/fnaze/main.go`は引数を`internal/`に渡すだけにする
+- **`cmd/`**: 実行ファイル`fnaze`を`cmd/fnaze/`に置く。`cmd/fnaze/main.go`は引数を`internal/cli`に渡すだけにする
 - **`tools/licenses/`**: 配布物に同梱する依存のライセンス文を集める（`.claude/rules/distribution.md`）。`go run ./tools/licenses <出力先> <main パッケージ>`。実行ファイルを置いたら、`TestRun`をその実行ファイルの一覧のテストに書き換える
 - **`.claude/skills/mutation-check/mutants/`**: 変異の道具。`go.mod`を持つ別のモジュールなので、`qsoku check`（`./...`）の対象に入らない。変えたら、そのディレクトリで整形・vet・テストを通す（Skill の「気をつけること」）
 - **`internal/`**: Goの仕組みとして、モジュールの外からimportできない。外へ公開するパッケージは`internal/`に置かない

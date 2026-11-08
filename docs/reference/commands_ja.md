@@ -159,11 +159,11 @@ docs/old.md       Removed; its content moved to docs/auth.md
 組を、新しい順に1行ずつ並べる。組の短い名前、日時、組にある言語、エントリの数、その言語の題を出す。その言語のファイルが無い組は、題を空にする。日時は利用者のタイムゾーンで、分まで出す（JSON では UTC）。
 
 - 組の短い名前は、組の名前の先頭で、ほかの組と区別できる長さのもの。少なくとも、日時・`_`・UUID の4文字。組を指定できるところなら、どこにでも渡せる
-- 言語は `,` でつなぐ。列はそろえる
+- 言語は `,` でつなぐ。列はそろえる（エントリの数は右にそろえる）
 
 ```
-20261107T021530Z_2c4c  2026-11-07 11:15  en,ja   3  Log session extensions
-20261107T003426Z_8980  2026-11-07 09:34  en,ja   6  Extend the session lifetime on access instead of fixing it
+20261107T021530Z_2c4c  2026-11-07 11:15  en,ja  3  Log session extensions
+20261107T003426Z_8980  2026-11-07 09:34  en,ja  6  Extend the session lifetime on access instead of fixing it
 ```
 
 （例は `TZ=Asia/Tokyo` のもの）

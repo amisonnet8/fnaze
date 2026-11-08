@@ -112,3 +112,38 @@ status: 1つのファイルの中で行の順に並べない | internal/core/com
 show: detail の行を改行でつながない | internal/core/commands.go | Detail: strings.Join(e.Detail, "\n"), Children | Detail: strings.Join(e.Detail, " "), Children
 log: 新しい順でなく古い順に並べる | internal/core/commands.go | for i := len(ch.groups) - 1; i >= 0; i-- {⏎⇥⇥g := ch.groups[i] | for i := 0; i < len(ch.groups); i++ {⏎⇥⇥g := ch.groups[i]
 log: 日時を UTC でなく利用者のタイムゾーンで返す | internal/core/commands.go | name.Datetime(g.ID).UTC() | name.Datetime(g.ID).Local()
+CLI: status --require で報告があっても終了コード 0 | internal/cli/cli.go | return exitReported, nil | return exitOK, nil
+CLI: --require が無くても報告があれば終了コード 1 | internal/cli/cli.go | if p.has("--require") && len(res.Items) > 0 { | if len(res.Items) > 0 {
+CLI: エラーの終了コードを 1 にする | internal/cli/cli.go | exitError    = 2 | exitError    = 1
+CLI: エラーの頭に fnaze: を付けない | internal/cli/cli.go | fmt.Fprintln(env.Stderr, "fnaze:", err) | fmt.Fprintln(env.Stderr, err)
+CLI: エラーを標準出力に出す | internal/cli/cli.go | _, _ = fmt.Fprintln(env.Stderr, | _, _ = fmt.Fprintln(env.Stdout,
+CLI: テキストのパスを今のディレクトリでなくルートから書く | internal/cli/cli.go | base, err := filepath.Abs(r.dir) | base, err := c.Root, error(nil)
+CLI: -C を無視する | internal/cli/cli.go | r := &runner{env: env, dir: p.value("-C")} | r := &runner{env: env, dir: ""}
+CLI: --json を無視する | internal/cli/cli.go | if p.has("--json") { | if false {
+CLI: 書き出しの失敗（テキスト）を見逃す | internal/cli/cli.go | _, err := io.WriteString(r.env.Stdout, b.String())⏎⇥return err | _, _ = io.WriteString(r.env.Stdout, b.String())⏎⇥return nil
+CLI: 書き出しの失敗（JSON）を見逃す | internal/cli/cli.go | return enc.Encode(v) | _ = enc.Encode(v)⏎⇥return nil
+CLI: --help で使い方を出さない | internal/cli/cli.go | return say(env, usage) | return say(env, "")
+CLI: --version に fnaze を付けない | internal/cli/cli.go | say(env, "fnaze "+version(env.Version)+"\n") | say(env, version(env.Version)+"\n")
+CLI: 引数が多すぎても許す | internal/cli/cli.go | case len(p.args) > len(cmd.args) && !cmd.variadic: | case false:
+CLI: set の --detail の2つ目から捨てる | internal/cli/cli.go | p.args[1], p.opts["--detail"], | p.args[1], p.opts["--detail"][:min(1, len(p.opts["--detail"]))],
+CLI: set で --detail が無くても detail を消す | internal/cli/cli.go | p.opts["--detail"], p.has("--detail")) | p.opts["--detail"], true)
+CLI: 版：リリースの版より Go の記録を先にする | internal/cli/cli.go | if set != "" {⏎⇥⇥return set | if set == "x" {⏎⇥⇥return set
+CLI: 版：(devel) を版として出す | internal/cli/cli.go | bi.Main.Version != "(devel)" | bi.Main.Version != "x"
+引数: --detail も2回目を誤りにする | internal/cli/args.go | if p.has(name) && name != "--detail" { | if p.has(name) {
+引数: ほかのオプションの2回目を許す | internal/cli/args.go | if p.has(name) && name != "--detail" { | if false {
+引数: -- のあとをオプションとして読む | internal/cli/args.go | if a == "--" { | if a == "---" {
+status: 行が 0 でも :0 を出す | internal/cli/text.go | if it.Line != 0 { | if true {
+show: 題のあとに空行を入れない | internal/cli/text.go | b.WriteString("\n")⏎⇥col := 0 | col := 0
+show: エントリが無くても空行を入れる | internal/cli/text.go | if len(rows) == 0 {⏎⇥⇥return⏎⇥} | if false {⏎⇥⇥return⏎⇥}
+show: インデントを空白4つにする | internal/cli/text.go | indent = "  " | indent = "    "
+show: desc の列を、いちばん長いパスの空白1つあとにする | internal/cli/text.go | col += len(gap) | col += 1
+show: 表示幅でなくバイト数で揃える | internal/cli/text.go | col = max(col, textWidth(r.left)) | col = max(col, len(r.left))
+show: desc の列を揃えない | internal/cli/text.go | b.WriteString(pad(r.left, col) + r.right + "\n") | b.WriteString(r.left + gap + r.right + "\n")
+show: detail の空の行を「|」でなく「| 」にする | internal/cli/text.go | strings.TrimRight("| "+line, " ") | "| "+line
+log: 日時を利用者のタイムゾーンでなく UTC で出す | internal/cli/text.go | g.Datetime.Local().Format | g.Datetime.UTC().Format
+log: 短い名前を UUID の3文字までにする | internal/cli/text.go | const shortMin = len("20060102T150405Z_") + 4 | const shortMin = len("20060102T150405Z_") + 3
+log: 短い名前を区別できるまで延ばさない | internal/cli/text.go | if !startsAnother(ids, i, id[:n]) { | if true {
+log: 短い名前の列を揃えない | internal/cli/text.go | line := pad(short[i], shortWidth) + gap | line := short[i] + gap
+log: 数を右に揃えない | internal/cli/text.go | fmt.Sprintf("%*d", countWidth, g.Entries) | fmt.Sprintf("%-*d", countWidth, g.Entries)
+log: 言語を「,」でなく空白でつなぐ | internal/cli/text.go | langs[i] = strings.Join(g.Langs, ",") | langs[i] = strings.Join(g.Langs, " ")
+log: 行末の空白を残す | internal/cli/text.go | b.WriteString(strings.TrimRight(line, " ") + "\n") | b.WriteString(line + "\n")

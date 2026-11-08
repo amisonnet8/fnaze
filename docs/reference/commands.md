@@ -159,11 +159,11 @@ docs/old.md       Removed; its content moved to docs/auth.md
 Lists the groups, newest first, one per line: the group's short name, the datetime, the languages the group has, the number of entries, and the title in the language. A group with no file in that language is shown with an empty title. The datetime is shown in the local time zone to the minute (UTC in JSON).
 
 - The short name is the start of the group, long enough to tell it from the other groups: at least the datetime, `_` and four characters of the UUID. It can be given wherever a group is taken
-- The languages are joined with `,`. The columns are aligned
+- The languages are joined with `,`. The columns are aligned (the numbers of entries to the right)
 
 ```
-20261107T021530Z_2c4c  2026-11-07 11:15  en,ja   3  Log session extensions
-20261107T003426Z_8980  2026-11-07 09:34  en,ja   6  Extend the session lifetime on access instead of fixing it
+20261107T021530Z_2c4c  2026-11-07 11:15  en,ja  3  Log session extensions
+20261107T003426Z_8980  2026-11-07 09:34  en,ja  6  Extend the session lifetime on access instead of fixing it
 ```
 
 (The example is in `TZ=Asia/Tokyo`.)
