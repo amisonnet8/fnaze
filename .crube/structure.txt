@@ -55,6 +55,16 @@ internal/	Packages used only inside this module
 		| Title, entries, details; format errors, empty title and empty descs. Reading and writing follow crube's structure.txt
 		format.go	Parse, the canonical writer, the skeleton for fnaze new, and the path lines for the language check
 		format_test.go	Tests of reading and writing, against the examples in docs/ and the cases of the spec
+	lang/	Checks the names of languages, and reads FNAZE_LANG
+		| A language is ASCII letters and digits. The languages of one group cannot repeat or differ only in case
+		lang.go	Check, CheckGroup, FromEnv, and One (the language of a command that takes one)
+		lang_test.go	Tests of the checks and of choosing the language
+	name/	Reads and makes the names of description files: <datetime>_<UUID>[_<language>].txt
+		name.go	Parse, File, IsGroup, Datetime, and NewGroup (the clock and the randomness are given by the caller)
+		name_test.go	Tests of the names; the expected UUIDs are from Python's uuid
+	project/	Finds the root (the directory that holds .fnaze/) and makes .fnaze/ (fnaze init)
+		project.go	Find, ChangesDir and Init
+		project_test.go	Tests of finding the root and of init, in temporary directories
 .gitattributes	Line endings (LF everywhere)
 .gitignore	Files kept out of git; dot entries in the root are an allowlist
 .golangci.yaml	golangci-lint settings

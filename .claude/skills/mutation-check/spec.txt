@@ -38,3 +38,34 @@ detail: 縦棒の後ろの空白を1つより多く取る | internal/format/form
 書く: 空の detail を「|」でなく「| 」で書く | internal/format/format.go | b.WriteString(indent + "\t|\n") | b.WriteString(indent + "\t| \n")
 骨組み: desc を残す | internal/format/format.go | out = append(out, &Entry{Name: e.Name, Path: e.Path, Children: skeleton(e.Children)}) | out = append(out, &Entry{Name: e.Name, Path: e.Path, Desc: e.Desc, Children: skeleton(e.Children)})
 パスの行: インデントを含めない | internal/format/format.go | lines = append(lines, strings.Repeat("\t", depth)+e.Name) | lines = append(lines, e.Name)
+
+# 言語（internal/lang。file-format.md「File name」、commands.md「Common」）
+言語: 数字を許さない | internal/lang/lang.go | || '0' <= c && c <= '9' | || false
+言語: 大文字を許さない | internal/lang/lang.go | || 'A' <= c && c <= 'Z' | || false
+言語: 空の名前を許す | internal/lang/lang.go | if lang == "" { | if false {
+組の言語: 大文字と小文字だけ違う言語を許す | internal/lang/lang.go | case strings.EqualFold(l, m): | case false:
+# 意味が同じなので残す：同じ言語の2回目は EqualFold でも捕まり、エラーになる。違うのはメッセージだけ
+# 組の言語: 同じ言語を2回許す | internal/lang/lang.go | case l == m: | case false:
+組の言語: 言語の名前を検査しない | internal/lang/lang.go | if err := Check(l); err != nil { | if err := Check(l); false && err != nil {
+FNAZE_LANG: 名前の前後の空白を取らない | internal/lang/lang.go | if l = strings.TrimSpace(l); l != "" { | if l != "" {
+FNAZE_LANG: 1つを取るコマンドで最初でなく最後の言語を使う | internal/lang/lang.go | l = langs[0] | l = langs[len(langs)-1]
+言語: 省いたときの既定を en にしない | internal/lang/lang.go | const Default = "en" | const Default = "ja"
+
+# ファイル名（internal/name。file-format.md「File name」）
+名前: en にも接尾辞を付ける | internal/name/name.go | if n.Lang == lang.Default { | if false {
+名前: _en.txt を許す | internal/name/name.go | l == lang.Default || | false ||
+名前: 言語の名前を検査しない | internal/name/name.go | || lang.Check(l) != nil { | || false {
+名前: 日時として読めない日時を許す | internal/name/name.go | if _, err := time.Parse(datetimeLayout, s[:datetimeLen]); err != nil { | if false {
+名前: UUID の大文字の16進を許す | internal/name/name.go | return '0' <= c && c <= '9' || 'a' <= c && c <= 'f' | return '0' <= c && c <= '9' || 'a' <= c && c <= 'f' || 'A' <= c && c <= 'F'
+名前: UUID の - の位置を確かめない | internal/name/name.go | if c != '-' { | if false {
+名前: .txt で終わることを確かめない | internal/name/name.go | rest, ok := strings.CutSuffix(file, ext) | rest, ok := strings.TrimSuffix(file, ext), true
+新しい組: 日時を UTC で書かない | internal/name/name.go | now.UTC().Format(datetimeLayout) | now.Format(datetimeLayout)
+新しい組: UUID の版を4にしない | internal/name/name.go | 0x40⏎⇥b[8] = b[8]&0x3f | 0x00⏎⇥b[8] = b[8]&0x3f
+新しい組: UUID の variant を立てない | internal/name/name.go | 0x80⏎⇥h := hex | 0x00⏎⇥h := hex
+新しい組: 乱数が16バイトに足りなくても作る | internal/name/name.go | io.ReadFull(random, b[:]) | random.Read(b[:])
+
+# ルートと init（internal/project。file-format.md「Location」、commands.md「fnaze init」）
+ルート: 上へたどらない | internal/project/project.go | if parent == d { | if true {
+ルート: .fnaze という名前のファイルもルートの印にする | internal/project/project.go | err == nil && fi.IsDir() | err == nil && fi != nil
+init: 上に .fnaze/ があっても作る | internal/project/project.go | if root, err := Find(abs); err == nil { | if root, err := Find(abs); false && err == nil {
+init: changes/ を作らない | internal/project/project.go | if err := os.Mkdir(ChangesDir(abs), 0o755); err != nil { | if err := error(nil); err != nil {

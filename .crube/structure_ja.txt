@@ -55,6 +55,16 @@ internal/	このモジュールの中だけで使うパッケージ
 		| 題・エントリ・detail。形の誤り・空の題・空の desc。読み方と書き方は crube の structure.txt に合わせた
 		format.go	読む（Parse）、決まった形で書く、fnaze new の骨組み、言語ごとのずれを比べるパスの行
 		format_test.go	読み書きのテスト。docs の例と、仕様の場合分けで確かめる
+	lang/	言語の名前を検査し、FNAZE_LANG を読む
+		| 言語は ASCII の英数字。1つの組の言語は、重なったり、大文字と小文字だけ違ったりしてはいけない
+		lang.go	Check・CheckGroup・FromEnv と、1つの言語を取るコマンドの言語を決める One
+		lang_test.go	検査と、言語の決め方のテスト
+	name/	説明のファイルの名前 <日時>_<UUID>[_<言語>].txt を読み、作る
+		name.go	Parse・File・IsGroup・Datetime と NewGroup（時計と乱数は呼ぶ側が渡す）
+		name_test.go	名前のテスト。期待する UUID は Python の uuid で求めた
+	project/	ルート（.fnaze/ のあるディレクトリ）を探し、.fnaze/ を作る（fnaze init）
+		project.go	Find・ChangesDir・Init
+		project_test.go	ルートの探し方と init のテスト。一時ディレクトリで確かめる
 .gitattributes	改行（すべて LF）
 .gitignore	git に入れないもの。ルート直下のドットで始まる名前は許可リスト方式
 .golangci.yaml	golangci-lint の設定
