@@ -2,15 +2,11 @@
 set -euo pipefail
 
 # The shells this container is set up for: qsoku's shell integration and the
-# completion of crube and mtqg go into each of them (the end of this file).
-# bash only by default. A project that runs its own shell scripts in the real
-# shells (completion scripts, shell integration) lists all four instead,
-#   shells=(bash zsh fish pwsh)
-# and adds "ghcr.io/devcontainers/features/powershell:2.0.3": {} to the features
-# of devcontainer.json (.claude/rules/testing.md). bash and zsh are in the base
-# image, fish is installed below, and pwsh comes only from that feature.
-# All four: fnaze ships its own completion scripts, which are run in the real
-# shells.
+# completion of crube, fnaze and mtqg go into each of them (the end of this file).
+# All four: fnaze ships its own completion scripts, run by the real shells in
+# its e2e tests (.claude/rules/testing.md). The template starts with bash only.
+# bash and zsh are in the base image, fish is installed below, and pwsh comes
+# only from the "powershell" feature of devcontainer.json.
 shells=(bash zsh fish pwsh)
 has_shell() {
   local shell
@@ -109,6 +105,12 @@ go install github.com/amisonnet8/mtqg/cmd/mtqg@latest
 # (.claude/rules/crube-usage.md). @latest, like the tools above.
 go install github.com/amisonnet8/crube/cmd/crube@latest
 
+# fnaze: built from this repository's own source, so a fresh devcontainer has
+# a `fnaze` command and its completion (below) to use interactively. It is a
+# snapshot of the source at creation, for people. Claude Code does not use it:
+# it builds the current source for its checks (qsoku).
+(cd "$(dirname "$0")/.." && go install ./cmd/fnaze)
+
 # goreleaser: builds the release archives (.goreleaser.yaml). Needed here only
 # for `qsoku snapshot`, which makes them without a tag to look at before tagging
 # (.claude/rules/distribution.md); the release workflow installs its own.
@@ -151,13 +153,14 @@ for shell in "${shells[@]}"; do
   esac
 done
 
-# The completion of crube and mtqg, for interactive use in this container, in
-# each shell, at the places their documents name (completion <shell>). They
-# are installed @latest above, and a release older than its
-# completion has none: then it only warns, and the next rebuild after a release
-# picks it up. pwsh has no completions directory: the script is appended to
-# $PROFILE once, found again by its Register-ArgumentCompleter line.
-for tool in crube mtqg; do
+# The completion of crube, fnaze and mtqg, for interactive use in this
+# container, in each shell, at the places their documents name (completion
+# <shell>). They are installed above (fnaze from this source, the others
+# @latest), and a release older than its completion has none: then it only
+# warns, and the next rebuild after a release picks it up. pwsh has no
+# completions directory: the script is appended to $PROFILE once, found again
+# by its Register-ArgumentCompleter line.
+for tool in crube fnaze mtqg; do
   print_completion=("$tool" completion)
   if ! "${print_completion[@]}" bash >/dev/null 2>&1; then
     echo "warning: no shell completion from this $tool (${print_completion[*]} bash failed); skipped" >&2
