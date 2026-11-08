@@ -99,4 +99,6 @@
 - **出力に出るパスと比べるテストは、一時ディレクトリを`filepath.EvalSymlinks`で解決してから比べる。** 同じディレクトリでも、macOSは`/var`→`/private/var`のシンボリックリンク、Windowsは8.3の短縮名（`RUNNER~1`）と長い名前が食い違う。`t.TempDir()`の値のまま比べると、macOS・WindowsのCIだけで落ちる
 - **Windowsでは、開いたままのファイルを置き換え（`rename`）られないことがあり、開いたハンドルのあるディレクトリは消せない。** 一時ファイル経由の置き換えや、失敗したときの後片付け（`os.RemoveAll`）の前に、先に`Close`する。Windowsのランナーでだけ落ちる
 - **Windowsの`os.Symlink`は、リンクの宛先の`/`を`\`にして保存する。** `os.Readlink`は`releases\v2`を返す。宛先を見せる・比べるときは`filepath.ToSlash`で`/`にそろえる。テストの宛先は、区切りを含むもの（`src/auth`）にする。区切りの無い宛先（`src`）では、この食い違いを捕まえられない（crube の`show`の`link`で、CI の Windows でだけ落ちた）
+- **大文字と小文字だけ違う名前のファイルを2つ作るテストは、macOS・Windowsでは1つのファイルになる**（大文字と小文字を区別しないファイルシステム。2つ目の書き込みが1つ目を上書きする）。fnaze の`TestStatus`が、`_ja.txt`と`_JA.txt`を作って、CI の macOS・Windows でだけ落ちた。そういう状態は別のテストに分け、作ったあとにファイルが本当に2つあるかを数え、無ければ`t.Skip`する（`TestStatusLanguagesThatDifferOnlyInCase`）
+- **テストを1つだけ動かすときも`go test`を直接打たない。** `GOFLAGS="-count=1 -run=TestName -v" qsoku unit`で絞れる
 - **OSで分かれる動き（区切りの`\`など）は、手元のLinuxのテストからも確かめる。** `filepath.Separator`のようなOSの値を、パッケージの変数（例：crube の`internal/core`の`osSeparator`）に入れて使い、テストでWindowsの値に差し替える（`t.Cleanup`で戻す。`t.Parallel`にしない）。CIのWindowsまで待たずに、手元で落ちる

@@ -411,7 +411,6 @@ func TestStatus(t *testing.T) {
 	g := newGroup
 	writeFile(t, c.Root, g+".txt", "# \nsrc/\n\ta.go\n")
 	writeFile(t, c.Root, g+"_ja.txt", "# 題\nsrc/\n\tb.go\tx\n")
-	writeFile(t, c.Root, g+"_JA.txt", "# 題\nsrc/\n\ta.go\tx\n")
 	writeFile(t, c.Root, "notes.txt", "")
 	writeFile(t, c.Root, ex1+"_en.txt", "")
 	writeFile(t, c.Root, ex1+"_fr.txt", "# t\na\n")
@@ -422,7 +421,6 @@ func TestStatus(t *testing.T) {
 	}
 	want := []item{
 		{"", p(ex1 + "_en.txt"), 0, "format"},
-		{g, p(g + ".txt"), 0, "format"},
 		{g, p(g + ".txt"), 1, "empty-title"},
 		{g, p(g + ".txt"), 3, "empty-desc"},
 		{g, p(g + "_ja.txt"), 0, "lang-mismatch"},
@@ -456,6 +454,28 @@ func TestStatus(t *testing.T) {
 	res, err = c.Status(ex2, false)
 	if err != nil || len(res.Items) != 2 {
 		t.Errorf("only the bad names for %s: %v, %v", ex2, items(res), err)
+	}
+}
+
+// Files of one group in two languages that differ only in case can be made by
+// hand where the file system tells case apart (Linux). Where it does not
+// (macOS, Windows), the second write goes to the first file, so there is
+// nothing to check.
+func TestStatusLanguagesThatDifferOnlyInCase(t *testing.T) {
+	c := newCore(t, "")
+	g := newGroup
+	for _, f := range []string{g + ".txt", g + "_ja.txt", g + "_JA.txt"} {
+		writeFile(t, c.Root, f, "# t\na\tx\n")
+	}
+	if got := files(t, c.Root); len(got) != 3 {
+		t.Skipf("the file system ignores case: %q", got)
+	}
+	res, err := c.Status("", false)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got := items(res); !slices.Equal(got, []item{{g, ".fnaze/changes/" + g + ".txt", 0, "format"}}) {
+		t.Errorf("got %v", got)
 	}
 }
 
