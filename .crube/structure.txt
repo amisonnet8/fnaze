@@ -1,0 +1,71 @@
+.claude/	Claude Code settings shared in the repository
+	hooks/	Hooks that Claude Code runs around its tools
+		build.sh	Runs qsoku build after a .go, go.mod or go.sum file is changed with Edit or Write
+		crube-untracked.sh	After Write creates a file, tells Claude which of its paths have no description, per language
+	rules/	Rules for working in this repository (Japanese); CLAUDE.md says when to read each
+		crube-usage.md	Using crube: MCP and the CLI, finding places, keeping descriptions in both languages
+		datetime.md	Dates and times: keep UTC, show in the local time zone
+		directory-structure.md	Where each file goes, and the layout of the repository
+		distribution.md	How the project is released: building the archives with goreleaser, and the release flow
+		documentation.md	How to write documents: example values from tools, what history goes in docs/design/
+		mtqg-usage.md	How to record memos, todos, questions, bugs and rules with mtqg
+		naming.md	Naming rules: the product name, the terms with their English and JSON names, and the names of commands and MCP tools
+		qsoku-usage.md	The qsoku names for build, test and lint, and how to call them
+		testing.md	Test policy, and pitfalls of the sandbox and of CI on each OS
+		working-with-human.md	How to ask people: small blockers, checks, and approval of what users see
+	settings.json	Permissions, sandbox and hooks of Claude Code (managed by people)
+	skills/	Skills of Claude Code
+		mutation-check/	Skill: break the code on purpose to see that the tests notice
+			SKILL.md	The steps of the skill
+			spec.txt	Mutations that break the promises of the project one by one, in the words of the spec (empty at first)
+			mutants/	The tool that makes the mutations and runs the tests (a Go module of its own)
+				go.mod	Module definition, apart from this project
+				main.go	Makes syntactic mutations, or those of a list, one at a time, and puts the files back
+				main_test.go	Tests of the tool
+.devcontainer/	Development container
+	devcontainer-lock.json	Versions of the features the container was built with
+	devcontainer.json	Container definition and VS Code settings
+	postCreate.sh	Installs the tools (qsoku, mtqg, crube, goreleaser, golangci-lint, Trivy) after the container is made, and wires up the shells it lists (bash by default)
+.github/	GitHub settings
+	workflows/	GitHub Actions workflows
+		ci.yml	CI: qsoku check on Linux, macOS and Windows, the race detector, ShellCheck and Trivy
+		release.yml	Release on a tag: runs ci.yml, attaches goreleaser's archives to a Release and publishes it
+.mtqg/	Process record kept with mtqg: memos, todos, questions, bugs, glossary and rules
+	.gitattributes	Merges journal.jsonl with merge=union
+	.gitignore	Keeps .local/ out of git
+	SCHEMA.md	Data format of journal.jsonl
+	journal.jsonl	The records, one JSON line each (written only through mtqg)
+	version	Version of the mtqg data format
+docs/	Documents of the project
+	design/	The design (Japanese only)
+		overview.md	What fnaze is for, what it does not do, and the design rules with their reasons
+	examples/	Examples for users
+		changes/	Two groups of description files in en and ja, as they would be in .fnaze/changes/
+			*.txt	A description file (en without a suffix, others with _<language>)
+		pre-commit	An example git pre-commit hook for one description per commit
+		README.md	What the examples are
+		README_ja.md	Japanese translation of README.md
+	reference/	The specification (English is authoritative, *_ja.md are Japanese translations)
+		commands.md	The commands
+		commands_ja.md	Japanese translation of commands.md
+		file-format.md	Where the description files are, their names, and how they are written
+		file-format_ja.md	Japanese translation of file-format.md
+internal/	Packages used only inside this module
+	doc.go	Placeholder package so that qsoku check passes in an empty module; remove it with the first real package
+.gitattributes	Line endings (LF everywhere)
+.gitignore	Files kept out of git; dot entries in the root are an allowlist
+.golangci.yaml	golangci-lint settings
+.mcp.json	MCP servers for Claude Code: mtqg, and crube in English and Japanese
+CLAUDE.md	Rules for Claude Code in this repository, and the rule files to read
+LICENSE	MIT license
+README.md	What fnaze is, and where its documents are
+go.mod	Go module and its dependencies
+qsokufile	Named commands for build, test and lint (qsoku)
+trivy.yaml	Trivy settings: what counts as a vulnerability or license failure
+.goreleaser.yaml	How the release archives are built (goreleaser)
+	| Used by .github/workflows/release.yml on a tag, and by qsoku snapshot locally. Rename yourproject first; see .claude/rules/distribution.md.
+tools/	Tools for building the project (not built into its command)
+	licenses/	Gathers the license texts of the dependencies for the release archives
+		| go run ./tools/licenses <dir> <main package>; goreleaser runs it before building. Fails if a module has no license file.
+		main.go	Finds the modules linked into the command with go list -deps and copies their licenses
+		main_test.go	Tests of the license gathering; TestRun is to be changed to the project's own command

@@ -1,0 +1,5 @@
+# Log session extensions
+src/
+	auth/
+		session.go	Log each extension at debug level
+			| Needed to check the 30m default in production

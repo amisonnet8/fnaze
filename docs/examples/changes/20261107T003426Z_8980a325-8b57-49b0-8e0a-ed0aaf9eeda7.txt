@@ -1,0 +1,8 @@
+# Extend the session lifetime on access instead of fixing it
+src/
+	auth/	Change the session lifetime from fixed to extended
+		session.go	Extend the lifetime on every access
+		*_test.go	Add tests for the extension
+config/auth.yaml	Set the default session.ttl to 30m
+	| Users reported sessions expiring too soon
+docs/old.md	Removed; its content moved to docs/auth.md

@@ -1,0 +1,8 @@
+# 認証のセッションの期限を、固定から延長に変えた
+src/
+	auth/	期限を固定から延長に変えた
+		session.go	アクセスのたびに期限を延ばす
+		*_test.go	延長のテストを足す
+config/auth.yaml	session.ttl の既定を 30m にした
+	| 短すぎてセッションが切れる報告があった
+docs/old.md	消した。内容は docs/auth.md に移した

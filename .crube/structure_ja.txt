@@ -1,0 +1,71 @@
+.claude/	リポジトリで共有する Claude Code の設定
+	hooks/	Claude Code が道具の前後に動かすフック
+		build.sh	Edit・Write で .go・go.mod・go.sum を変えたあとに qsoku build を動かす
+		crube-untracked.sh	Write でファイルを作ったあと、説明の無いパスを言語ごとに Claude に知らせる
+	rules/	このリポジトリで作業するときのルール（日本語）。いつ読むかは CLAUDE.md にある
+		crube-usage.md	crube の使い方：MCP と CLI、場所の探し方、両方の言語の説明の保ち方
+		datetime.md	日時の扱い：UTC で持ち、表示だけ利用者のタイムゾーンに直す
+		directory-structure.md	ファイルの置き場所と、リポジトリの構成
+		distribution.md	配布の方法：goreleaser での配布物の作り方と、リリースの流れ
+		documentation.md	文書の書き方：例の値は道具で求める、docs/design/ に書く経緯の線引き
+		mtqg-usage.md	mtqg でメモ・todo・質問・不具合・決まり事を記録する方法
+		naming.md	命名規則：製品名、用語（英語・JSON での表記つき）、コマンドと MCP の道具の名前
+		qsoku-usage.md	ビルド・テスト・lint の qsoku の名前と呼び方
+		testing.md	テスト方針と、サンドボックス・OS ごとの CI の落とし穴
+		working-with-human.md	人間への頼み方：小さなつまずき、確認、見え方の了承
+	settings.json	Claude Code の許可・サンドボックス・フック（人間が管理する）
+	skills/	Claude Code のスキル
+		mutation-check/	スキル：実装をわざと壊して、テストが気づくか確かめる
+			SKILL.md	スキルの手順
+			spec.txt	プロジェクトの仕様の約束を1つずつ壊す変異の一覧（仕様の言葉で書く。最初は空）
+			mutants/	変異を入れてテストを回す道具（独立した Go モジュール）
+				go.mod	モジュールの定義（このプロジェクトとは別）
+				main.go	構文の変異、または一覧の変異を1つずつ入れ、ファイルを元に戻す
+				main_test.go	道具のテスト
+.devcontainer/	開発用のコンテナ
+	devcontainer-lock.json	コンテナを作ったときの feature の版
+	devcontainer.json	コンテナの定義と VS Code の設定
+	postCreate.sh	コンテナを作ったあとに道具（qsoku・mtqg・crube・goreleaser・golangci-lint・Trivy）を入れ、挙げたシェル（初めは bash だけ）を配線する
+.github/	GitHub の設定
+	workflows/	GitHub Actions のワークフロー
+		ci.yml	CI：Linux・macOS・Windows での qsoku check、race、ShellCheck、Trivy
+		release.yml	タグで動くリリース。ci.yml を通してから、goreleaser の配布物を Release に添付して公開する
+.mtqg/	mtqg の作業記録：メモ・todo・質問・不具合・用語・決まり事
+	.gitattributes	journal.jsonl を merge=union でマージする
+	.gitignore	.local/ を git に入れない
+	SCHEMA.md	journal.jsonl のデータ形式
+	journal.jsonl	記録そのもの。1件1行の JSON（mtqg からだけ書く）
+	version	mtqg のデータ形式の版
+docs/	プロジェクトの文書
+	design/	設計（日本語のみ）
+		overview.md	fnaze の目的、しないこと、設計の決まりとその理由
+	examples/	使う人のための例
+		changes/	説明のファイルの組を2つ、en と ja で。.fnaze/changes/ に置かれる形のまま
+			*.txt	説明のファイル（en は接尾辞なし、ほかは _<言語の名前>）
+		pre-commit	コミット1つにつき説明を1つ書く使い方のための、git の pre-commit フックの例
+		README.md	例の一覧（英語）
+		README_ja.md	README.md の日本語版
+	reference/	仕様（英語が正本で、*_ja.md は日本語版）
+		commands.md	コマンド（英語）
+		commands_ja.md	commands.md の日本語版
+		file-format.md	説明のファイルの置き場所・名前・書き方（英語）
+		file-format_ja.md	file-format.md の日本語版
+internal/	このモジュールの中だけで使うパッケージ
+	doc.go	空のモジュールでも qsoku check が通るようにするプレースホルダー。最初の本物のパッケージを足したら消す
+.gitattributes	改行（すべて LF）
+.gitignore	git に入れないもの。ルート直下のドットで始まる名前は許可リスト方式
+.golangci.yaml	golangci-lint の設定
+.mcp.json	Claude Code に mtqg と、crube（英語・日本語）の MCP サーバーをつなぐ設定
+CLAUDE.md	このリポジトリでの Claude Code のルールと、読むべきルールファイルの案内
+LICENSE	MIT ライセンス
+README.md	fnaze とは何かと、文書の場所（英語）
+go.mod	Go モジュールと依存
+qsokufile	ビルド・テスト・lint の名前つきコマンド（qsoku）
+trivy.yaml	Trivy の設定：何を脆弱性・ライセンスの失敗とみなすか
+.goreleaser.yaml	配布物の作り方（goreleaser）
+	| タグで .github/workflows/release.yml が、手元では qsoku snapshot が使う。先に yourproject を書き換える。.claude/rules/distribution.md を参照。
+tools/	プロジェクトを作るための道具（実行ファイルには組み込まれない）
+	licenses/	配布物に入れる依存のライセンス文を集める
+		| go run ./tools/licenses <dir> <main パッケージ>。goreleaser がビルドの前に動かす。ライセンスのファイルが無いモジュールがあれば失敗する。
+		main.go	実行ファイルに組み込まれるモジュールを go list -deps で求め、ライセンス文を写す
+		main_test.go	ライセンス文を集める処理のテスト。TestRun はプロジェクトの実行ファイルのテストに書き換える
