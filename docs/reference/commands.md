@@ -105,7 +105,7 @@ It reports:
 
 | Kind | Meaning |
 |---|---|
-| Format error | No title line, broken indentation, the same path twice, a path that is not allowed, a file entry with children, a blank line, a CR, a BOM, a file in `.fnaze/changes/` whose name does not match the form |
+| Format error | No title line, broken indentation, the same path twice, a path that is not allowed, a file entry with children, a BOM, a file in `.fnaze/changes/` whose name does not match the form |
 | Empty title | A title that is only `#` or `# ` |
 | Empty desc | An entry without children and without a desc |
 | Language mismatch | Files of one group whose path lines (the paths and their order) differ |

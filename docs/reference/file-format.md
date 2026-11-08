@@ -50,8 +50,8 @@ Example:
 
 UTF-8 text with LF line endings. The first line is the title. Each following line is an entry or a detail.
 
-- A blank line, a CR (so a CRLF line ending too) and a BOM are format errors
-- The last line may end with LF or not. fnaze ends it with LF when it writes the file
+- **Reading**: spaces and tabs at the end of a line are removed, and so is a CR (CRLF line endings can be read). Blank lines are ignored. The last line may end with LF or not. A BOM is a format error
+- **Writing** (`new`, `set`, `rm`): LF line endings with a final LF, no blank lines, and no spaces at the end of lines except in the empty title `# `. Alignment and blank lines made by hand are gone once fnaze writes the file
 
 ```
 # Extend the session lifetime on access instead of fixing it
@@ -87,6 +87,8 @@ docs/old.md	Removed; its content moved to docs/auth.md
   - Only directory entries can have indented children
   - `.`, `..`, empty parts (`a//b`) and a leading `/` are not allowed
 - **A desc** is one line. Its length has no limit
+  - The desc is everything after the first tab of the line, with the spaces and tabs around it removed: tabs that line descs up by hand are allowed, and tabs inside a desc are kept
+  - So a path cannot contain a tab
 - **An entry without a desc**:
   - If it is a directory entry with children, it is a skeleton line for writing deeper paths (`src/` in the example)
   - If it has no children, it has an **empty desc** (something left unwritten)
@@ -115,6 +117,7 @@ To find the description of a path, the closest one is used:
 <indent>| <detail>
 ```
 
+- A detail line is `|` alone or starts with `| `. A line of `|` alone is an empty line in the note. A line such as `|text` is not a detail line (it is read as an entry), and a path that is `|` alone or starts with `| ` cannot be written
 - A note on the entry just before it (a reason, background, and so on). It is indented one level deeper than that entry
 - An entry may have several detail lines in a row. They are read in order as one note
 - Its length has no limit
