@@ -37,7 +37,6 @@
 - **`tools/licenses/`**: 配布物に同梱する依存のライセンス文を集める（`.claude/rules/distribution.md`）。`go run ./tools/licenses <出力先> <main パッケージ>`。実行ファイルを置いたら、`TestRun`をその実行ファイルの一覧のテストに書き換える
 - **`.claude/skills/mutation-check/mutants/`**: 変異の道具。`go.mod`を持つ別のモジュールなので、`qsoku check`（`./...`）の対象に入らない。変えたら、そのディレクトリで整形・vet・テストを通す（Skill の「気をつけること」）
 - **`internal/`**: Goの仕組みとして、モジュールの外からimportできない。外へ公開するパッケージは`internal/`に置かない
-- **`internal/doc.go`**: `package`宣言だけのプレースホルダー。Goのパッケージが1つも無いと`qsoku vet`・`lint`・`unit`が失敗するので、空のモジュールでも`qsoku check`が通るように置いてある。実際のパッケージを足したら消す
 - **`go.sum`**: コミットする（改ざん検知・再現可能なビルドのため）
 - **`.mtqg/`**: コミットされる。中のファイルは直接編集せず、すべて`mtqg`のコマンド経由で書く（`.claude/rules/mtqg-usage.md`）。`.mtqg/.local/`はコミットされない
 - **`.mcp.json`**: `mtqg mcp`（MCPサーバー）の配線。`mtqg init --agent claude-code`が書くものと同じ。その後ろに、crubeのMCPサーバー（`crube mcp --allow-write`。`crube-ja`は`CRUBE_LANG=ja`）を手で足している（`.claude/rules/crube-usage.md`）

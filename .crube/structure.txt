@@ -51,7 +51,10 @@ docs/	Documents of the project
 		file-format.md	Where the description files are, their names, and how they are written
 		file-format_ja.md	Japanese translation of file-format.md
 internal/	Packages used only inside this module
-	doc.go	Placeholder package so that qsoku check passes in an empty module; remove it with the first real package
+	format/	Reads and writes one description file, and finds the problems of that file alone
+		| Title, entries, details; format errors, empty title and empty descs. Reading and writing follow crube's structure.txt
+		format.go	Parse, the canonical writer, the skeleton for fnaze new, and the path lines for the language check
+		format_test.go	Tests of reading and writing, against the examples in docs/ and the cases of the spec
 .gitattributes	Line endings (LF everywhere)
 .gitignore	Files kept out of git; dot entries in the root are an allowlist
 .golangci.yaml	golangci-lint settings

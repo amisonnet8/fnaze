@@ -5,3 +5,36 @@
 #
 # 例（crube の一覧から。照合の「完全一致をパターンより優先する」という約束を壊す）：
 # 照合: 完全一致をパターンより優先しない | internal/match/match.go | ⇥⇥if e.Name == exact {⏎⇥⇥⇥return e | ⇥⇥if false && e.Name == exact {⏎⇥⇥⇥return e
+
+# docs/reference/file-format.md（internal/format）
+読む: 行末の空白と CR を取り除かない | internal/format/format.go | line := strings.TrimRightFunc(raw, unicode.IsSpace) | line := raw
+読む: 空行を無視せず形の誤りにする | internal/format/format.go | if line == "" {⏎⇥⇥⇥continue | if line == "" {⏎⇥⇥⇥p.add(n, KindFormat, "blank line")⏎⇥⇥⇥continue
+読む: BOM を形の誤りにしない | internal/format/format.go | p.add(1, KindFormat, "the file starts with a BOM") | _ = "the file starts with a BOM"
+題: # だけの題を空の題にしない | internal/format/format.go | case line == "#": | case false:
+題: 題の前後の空白を取り除かない | internal/format/format.go | p.f.Title = strings.TrimSpace(line[2:]) | p.f.Title = line[2:]
+題: # のすぐ後が空白でない題を形の誤りにしない | internal/format/format.go | case strings.HasPrefix(line, "#"): | case false:
+題: 題の無いファイルの1行目をエントリとして読まない | internal/format/format.go | ⇥⇥return false | ⇥⇥return true
+インデント: 空白の混じったインデントを許す | internal/format/format.go | if body[0] == ' ' { | if false {
+インデント: 2段以上深い行を許す | internal/format/format.go | if depth > len(p.stack) { | if false {
+エントリ: ファイルのエントリに子を許す | internal/format/format.go | if !parent.IsDir() { | if false {
+エントリ: インデントしたパスを親のパスにつなげない | internal/format/format.go | e.Path = parent.Path + name | e.Path = name
+エントリ: desc を最初のタブでなく最後のタブで切る | internal/format/format.go | name, desc, _ := strings.Cut(body, "\t") | name, desc := body, ""⏎⇥if i := strings.LastIndex(body, "\t"); i >= 0 {⏎⇥⇥name, desc = body[:i], body[i+1:]⏎⇥}
+エントリ: desc の前後の空白とタブを取り除かない | internal/format/format.go | Desc: strings.TrimSpace(desc) | Desc: desc
+エントリ: 同じパスのエントリを2つ許す | internal/format/format.go | if first, ok := p.seen[e.Path]; ok { | if first, ok := p.seen[e.Path]; false && ok {
+パス: 空の部分を許す | internal/format/format.go | case "": | case "\x00":
+パス: . と .. を許す | internal/format/format.go | case ".", "..": | case "\x00":
+# 意味が同じなので残す：先頭の / は、/ で分けた最初の部分が空になるので「空の部分」でも形の誤りになる。違うのはメッセージだけ
+# パス: 先頭の / を許す | internal/format/format.go | if strings.HasPrefix(name, "/") { | if false {
+パターン: 最後の部分でない * を許す | internal/format/format.go | parts[:len(parts)-1] | parts[:0]
+detail: 縦棒だけの行を detail にしない | internal/format/format.go | if body == "|" || strings.HasPrefix(body, "| ") { | if strings.HasPrefix(body, "| ") {
+detail: エントリより1段深いことを確かめない | internal/format/format.go | if depth != len(p.stack) { | if false {
+detail: 縦棒の後ろの空白を1つより多く取る | internal/format/format.go | text = body[2:] | text = strings.TrimSpace(body[1:])
+空の desc: 子のあるエントリも空の desc にする | internal/format/format.go | if len(e.Children) == 0 && e.Desc == "" { | if e.Desc == "" {
+空の desc: 報告しない | internal/format/format.go | p.add(e.Line, KindEmptyDesc, "%s has no desc", e.Path) | _ = e.Path
+報告: 行の順に並べない | internal/format/format.go | return a.Line - b.Line | return 0
+書く: 空の題を「# 」でなく「#」で書く | internal/format/format.go | b.WriteString("# " + strings.TrimSpace(f.Title) + "\n") | b.WriteString(strings.TrimSpace("# "+f.Title) + "\n")
+書く: desc の前後の空白を取り除かない | internal/format/format.go | if desc := strings.TrimSpace(e.Desc); desc != "" { | if desc := e.Desc; desc != "" {
+書く: detail の行末の空白を取り除かない | internal/format/format.go | if d = strings.TrimRightFunc(d, unicode.IsSpace); d == "" { | if d == "" {
+書く: 空の detail を「|」でなく「| 」で書く | internal/format/format.go | b.WriteString(indent + "\t|\n") | b.WriteString(indent + "\t| \n")
+骨組み: desc を残す | internal/format/format.go | out = append(out, &Entry{Name: e.Name, Path: e.Path, Children: skeleton(e.Children)}) | out = append(out, &Entry{Name: e.Name, Path: e.Path, Desc: e.Desc, Children: skeleton(e.Children)})
+パスの行: インデントを含めない | internal/format/format.go | lines = append(lines, strings.Repeat("\t", depth)+e.Name) | lines = append(lines, e.Name)

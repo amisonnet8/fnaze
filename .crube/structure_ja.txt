@@ -51,7 +51,10 @@ docs/	プロジェクトの文書
 		file-format.md	説明のファイルの置き場所・名前・書き方（英語）
 		file-format_ja.md	file-format.md の日本語版
 internal/	このモジュールの中だけで使うパッケージ
-	doc.go	空のモジュールでも qsoku check が通るようにするプレースホルダー。最初の本物のパッケージを足したら消す
+	format/	説明のファイル1つを読み書きし、そのファイルだけで分かる問題を見つける
+		| 題・エントリ・detail。形の誤り・空の題・空の desc。読み方と書き方は crube の structure.txt に合わせた
+		format.go	読む（Parse）、決まった形で書く、fnaze new の骨組み、言語ごとのずれを比べるパスの行
+		format_test.go	読み書きのテスト。docs の例と、仕様の場合分けで確かめる
 .gitattributes	改行（すべて LF）
 .gitignore	git に入れないもの。ルート直下のドットで始まる名前は許可リスト方式
 .golangci.yaml	golangci-lint の設定
