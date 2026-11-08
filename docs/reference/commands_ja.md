@@ -21,6 +21,8 @@
 - `-C`・`--json` は、下の各コマンドの使い方の行には書かない
 - **使い方とバージョン**：`fnaze --help`（`fnaze <コマンド> --help`）で使い方を、`fnaze --version` でバージョンを書き出す
 - **終了コード**：成功は `0`。`status --require` で報告があるときだけ `1`。エラー（コマンド行の誤りを含む）は `2`
+- **テキストの出力**（`--json` が無いとき）：パスは今のディレクトリからの相対で、そのまま開ける（JSON ではルートからの相対）。色は付けない。`init`・`set`・`rm` は、成功したときは何も書き出さない
+- **エラー**は、標準エラーに `fnaze: <メッセージ>` で書き出す
 - fnaze は、`.fnaze/` の中のほかは書かない。ほかのプログラム（git など）を呼ばない
 
 ## JSON
@@ -60,7 +62,13 @@ fnaze new              # いちばん新しい組と同じ言語
   - 残すもの：パスの行と、そのインデント
   - 除くもの：題の中身（`# ` だけ残す）、desc（タブごと）、detail の行
   - その言語のファイルがまだ無ければ、`# ` だけのファイルを作る
-- 作ったファイルのパスを、1行に1つ書き出す
+- 作ったファイルのパスを、今のディレクトリからの相対で、1行に1つ書き出す
+
+```
+$ fnaze new en ja
+.fnaze/changes/20261108T010203Z_00010203-0405-4607-8809-0a0b0c0d0e0f.txt
+.fnaze/changes/20261108T010203Z_00010203-0405-4607-8809-0a0b0c0d0e0f_ja.txt
+```
 
 例：`ja` のいちばん新しいファイルが
 
@@ -115,7 +123,13 @@ src/
 | 空の desc | 子の無いエントリで、desc の無いもの |
 | 言語ごとのずれ | 同じ組の言語ごとのファイルで、パスの行（パスとその順）が違うもの |
 
-- 何も無ければ何も書き出さない
+- 何も無ければ何も書き出さない。あれば、ファイルの順、行の順に、1つにつき1行、`<ファイル>:<行>: <種類>: <メッセージ>` の形で書き出す（行が 0 のときは `:<行>` を省く）。ファイルは今のディレクトリからの相対、種類は JSON と同じ
+
+```
+.fnaze/changes/20261108T010203Z_00010203-0405-4607-8809-0a0b0c0d0e0f.txt:3: empty-desc: src/a.go has no desc
+.fnaze/changes/notes.txt: format: the name does not have the form <datetime>_<UUID>[_<language>].txt
+```
+
 - 終了コードは、`--require` を付けないときは、報告があっても 0。付けたときは、報告が1つでもあれば 1。エラーは、どのコマンドとも同じく 2
 - `--all` を付けると、すべての組を検査する。組と一緒には指定できない
 - `.fnaze/changes/` の中の、置き場所の形に合わない名前のファイルは、どの組を検査しても報告する（JSON では `group` が `""`）
@@ -124,9 +138,35 @@ src/
 
 組の、その言語のファイルを、ツリーで見せる。題を先頭に出し、パスと desc の列をそろえ、detail は desc の下に出す。その言語のファイルが組に無ければ失敗する。
 
+- 題のあとに空行を1つ入れる。インデントは1段につき空白2つ。パスはファイルに書いたまま
+- desc は、いちばん幅の広いパスのあとに空白2つを置いた列から始める。幅は表示幅で数える（全角は2）
+- detail の行は、desc の列に、`| ` を付けて出す
+
+```
+# Extend the session lifetime on access instead of fixing it
+
+src/
+  auth/           Change the session lifetime from fixed to extended
+    session.go    Extend the lifetime on every access
+    *_test.go     Add tests for the extension
+config/auth.yaml  Set the default session.ttl to 30m
+                  | Users reported sessions expiring too soon
+docs/old.md       Removed; its content moved to docs/auth.md
+```
+
 ## `fnaze log [--lang <言語>]`
 
-組を、新しい順に1行ずつ並べる。日時、組にある言語、その言語の題、エントリの数を出す。その言語のファイルが無い組は、題を空にする。日時は利用者のタイムゾーンで出す（JSON では UTC）。
+組を、新しい順に1行ずつ並べる。組の短い名前、日時、組にある言語、エントリの数、その言語の題を出す。その言語のファイルが無い組は、題を空にする。日時は利用者のタイムゾーンで、分まで出す（JSON では UTC）。
+
+- 組の短い名前は、組の名前の先頭で、ほかの組と区別できる長さのもの。少なくとも、日時・`_`・UUID の4文字。組を指定できるところなら、どこにでも渡せる
+- 言語は `,` でつなぐ。列はそろえる
+
+```
+20261107T021530Z_2c4c  2026-11-07 11:15  en,ja   3  Log session extensions
+20261107T003426Z_8980  2026-11-07 09:34  en,ja   6  Extend the session lifetime on access instead of fixing it
+```
+
+（例は `TZ=Asia/Tokyo` のもの）
 
 ## `fnaze mcp [--allow-write]`
 

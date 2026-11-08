@@ -21,6 +21,8 @@ The file format is in `file-format.md`. "Group" and "root" in this document have
 - `-C` and `--json` are not repeated in the usage lines of the commands below
 - **Help and version**: `fnaze --help` (and `fnaze <command> --help`) prints the usage, and `fnaze --version` prints the version
 - **Exit code**: `0` on success, `1` only when `status --require` reports something, and `2` on any error (a wrong command line included)
+- **Text output** (without `--json`): paths are relative to the current directory, so that they can be opened as they are (in JSON they are relative to the root). Nothing is colored. `init`, `set` and `rm` print nothing when they succeed
+- **Errors** go to standard error as `fnaze: <message>`
 - fnaze writes nothing outside `.fnaze/`. It runs no other program (git included)
 
 ## JSON
@@ -60,7 +62,13 @@ fnaze new              # the same languages as the newest group
   - Kept: the path lines and their indentation
   - Removed: the title text (only `# ` remains), the descs (with their tabs), and the detail lines
   - If there is no file in that language yet, it creates a file that holds only `# `
-- It prints the path of each file it created, one per line
+- It prints the path of each file it created, one per line, relative to the current directory
+
+```
+$ fnaze new en ja
+.fnaze/changes/20261108T010203Z_00010203-0405-4607-8809-0a0b0c0d0e0f.txt
+.fnaze/changes/20261108T010203Z_00010203-0405-4607-8809-0a0b0c0d0e0f_ja.txt
+```
 
 Example: if the newest `ja` file is
 
@@ -115,7 +123,13 @@ It reports:
 | Empty desc | An entry without children and without a desc |
 | Language mismatch | Files of one group whose path lines (the paths and their order) differ |
 
-- It prints nothing when there is nothing to report
+- It prints nothing when there is nothing to report. Otherwise it prints one line for each item, in the order of the files and then of the lines, as `<file>:<line>: <kind>: <message>` (`:<line>` is left out when the line is 0). The file is relative to the current directory, and the kind is the one in JSON
+
+```
+.fnaze/changes/20261108T010203Z_00010203-0405-4607-8809-0a0b0c0d0e0f.txt:3: empty-desc: src/a.go has no desc
+.fnaze/changes/notes.txt: format: the name does not have the form <datetime>_<UUID>[_<language>].txt
+```
+
 - Without `--require`, the exit code is 0 whatever is reported. With `--require`, it is 1 if anything is reported. An error is 2, as in every command
 - `--all` checks every group. A group cannot be given with it
 - A file in `.fnaze/changes/` whose name does not match the form is reported whichever group is checked (its `group` is `""` in JSON)
@@ -124,9 +138,35 @@ It reports:
 
 Shows the group's file in the language as a tree: the title first, the paths and descs in aligned columns, and the details under their desc. Fails if the group has no file in that language.
 
+- The title is followed by an empty line. Each level is indented by two spaces, and the paths are written as in the file
+- The descs start in one column: two spaces after the widest path, counted in display width (full width is 2)
+- Each detail line is shown in the column of the descs, after `| `
+
+```
+# Extend the session lifetime on access instead of fixing it
+
+src/
+  auth/           Change the session lifetime from fixed to extended
+    session.go    Extend the lifetime on every access
+    *_test.go     Add tests for the extension
+config/auth.yaml  Set the default session.ttl to 30m
+                  | Users reported sessions expiring too soon
+docs/old.md       Removed; its content moved to docs/auth.md
+```
+
 ## `fnaze log [--lang <language>]`
 
-Lists the groups, newest first, one per line: the datetime, the languages the group has, the title in the language, and the number of entries. A group with no file in that language is shown with an empty title. The datetime is shown in the local time zone (UTC in JSON).
+Lists the groups, newest first, one per line: the group's short name, the datetime, the languages the group has, the number of entries, and the title in the language. A group with no file in that language is shown with an empty title. The datetime is shown in the local time zone to the minute (UTC in JSON).
+
+- The short name is the start of the group, long enough to tell it from the other groups: at least the datetime, `_` and four characters of the UUID. It can be given wherever a group is taken
+- The languages are joined with `,`. The columns are aligned
+
+```
+20261107T021530Z_2c4c  2026-11-07 11:15  en,ja   3  Log session extensions
+20261107T003426Z_8980  2026-11-07 09:34  en,ja   6  Extend the session lifetime on access instead of fixing it
+```
+
+(The example is in `TZ=Asia/Tokyo`.)
 
 ## `fnaze mcp [--allow-write]`
 
