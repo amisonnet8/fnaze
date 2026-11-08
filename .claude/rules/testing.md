@@ -45,6 +45,7 @@
   - `internal/core`の組の指定の`case 0:`と、言語ごとのずれのメッセージの`g.Files[0]`：変わるのはメッセージだけ。文言は見え方の了承（todo `4838f9a5f0`）で決め、e2e（todo `f61854d051`）で確かめる
   - `internal/cli`のコマンドの`return 0, err`の`0`：エラーのとき、終了コードは`Run`が`fail`で決める
   - `internal/cli`の`pad`の`max(…, 0)`→`-1`、`showText`の`col := 0`と`logText`の列の幅の初期値→`1`・`-1`：パス・言語・短い名前は1桁より狭くならず、列はいちばん広いものより狭くならない
+  - `internal/cli`の`nextLevel`が返す`false`→`true`：パスの候補は、最後に語の先頭で絞り直すので、語で始まらないもの（空の値）は残らない
   - `internal/cli`の`shortNames`の`n < len(id)`→`<=`：組の名前全体がほかの組の先頭になるのは、同じ名前が2つあるとき（ありえない）だけ
 
 ## Trivy：既知の脆弱性とライセンス

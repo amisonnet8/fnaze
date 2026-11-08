@@ -81,6 +81,15 @@ internal/	このモジュールの中だけで使うパッケージ
 		cli_test.go	一時的なルートでコマンドラインを動かすテスト
 		text_test.go	テキストの出力、表示幅、組の短い名前のテスト
 		mcp_test.go	MCP の道具が、コマンドと同じ JSON とエラーを返すことのテスト
+		complete.go	fnaze completion と、スクリプトが呼ぶ隠しコマンド fnaze __complete
+			| コマンド、オプション、題を添えた組、言語、1段ずつのエントリのパス。core の Log と Show から求める
+		complete_test.go	__complete の候補とスクリプトのテスト
+		completions/	補完のスクリプト。fnaze に埋め込む
+			| 決まった文字列。TAB のたびに fnaze __complete に聞くので、入っている fnaze と食い違わない
+			fnaze.bash	bash の補完
+			fnaze.zsh	zsh の補完
+			fnaze.fish	fish の補完
+			fnaze.ps1	PowerShell の補完
 	mcpserver/	fnaze mcp の MCP サーバー。internal/core の薄い包み
 		| 読む道具 show・status・log と、--allow-write のときの書く道具 new_group・set_description・remove_description。どれも core.JSON（--json と同じ JSON）を返す
 		server.go	道具とその引数、標準入出力で動かす Run

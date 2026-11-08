@@ -9,7 +9,9 @@ set -euo pipefail
 # and adds "ghcr.io/devcontainers/features/powershell:2.0.3": {} to the features
 # of devcontainer.json (.claude/rules/testing.md). bash and zsh are in the base
 # image, fish is installed below, and pwsh comes only from that feature.
-shells=(bash)
+# All four: fnaze ships its own completion scripts, which are run in the real
+# shells.
+shells=(bash zsh fish pwsh)
 has_shell() {
   local shell
   for shell in "${shells[@]}"; do

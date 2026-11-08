@@ -160,3 +160,15 @@ MCP: log の言語の引数を無視する | internal/mcpserver/server.go | retu
 MCP: new_group の言語の引数を無視する | internal/mcpserver/server.go | return c.New(in.Langs) | return c.New(nil)
 MCP: FNAZE_LANG を無視する | internal/mcpserver/server.go | c, err := core.Open(o.Dir, o.EnvLang) | c, err := core.Open(o.Dir, "")
 CLI: mcp に FNAZE_LANG を渡さない | internal/cli/cli.go | EnvLang:    r.env.Getenv(envLang), | EnvLang:    "",
+補完: 渡したオプションをもう一度出す | internal/cli/complete.go | if !p.seen[name] || name == "--detail" { | if true {
+補完: --detail を2回目には出さない | internal/cli/complete.go | if !p.seen[name] || name == "--detail" { | if !p.seen[name] {
+補完: new で書いた言語も出す | internal/cli/complete.go | for _, g := range given { | for _, g := range given[:0] {
+補完: status --all でも組を出す | internal/cli/complete.go | p.name == "status" && !p.seen["--all"] | p.name == "status"
+補完: パスの次に来る引数にもパスを出す | internal/cli/complete.go | case (p.name == "set" || p.name == "rm") && len(p.args) == 0: | case p.name == "set" || p.name == "rm":
+補完: パスを1段ずつでなく全部出す | internal/cli/complete.go | if i := strings.Index(rest, "/"); i >= 0 { | if i := strings.Index(rest, "/"); i < -1 {
+補完: パスをディレクトリの中まで出さない | internal/cli/complete.go | add(e.Children) | _ = e.Children
+補完: 途中までのディレクトリに desc を添える | internal/cli/complete.go | if v == e.Path { | if true {
+補完: 組の題を --lang でなく既定の言語で出す | internal/cli/complete.go | res, err := c.Log(p.lang) | res, err := c.Log("")
+補完: パスを --lang・--group でなく既定から出す | internal/cli/complete.go | res, err := c.Show(p.lang, p.group) | res, err := c.Show("", "")
+補完: 説明を60桁より短く切る | internal/cli/complete.go | const candidateWidth = 60 | const candidateWidth = 59
+補完: 候補を出さない | internal/cli/complete.go | _, _ = io.WriteString(env.Stdout, b.String()) | _, _ = io.WriteString(env.Stdout, "")

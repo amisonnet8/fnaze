@@ -2,8 +2,6 @@
 
 > This is the authoritative version. A Japanese translation is in `commands_ja.md`.
 
-> Not implemented yet. This document is the specification to implement.
-
 The file format is in `file-format.md`. "Group" and "root" in this document have the meanings given there.
 
 ## Common
@@ -207,10 +205,20 @@ fnaze completion powershell >>$PROFILE
 
 It completes:
 
-- Command names and their flags
-- Groups (`--group` of `set` and `rm`, the argument of `status` and `show`): the `<datetime>_<UUID>` of each existing group, described by its title in the language
-- Languages (the arguments of `new`, and `--lang`): the languages used by the existing groups
-- Paths (`<path>` of `set` and `rm`): the entry paths in the target group's file in the language
+- Command names, described by what they do, and their flags
+- Groups (`--group` of `set` and `rm`, the argument of `status` and `show`): the `<datetime>_<UUID>` of each existing group, newest first, described by its title in the language (no description for a group with no file in it)
+- Languages (the arguments of `new`, and `--lang`): the languages used by the existing groups, in the order of the newest group and then those that only older groups have. `new` leaves out the languages already given
+- Paths (`<path>` of `set` and `rm`): the entry paths in the target group's file in the language, one level at a time: a directory ends with `/`, and the line goes on into it without a space. An entry is described by its desc
+
+```
+$ fnaze rm src/auth/<TAB>
+src/auth/            Auth
+src/auth/session.go  Extend
+src/auth/*_test.go   Tests
+```
+
+- A description longer than 60 columns (in display width) is cut, and ends with `…`
+- Where nothing is offered (the value of `-C`, a new path for `set`), the shell offers files
 
 The language here is the `--lang` already on the command line being completed, or the first language in `FNAZE_LANG`, or `en`.
 

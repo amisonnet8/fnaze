@@ -37,7 +37,7 @@ type Env struct {
 }
 
 // order is the order of the commands in the usage.
-var order = []string{"init", "new", "set", "rm", "status", "show", "log", "mcp"}
+var order = []string{"init", "new", "set", "rm", "status", "show", "log", "mcp", "completion"}
 
 // usage is what fnaze --help prints.
 var usage = func() string {
@@ -109,6 +109,11 @@ var commands = map[string]*command{
 		options: []string{"--allow-write", "-C"},
 		run:     (*runner).mcp,
 	},
+	"completion": {
+		usage: "fnaze completion <shell>", summary: "print a shell completion script",
+		args: []string{"shell"}, min: 1,
+		run: (*runner).completion,
+	},
 }
 
 // Run runs the command line args (without the program name) and returns the
@@ -123,6 +128,8 @@ func Run(args []string, env Env) int {
 		return say(env, usage)
 	case "--version":
 		return say(env, "fnaze "+version(env.Version)+"\n")
+	case completeCommand:
+		return complete(args[1:], env)
 	}
 
 	name := args[0]

@@ -81,6 +81,15 @@ internal/	Packages used only inside this module
 		cli_test.go	Tests that run the command line on temporary roots
 		text_test.go	Tests of the text output, display width and short group names
 		mcp_test.go	Tests that the MCP tools return the same JSON and errors as the commands
+		complete.go	fnaze completion and the hidden fnaze __complete that the scripts call
+			| Commands, options, groups with their titles, languages and entry paths one level at a time, from core's Log and Show
+		complete_test.go	Tests of the candidates of __complete and of the scripts
+		completions/	The completion scripts, embedded in fnaze
+			| Fixed text: at every TAB they ask fnaze __complete, so they never disagree with the fnaze installed
+			fnaze.bash	bash completion
+			fnaze.zsh	zsh completion
+			fnaze.fish	fish completion
+			fnaze.ps1	PowerShell completion
 	mcpserver/	The MCP server of fnaze mcp; a thin wrapper of internal/core
 		| Read tools show, status and log; write tools new_group, set_description and remove_description with --allow-write. Each returns core.JSON, the same JSON as --json
 		server.go	The tools, their arguments and Run over stdio
