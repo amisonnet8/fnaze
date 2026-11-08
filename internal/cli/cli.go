@@ -4,7 +4,7 @@
 package cli
 
 import (
-	"encoding/json"
+	"context"
 	"fmt"
 	"io"
 	"path/filepath"
@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/amisonnet8/fnaze/internal/core"
+	"github.com/amisonnet8/fnaze/internal/mcpserver"
 )
 
 // Exit codes (docs/reference/commands.md, "Common").
@@ -36,7 +37,7 @@ type Env struct {
 }
 
 // order is the order of the commands in the usage.
-var order = []string{"init", "new", "set", "rm", "status", "show", "log"}
+var order = []string{"init", "new", "set", "rm", "status", "show", "log", "mcp"}
 
 // usage is what fnaze --help prints.
 var usage = func() string {
@@ -101,6 +102,12 @@ var commands = map[string]*command{
 		summary: "list the groups, newest first",
 		options: []string{"--lang", "-C", "--json"},
 		run:     (*runner).log,
+	},
+	"mcp": {
+		usage:   "fnaze mcp [--allow-write] [-C <dir>]",
+		summary: "run as an MCP server over standard input and output",
+		options: []string{"--allow-write", "-C"},
+		run:     (*runner).mcp,
 	},
 }
 
@@ -221,13 +228,14 @@ func (r *runner) relFunc(c *core.Core) func(string) string {
 	}
 }
 
-// writeJSON writes v as JSON indented by 2 spaces. HTML characters are kept
-// as they are, since descriptions are text for people, not for a web page.
+// writeJSON writes v as core.JSON, the JSON that the MCP tools return too.
 func (r *runner) writeJSON(v any) error {
-	enc := json.NewEncoder(r.env.Stdout)
-	enc.SetEscapeHTML(false)
-	enc.SetIndent("", "  ")
-	return enc.Encode(v)
+	b, err := core.JSON(v)
+	if err != nil {
+		return err
+	}
+	_, err = r.env.Stdout.Write(b)
+	return err
 }
 
 // output writes v as JSON with --json, else the text that text makes (nil
@@ -326,6 +334,23 @@ func (r *runner) log(p *parsed) (int, error) {
 		return 0, err
 	}
 	return exitOK, r.output(p, res, func(b *strings.Builder) { logText(b, res) })
+}
+
+// mcp runs the MCP server over standard input and output until the client
+// closes it. The root is looked for on each call, not now, as the commands do.
+func (r *runner) mcp(p *parsed) (int, error) {
+	return exitOK, mcpserver.Run(context.Background(), r.mcpOptions(p))
+}
+
+func (r *runner) mcpOptions(p *parsed) mcpserver.Options {
+	return mcpserver.Options{
+		Dir:        r.dir,
+		EnvLang:    r.env.Getenv(envLang),
+		AllowWrite: p.has("--allow-write"),
+		Version:    version(r.env.Version),
+		Now:        r.env.Now,
+		Random:     r.env.Random,
+	}
 }
 
 // arg is the i-th positional argument, or "" when it is not given.

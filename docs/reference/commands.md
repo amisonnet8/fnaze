@@ -176,6 +176,23 @@ Runs as an MCP server over standard input and output, so AI agents can call fnaz
 - Each tool returns the same JSON as the command with `--json`. An error is returned as a tool error, with the same message as the command
 - Read tools have the names of the commands: `show`, `status` and `log`
 - Write tools have names of their own, so that an agent does not take them for tools that create or delete files: `new_group` (`new`), `set_description` (`set`) and `remove_description` (`rm`). Offered only with `--allow-write`
+- The root is looked for on each call, from `-C <dir>` or the directory the server runs in, so `.fnaze/` made or changed while the server runs is seen
+
+The arguments have the meanings of the options of the command. Those marked `?` can be left out, with the same default as the command.
+
+| Tool | Arguments | Command |
+|---|---|---|
+| `show` | `lang?`, `group?` | `--lang`, `[group]` |
+| `status` | `group?`, `all?` (boolean) | `[group]`, `--all` |
+| `log` | `lang?` | `--lang` |
+| `new_group` | `langs?` (list of strings) | `[language…]` |
+| `set_description` | `lang?`, `group?`, `path`, `desc`, `detail?` (list of strings) | `--lang`, `--group`, `<path> <desc>`, `--detail`… |
+| `remove_description` | `lang?`, `group?`, `path` | `--lang`, `--group`, `<path>` |
+
+- `detail`: each string is one line, and a newline in one starts another line. Left out, the detail is kept; `[]` or only empty strings remove it
+- `status` has no `require`: a tool has no exit code, and an empty `items` means nothing is reported
+- The result is a text content that is the JSON of `--json`, byte for byte, and the same JSON as the structured content. There is no output schema
+- An error is a tool error whose text is the message of the command, without `fnaze: `
 
 ## `fnaze completion <shell>`
 

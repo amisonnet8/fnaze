@@ -147,3 +147,16 @@ log: 短い名前の列を揃えない | internal/cli/text.go | line := pad(shor
 log: 数を右に揃えない | internal/cli/text.go | fmt.Sprintf("%*d", countWidth, g.Entries) | fmt.Sprintf("%-*d", countWidth, g.Entries)
 log: 言語を「,」でなく空白でつなぐ | internal/cli/text.go | langs[i] = strings.Join(g.Langs, ",") | langs[i] = strings.Join(g.Langs, " ")
 log: 行末の空白を残す | internal/cli/text.go | b.WriteString(strings.TrimRight(line, " ") + "\n") | b.WriteString(line + "\n")
+JSON: 字下げを空白2つでなくタブにする | internal/core/json.go | enc.SetIndent("", "  ") | enc.SetIndent("", "\t")
+JSON: HTML の文字を逃がす | internal/core/json.go | enc.SetEscapeHTML(false) | enc.SetEscapeHTML(true)
+MCP: --allow-write が無くても書く道具を出す | internal/mcpserver/server.go | if !o.AllowWrite { | if false {
+MCP: --allow-write があっても書く道具を出さない | internal/mcpserver/server.go | if !o.AllowWrite { | if true {
+MCP: --json と違う JSON（SDK のもの）を返す | internal/mcpserver/server.go | return &mcp.CallToolResult{Content: []mcp.Content{&mcp.TextContent{Text: string(b)}}}, out, nil | _ = b⏎⇥⇥return nil, out, nil
+MCP: detail を省いても detail を消す | internal/mcpserver/server.go | in.Detail, in.Detail != nil) | in.Detail, true)
+MCP: show の言語の引数を無視する | internal/mcpserver/server.go | return c.Show(in.Lang, in.Group) | return c.Show("", in.Group)
+MCP: show の組の引数を無視する | internal/mcpserver/server.go | return c.Show(in.Lang, in.Group) | return c.Show(in.Lang, "")
+MCP: status の all を無視する | internal/mcpserver/server.go | return c.Status(in.Group, in.All) | return c.Status(in.Group, false)
+MCP: log の言語の引数を無視する | internal/mcpserver/server.go | return c.Log(in.Lang) | return c.Log("")
+MCP: new_group の言語の引数を無視する | internal/mcpserver/server.go | return c.New(in.Langs) | return c.New(nil)
+MCP: FNAZE_LANG を無視する | internal/mcpserver/server.go | c, err := core.Open(o.Dir, o.EnvLang) | c, err := core.Open(o.Dir, "")
+CLI: mcp に FNAZE_LANG を渡さない | internal/cli/cli.go | EnvLang:    r.env.Getenv(envLang), | EnvLang:    "",

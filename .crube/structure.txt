@@ -72,6 +72,7 @@ internal/	Packages used only inside this module
 		core.go	Open and Init, reading .fnaze/changes/ into groups, and finding a group from a start of its name
 		commands.go	The commands and their results (the JSON types)
 		core_test.go	Tests of the commands in temporary roots, with the examples of docs/ and a fixed clock and randomness
+		json.go	JSON: the JSON of a result, shared by --json and the MCP tools
 	cli/	The fnaze command line; a thin wrapper of internal/core
 		| Turns arguments into calls to core and results into text or JSON; exit codes 0, 1 and 2
 		args.go	Reading the options and arguments of one command
@@ -79,6 +80,11 @@ internal/	Packages used only inside this module
 		text.go	The text output of new, status, show and log, aligned by display width
 		cli_test.go	Tests that run the command line on temporary roots
 		text_test.go	Tests of the text output, display width and short group names
+		mcp_test.go	Tests that the MCP tools return the same JSON and errors as the commands
+	mcpserver/	The MCP server of fnaze mcp; a thin wrapper of internal/core
+		| Read tools show, status and log; write tools new_group, set_description and remove_description with --allow-write. Each returns core.JSON, the same JSON as --json
+		server.go	The tools, their arguments and Run over stdio
+		server_test.go	Tests that call the tools over an in-memory connection
 .gitattributes	Line endings (LF everywhere)
 .gitignore	Files kept out of git; dot entries in the root are an allowlist
 .golangci.yaml	golangci-lint settings

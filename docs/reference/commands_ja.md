@@ -176,6 +176,23 @@ MCP サーバーとして、標準入出力で動く。AIエージェントが�
 - 道具は、コマンドに `--json` を付けたときと同じ JSON を返す。エラーは道具のエラーとして、コマンドと同じ文言で返す
 - 読む道具は、コマンドと同じ名前：`show`・`status`・`log`
 - 書く道具は、別の名前にする。AIが、ファイルを作る・消す道具と取り違えないようにするため：`new_group`（`new`）・`set_description`（`set`）・`remove_description`（`rm`）。`--allow-write` を付けたときだけ出す
+- ルートは、呼ぶたびに、`-C <dir>` かサーバーを動かしたディレクトリから探す。サーバーが動いている間に作った・変えた `.fnaze/` も見える
+
+引数の意味は、コマンドのオプションと同じ。`?` を付けたものは省ける。省いたときも、コマンドと同じ。
+
+| 道具 | 引数 | コマンド |
+|---|---|---|
+| `show` | `lang?`、`group?` | `--lang`、`[組]` |
+| `status` | `group?`、`all?`（真偽） | `[組]`、`--all` |
+| `log` | `lang?` | `--lang` |
+| `new_group` | `langs?`（文字列の配列） | `[言語…]` |
+| `set_description` | `lang?`、`group?`、`path`、`desc`、`detail?`（文字列の配列） | `--lang`、`--group`、`<パス> <desc>`、`--detail`… |
+| `remove_description` | `lang?`、`group?`、`path` | `--lang`、`--group`、`<パス>` |
+
+- `detail`：文字列1つが1行で、文字列の中の改行は次の行になる。省くと detail を保つ。`[]` か、空の文字列だけなら消す
+- `status` に `require` は無い。道具には終了コードが無く、`items` が空なら報告は無い
+- 結果は、`--json` の JSON とバイトまで同じテキストで、structured content にも同じ JSON を入れる。出力のスキーマは無い
+- エラーは道具のエラーで、テキストはコマンドのメッセージから `fnaze: ` を除いたもの
 
 ## `fnaze completion <シェル>`
 
