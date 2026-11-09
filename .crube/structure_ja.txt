@@ -125,7 +125,7 @@ e2e/	端から端までのテスト：ビルドした fnaze、その MCP サー�
 	mcp_test.go	ビルドした fnaze mcp を標準入出力でつなぐ：出す道具と、--json と同じ JSON・エラー
 	completion_test.go	補完のスクリプトを、本物の bash・zsh・fish・PowerShell で、ビルドした fnaze を PATH に置いて動かす
 .fnaze/	fnaze 自身のデータ：このリポジトリのコミットごとの説明を fnaze で書いたもの（.claude/rules/fnaze-usage.md）
-	changes/	説明のファイル。コミット1つにつき組1つ（日本語だけ）
+	changes/	説明のファイル。コミット1つにつき組1つ（英語と日本語。初めのころは日本語だけ）
 		*.txt	説明のファイル：<日時>_<UUID>_ja.txt。fnaze new で作り、fnaze title・set・rm で書く
 .githooks/	このリポジトリの git のフック（core.hooksPath。.devcontainer/postCreate.sh が設定する）
 	pre-commit	docs/examples/pre-commit そのまま：説明のファイルを足さないコミットと、いちばん新しい組を fnaze status --require が報告するコミットを止める

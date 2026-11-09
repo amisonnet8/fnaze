@@ -23,6 +23,7 @@
   "postCreateCommand": "bash .devcontainer/postCreate.sh",
   "remoteUser": "vscode",
   "containerEnv": {
-    "CGO_ENABLED": "0"
+    "CGO_ENABLED": "0",
+    "FNAZE_LANG": "ja"
   }
 }

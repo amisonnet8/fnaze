@@ -1,0 +1,11 @@
+# fnaze の説明を英語と日本語の両方で書くようにし、FNAZE_LANG を ja にした
+.crube/
+	structure.txt	.fnaze/changes/ の英語の説明を、英語と日本語の組になったことに合わせた（crube set）
+	structure_ja.txt	.fnaze/changes/ の日本語の説明を、英語と日本語の組になったことに合わせた（crube set）
+.claude/
+	rules/
+		fnaze-usage.md	手順を en と ja の2言語にした。言語の設定（FNAZE_LANG）の節と、new を言語なしで打つ落とし穴を足した
+.mtqg/
+	journal.jsonl	決まりを記録（q 564f68ac3b・回答 85f47952cb、rule a4e22b4081 を2言語に直した、memo 9e94d7bc34・cea708ad10）
+.devcontainer/
+	devcontainer.json	containerEnv に FNAZE_LANG=ja を足した。人間のターミナルで、言語を省いたコマンドが ja を使う

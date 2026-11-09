@@ -1,0 +1,11 @@
+# Describe fnaze changes in both English and Japanese, and set FNAZE_LANG to ja
+.crube/
+	structure.txt	Updated the English description of .fnaze/changes/ for groups in English and Japanese (crube set)
+	structure_ja.txt	Updated the Japanese description of .fnaze/changes/ for groups in English and Japanese (crube set)
+.claude/
+	rules/
+		fnaze-usage.md	Made the steps cover both en and ja; added a section on FNAZE_LANG and the pitfall of running new without languages
+.mtqg/
+	journal.jsonl	Recorded the decision (q 564f68ac3b, answer 85f47952cb, rule a4e22b4081 changed to both languages, memos 9e94d7bc34 and cea708ad10)
+.devcontainer/
+	devcontainer.json	Added FNAZE_LANG=ja to containerEnv, so commands without a language use ja in the human's terminal

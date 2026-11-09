@@ -125,7 +125,7 @@ e2e/	End-to-end tests: the built fnaze, its MCP server, the completion scripts i
 	mcp_test.go	The built fnaze mcp over standard input and output: the tools offered, and the same JSON and errors as --json
 	completion_test.go	The completion scripts in real bash, zsh, fish and PowerShell, with the built fnaze on the PATH
 .fnaze/	fnaze's own data: the description of each commit of this repository, written with fnaze (.claude/rules/fnaze-usage.md)
-	changes/	The description files, one group per commit (Japanese only)
+	changes/	The description files, one group per commit (English and Japanese; earlier ones Japanese only)
 		*.txt	A description file: <datetime>_<UUID>_ja.txt, made by fnaze new and written by fnaze title, set and rm
 .githooks/	The git hooks of this repository (core.hooksPath, set by .devcontainer/postCreate.sh)
 	pre-commit	docs/examples/pre-commit as it is: stops a commit that adds no description file, or whose newest group fnaze status --require reports
