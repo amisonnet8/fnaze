@@ -1,0 +1,10 @@
+# Wire fnaze's own MCP server into .mcp.json, as with crube (one server)
+.claude/
+	rules/
+		fnaze-usage.md	Added an Entry points section: the MCP tools, one server with the language as an argument, and enabledMcpjsonServers
+		directory-structure.md	Added the fnaze server to the .mcp.json line and its note
+.mtqg/
+	journal.jsonl	Recorded the decision (q a1f9d0fc8a, answer 99721244a2) and memo 124eb20b53
+.crube/	Updated the description of .mcp.json in both languages (crube set)
+.mcp.json	Added the server fnaze (fnaze mcp --allow-write), after mtqg and crube
+CLAUDE.md	Added a paragraph on how fnaze is wired, next to the one for crube

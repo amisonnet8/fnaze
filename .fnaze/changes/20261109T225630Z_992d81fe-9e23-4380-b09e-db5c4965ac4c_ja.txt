@@ -1,0 +1,10 @@
+# crube と同じく、fnaze 自身の MCP サーバーを .mcp.json に入れた（サーバーは1つ）
+.claude/
+	rules/
+		fnaze-usage.md	入口の節を足した。MCP の道具、サーバーは1つで言語は引数、enabledMcpjsonServers のこと
+		directory-structure.md	.mcp.json の行と補足に、fnaze のサーバーを足した
+.mtqg/
+	journal.jsonl	決まりを記録（q a1f9d0fc8a・回答 99721244a2）と memo 124eb20b53
+.crube/	.mcp.json の説明を英語と日本語で直した（crube set）
+.mcp.json	mtqg と crube の後ろに、サーバー fnaze（fnaze mcp --allow-write）を足した
+CLAUDE.md	crube の配線の段落の隣に、fnaze の配線の段落を足した

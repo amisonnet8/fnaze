@@ -16,7 +16,7 @@
 ├── .golangci.yaml          ← lintの設定
 ├── .goreleaser.yaml        ← 配布物の作り方（goreleaser。`release.yml`と`qsoku snapshot`が使う。`.claude/rules/distribution.md`）
 ├── trivy.yaml              ← 脆弱性・ライセンス検査の設定
-├── .mcp.json               ← mtqgとcrube（英語の`crube`・日本語の`crube-ja`）のMCPサーバーの配線
+├── .mcp.json               ← mtqg・crube（英語の`crube`・日本語の`crube-ja`）・fnazeのMCPサーバーの配線
 ├── .crube/                 ← このリポジトリのファイルの説明（crube。`structure.txt`は英語、`structure_ja.txt`は日本語、`ignore`は`.gitignore`に合わせて手で保つ）。**コミットする**
 ├── .fnaze/changes/         ← このリポジトリのコミットごとの説明（fnaze 自身で書く。`.claude/rules/fnaze-usage.md`）。**コミットする**
 ├── .githooks/              ← git のフック（`pre-commit`は`docs/examples/pre-commit`と同じ中身。`core.hooksPath`は`postCreate.sh`が設定する）
@@ -43,7 +43,7 @@
 - **`internal/`**: Goの仕組みとして、モジュールの外からimportできない。外へ公開するパッケージは`internal/`に置かない
 - **`go.sum`**: コミットする（改ざん検知・再現可能なビルドのため）
 - **`.mtqg/`**: コミットされる。中のファイルは直接編集せず、すべて`mtqg`のコマンド経由で書く（`.claude/rules/mtqg-usage.md`）。`.mtqg/.local/`はコミットされない
-- **`.mcp.json`**: `mtqg mcp`（MCPサーバー）の配線。`mtqg init --agent claude-code`が書くものと同じ。その後ろに、crubeのMCPサーバー（`crube mcp --allow-write`。`crube-ja`は`CRUBE_LANG=ja`）を手で足している（`.claude/rules/crube-usage.md`）
+- **`.mcp.json`**: `mtqg mcp`（MCPサーバー）の配線。`mtqg init --agent claude-code`が書くものと同じ。その後ろに、crubeのMCPサーバー（`crube mcp --allow-write`。`crube-ja`は`CRUBE_LANG=ja`）を手で足している（`.claude/rules/crube-usage.md`）。最後に、fnaze 自身のMCPサーバー（`fnaze mcp --allow-write`。1つだけ）を足している（`.claude/rules/fnaze-usage.md`）
 - **`.crube/`**: このリポジトリのファイルとディレクトリの説明（`.claude/rules/crube-usage.md`）。**コミットする**（`.gitignore`の`!/.crube/`）。追跡するファイルすべての説明を、両方の言語で持つ。`ignore`は`.gitignore`を手で写したもの（crube は`.gitignore`を読まない）
 - **`.devcontainer/devcontainer-lock.json`**: コンテナのビルドで自動で作られる。**コミットする**（この版のfeatureでテストなどが通った証明になる）。featureを新しくしたいときは、lockを消してビルドし直し、新しいlockをコミットする
 - **VSCodeの設定**: `.devcontainer/devcontainer.json`の`customizations.vscode`に置く（拡張と設定を1か所にまとめる）。`.vscode/`は作らない

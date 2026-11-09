@@ -99,7 +99,7 @@ internal/	このモジュールの中だけで使うパッケージ
 .gitattributes	改行（すべて LF）
 .gitignore	git に入れないもの。ルート直下のドットで始まる名前は許可リスト方式
 .golangci.yaml	golangci-lint の設定
-.mcp.json	Claude Code に mtqg と、crube（英語・日本語）の MCP サーバーをつなぐ設定
+.mcp.json	Claude Code に mtqg と、crube（英語・日本語）と、fnaze 自身（1つ）の MCP サーバーをつなぐ設定
 CLAUDE.md	このリポジトリでの Claude Code のルールと、読むべきルールファイルの案内
 LICENSE	MIT ライセンス
 README.md	fnaze とは何かと、文書の場所（英語の正本。日本語版は README_ja.md）

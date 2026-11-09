@@ -23,6 +23,13 @@
       "env": {
         "CRUBE_LANG": "ja"
       }
+    },
+    "fnaze": {
+      "command": "fnaze",
+      "args": [
+        "mcp",
+        "--allow-write"
+      ]
     }
   }
 }

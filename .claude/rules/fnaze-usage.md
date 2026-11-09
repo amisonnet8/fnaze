@@ -7,6 +7,16 @@
 - crube（`.claude/rules/crube-usage.md`）と同じ形にする。**`FNAZE_LANG`は設定しない**（`.devcontainer/`にも`.claude/settings.json`にも置かない）。言語を省いたコマンドは英語（`en`）を使い、日本語は`--lang ja`で指定する
 - 書くときは、**いつも`--lang en`・`--lang ja`を明示する**（手元の環境に`FNAZE_LANG`があっても、同じ結果になる）
 
+## 入口
+
+| 入口 | 使い方 |
+|---|---|
+| MCP（`.mcp.json`の`fnaze`） | 読む`show`・`status`・`log`と、書く`new_group`・`set_title`・`set_description`・`remove_description`。`fnaze mcp --allow-write`で動く。**サーバーは1つ**で、言語は道具の引数（`lang`、`new_group`は`langs`）で渡す（crube のように言語ごとにサーバーを分けない） |
+| CLI（`fnaze <引数>`） | 下の手順のコマンド。日本語は`--lang ja` |
+
+- `.claude/settings.json`の`enabledMcpjsonServers`に`fnaze`が無いと、MCPは現れない（人間が管理する）。そのときはCLIで進める
+- MCP のサーバーは、PATH の`fnaze`を動かす。fnaze を変えたら`go install ./cmd/fnaze`で入れ直し、Claude Code の MCP をつなぎ直す（下の「手元の`fnaze`が古いことがある」）
+
 ## コミットのたびに
 
 1. 入れるファイルを`git add`し、`git diff --cached --name-only`で変わったファイルを確かめる

@@ -99,7 +99,7 @@ internal/	Packages used only inside this module
 .gitattributes	Line endings (LF everywhere)
 .gitignore	Files kept out of git; dot entries in the root are an allowlist
 .golangci.yaml	golangci-lint settings
-.mcp.json	MCP servers for Claude Code: mtqg, and crube in English and Japanese
+.mcp.json	MCP servers for Claude Code: mtqg, crube in English and Japanese, and fnaze itself (one server)
 CLAUDE.md	Rules for Claude Code in this repository, and the rule files to read
 LICENSE	MIT license
 README.md	What fnaze is, and where its documents are (authoritative; README_ja.md is the Japanese translation)
