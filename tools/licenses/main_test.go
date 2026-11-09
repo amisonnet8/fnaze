@@ -51,31 +51,15 @@ func TestLicenseFiles(t *testing.T) {
 	}
 }
 
-// TestRun gathers the licenses of a small module of its own, which has a
-// command and no dependencies: only Go's license comes out.
+// TestRun gathers the licenses of fnaze, the command that is released
+// (.goreleaser.yaml), and lists every module it links on any of the three OSes.
 //
-// Once the project has a command to release, change this test to gather the
-// licenses of that command (t.Chdir to the module root and run it with
-// "./cmd/<name>"), and list every module it links. When a dependency is added
-// or dropped, that list changes: check the license of the new module, then
-// update the list.
+// When a dependency is added or dropped, this list changes: check the license
+// of the new module (and run qsoku trivy), then update the list.
 func TestRun(t *testing.T) {
-	mod := t.TempDir()
-	for name, body := range map[string]string{
-		"go.mod":            "module example.com/licensestest\n",
-		"cmd/hello/main.go": "package main\n\nimport \"fmt\"\n\nfunc main() { fmt.Println(\"hello\") }\n",
-	} {
-		p := filepath.Join(mod, filepath.FromSlash(name))
-		if err := os.MkdirAll(filepath.Dir(p), 0o755); err != nil {
-			t.Fatal(err)
-		}
-		if err := os.WriteFile(p, []byte(body), 0o644); err != nil {
-			t.Fatal(err)
-		}
-	}
-	t.Chdir(mod)
+	t.Chdir(filepath.Join("..", ".."))
 	dir := t.TempDir()
-	if err := run(dir, "./cmd/hello"); err != nil {
+	if err := run(dir, "./cmd/fnaze"); err != nil {
 		t.Fatal(err)
 	}
 	var got []string
@@ -90,7 +74,17 @@ func TestRun(t *testing.T) {
 		t.Fatal(err)
 	}
 	want := []string{
+		"github.com/google/jsonschema-go/LICENSE",
+		"github.com/modelcontextprotocol/go-sdk/LICENSE",
+		"github.com/segmentio/asm/LICENSE",
+		"github.com/segmentio/encoding/LICENSE",
+		"github.com/yosida95/uritemplate/v3/LICENSE",
 		"go/LICENSE",
+		"golang.org/x/oauth2/LICENSE",
+		"golang.org/x/sync/LICENSE",
+		"golang.org/x/sys/LICENSE",
+		"golang.org/x/text/LICENSE",
+		"golang.org/x/time/LICENSE",
 	}
 	if !slices.Equal(got, want) {
 		t.Errorf("gathered:\n%q\nwant:\n%q", got, want)

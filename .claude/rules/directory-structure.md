@@ -38,7 +38,7 @@
 ## 各ファイル・ディレクトリの補足
 
 - **`cmd/`**: 実行ファイル`fnaze`を`cmd/fnaze/`に置く。`cmd/fnaze/main.go`は引数を`internal/cli`に渡すだけにする
-- **`tools/licenses/`**: 配布物に同梱する依存のライセンス文を集める（`.claude/rules/distribution.md`）。`go run ./tools/licenses <出力先> <main パッケージ>`。実行ファイルを置いたら、`TestRun`をその実行ファイルの一覧のテストに書き換える
+- **`tools/licenses/`**: 配布物に同梱する依存のライセンス文を集める（`.claude/rules/distribution.md`）。`go run ./tools/licenses <出力先> <main パッケージ>`。`TestRun`は、`./cmd/fnaze`に組み込まれるモジュールのライセンスの一覧を確かめる（依存を足す・外すと落ちるので、ライセンスを確かめてから一覧を直す）
 - **`.claude/skills/mutation-check/mutants/`**: 変異の道具。`go.mod`を持つ別のモジュールなので、`qsoku check`（`./...`）の対象に入らない。変えたら、そのディレクトリで整形・vet・テストを通す（Skill の「気をつけること」）
 - **`internal/`**: Goの仕組みとして、モジュールの外からimportできない。外へ公開するパッケージは`internal/`に置かない
 - **`go.sum`**: コミットする（改ざん検知・再現可能なビルドのため）

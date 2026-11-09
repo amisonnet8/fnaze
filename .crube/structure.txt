@@ -107,12 +107,12 @@ go.mod	Go module and its dependencies
 qsokufile	Named commands for build, test and lint (qsoku)
 trivy.yaml	Trivy settings: what counts as a vulnerability or license failure
 .goreleaser.yaml	How the release archives are built (goreleaser)
-	| Used by .github/workflows/release.yml on a tag, and by qsoku snapshot locally. Rename yourproject first; see .claude/rules/distribution.md.
+	| Used by .github/workflows/release.yml on a tag, and by qsoku snapshot locally; see .claude/rules/distribution.md.
 tools/	Tools for building the project (not built into its command)
 	licenses/	Gathers the license texts of the dependencies for the release archives
 		| go run ./tools/licenses <dir> <main package>; goreleaser runs it before building. Fails if a module has no license file.
 		main.go	Finds the modules linked into the command with go list -deps and copies their licenses
-		main_test.go	Tests of the license gathering; TestRun is to be changed to the project's own command
+		main_test.go	Tests of the license gathering; TestRun lists the licenses of what fnaze links
 cmd/	Executables
 	fnaze/	The fnaze command
 		main.go	main: passes the arguments and the version to internal/cli

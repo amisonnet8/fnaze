@@ -1,0 +1,12 @@
+# リリースの準備：goreleaser で fnaze を作り、TestRun でそのライセンスの一覧を確かめる
+.claude/
+	rules/
+		directory-structure.md	tools/licenses の補足を、テンプレートの書き換えの案内から、TestRun が確かめることに直した
+.mtqg/
+	journal.jsonl	memo 2677a2eaa4（確かめたことと、スナップショットの中身）を足し、todo 3aebb78f5c を閉じた
+.crube/	.goreleaser.yaml と tools/licenses/main_test.go の説明を、英語と日本語で直した（crube set）
+.goreleaser.yaml	yourproject を fnaze にした（project_name・main・binary・tools/licenses に渡すパッケージ）。テンプレートの案内のコメントを消した
+tools/
+	licenses/
+		main_test.go	TestRun を、./cmd/fnaze のライセンスを集め、11件（Go と、組み込まれる10モジュール）の一覧と比べるテストにした
+			| 一覧は、3つの OS での go list -deps と、モジュールのキャッシュの各 LICENSE で確かめた

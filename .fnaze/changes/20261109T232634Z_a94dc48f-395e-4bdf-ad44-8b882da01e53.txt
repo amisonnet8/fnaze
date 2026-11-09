@@ -1,0 +1,12 @@
+# Prepare the release: build fnaze with goreleaser and list its licenses in TestRun
+.claude/
+	rules/
+		directory-structure.md	The tools/licenses note now says what TestRun checks, instead of the template's instruction to rewrite it
+.mtqg/
+	journal.jsonl	Added memo 2677a2eaa4 (what was checked, and the snapshot's contents) and closed todo 3aebb78f5c
+.crube/	Updated the descriptions of .goreleaser.yaml and tools/licenses/main_test.go in both languages (crube set)
+.goreleaser.yaml	Renamed yourproject to fnaze (project_name, main, binary, and the package given to tools/licenses), and dropped the template's note
+tools/
+	licenses/
+		main_test.go	TestRun gathers the licenses of ./cmd/fnaze and lists the 11 files: Go and the 10 linked modules
+			| The list was checked against go list -deps on linux, darwin and windows, and the LICENSE of each module in the module cache

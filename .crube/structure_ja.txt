@@ -107,12 +107,12 @@ go.mod	Go モジュールと依存
 qsokufile	ビルド・テスト・lint の名前つきコマンド（qsoku）
 trivy.yaml	Trivy の設定：何を脆弱性・ライセンスの失敗とみなすか
 .goreleaser.yaml	配布物の作り方（goreleaser）
-	| タグで .github/workflows/release.yml が、手元では qsoku snapshot が使う。先に yourproject を書き換える。.claude/rules/distribution.md を参照。
+	| タグで .github/workflows/release.yml が、手元では qsoku snapshot が使う。.claude/rules/distribution.md を参照。
 tools/	プロジェクトを作るための道具（実行ファイルには組み込まれない）
 	licenses/	配布物に入れる依存のライセンス文を集める
 		| go run ./tools/licenses <dir> <main パッケージ>。goreleaser がビルドの前に動かす。ライセンスのファイルが無いモジュールがあれば失敗する。
 		main.go	実行ファイルに組み込まれるモジュールを go list -deps で求め、ライセンス文を写す
-		main_test.go	ライセンス文を集める処理のテスト。TestRun はプロジェクトの実行ファイルのテストに書き換える
+		main_test.go	ライセンス文を集める処理のテスト。TestRun は fnaze に組み込まれるもののライセンスの一覧を確かめる
 cmd/	実行ファイル
 	fnaze/	fnaze のコマンド
 		main.go	main：引数と版を internal/cli に渡す

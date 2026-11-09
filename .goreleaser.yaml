@@ -1,24 +1,20 @@
 # The release archives of this project (.claude/rules/distribution.md). On a
 # tag, .github/workflows/release.yml runs this, which attaches the archives to a
 # draft Release, and then publishes the Release. Locally: qsoku snapshot.
-#
-# For the template: rename yourproject (project_name, the main package, the
-# binary and the main package given to tools/licenses) once the project has its
-# command in cmd/<name>/. Until then qsoku snapshot and a release fail, as there
-# is nothing to build. goreleaser check needs a git repository with a remote.
+# goreleaser check needs a git repository with a remote.
 version: 2
 
-project_name: yourproject
+project_name: fnaze
 
 before:
   hooks:
     # The license texts of what is built into the command, put into every
     # archive.
-    - go run ./tools/licenses bin/licenses ./cmd/yourproject
+    - go run ./tools/licenses bin/licenses ./cmd/fnaze
 
 builds:
-  - main: ./cmd/yourproject
-    binary: yourproject
+  - main: ./cmd/fnaze
+    binary: fnaze
     env:
       - CGO_ENABLED=0
     goos: [linux, darwin, windows]
