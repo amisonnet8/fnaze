@@ -49,5 +49,5 @@
 - **`.gitignore`のドットファイル**: ルート直下のドットファイル・ドットディレクトリは**許可リスト方式**（`/.*`を無視し、追跡するものだけ`!`で戻す。`.claude/`の中は`/.claude/*`を無視して`settings.json`・`rules/`・`skills/`・`hooks/`だけ戻す）。サンドボックスが作業ディレクトリ直下に出すダミーファイルを`git add -A`で混ぜないため（`.claude/rules/testing.md`）。**追跡するドットファイルを新しく足すときは、`.gitignore`に`!`の行を足すこと**。足さないと`git add`が無視する
 - **配布物（ビルド済みバイナリ）**: リポジトリにコミットしない。`.gitignore`には**ルート直下に限定して**書く（`/名前`）。名前だけを書くと、同名のソースディレクトリまで無視される
 - **`docs/`**: 文書。`design/`（設計。日本語のみ）、`reference/`（仕様。英語が正本で`*_ja.md`が日本語版）、`examples/`（使う人のための例）。言語の決まりは`CLAUDE.md`「ドキュメントの言語」
-- **`.fnaze/`**: お試しで、コミットごとの説明を手で書いて置く（mtqg の rule `a4e22b4081`）。`.gitignore`の`/.*`で git の対象外、crube も`.crube/ignore`の`/.*`で外している
+- **`.fnaze/`**: コミットごとの説明を、fnaze 自身のコマンド（`new`・`set`・`rm`・`status --require`）で書いて置く（mtqg の rule `a4e22b4081`）。`.gitignore`の`/.*`で git の対象外、crube も`.crube/ignore`の`/.*`で外している
 - **シェルスクリプト**: 最小限にする。追跡中のものは`qsoku shellcheck`の対象になる（`.claude/rules/testing.md`）
