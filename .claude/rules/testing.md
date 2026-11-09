@@ -115,4 +115,5 @@
 - **Windowsの`os.Symlink`は、リンクの宛先の`/`を`\`にして保存する。** `os.Readlink`は`releases\v2`を返す。宛先を見せる・比べるときは`filepath.ToSlash`で`/`にそろえる。テストの宛先は、区切りを含むもの（`src/auth`）にする。区切りの無い宛先（`src`）では、この食い違いを捕まえられない（crube の`show`の`link`で、CI の Windows でだけ落ちた）
 - **大文字と小文字だけ違う名前のファイルを2つ作るテストは、macOS・Windowsでは1つのファイルになる**（大文字と小文字を区別しないファイルシステム。2つ目の書き込みが1つ目を上書きする）。fnaze の`TestStatus`が、`_ja.txt`と`_JA.txt`を作って、CI の macOS・Windows でだけ落ちた。そういう状態は別のテストに分け、作ったあとにファイルが本当に2つあるかを数え、無ければ`t.Skip`する（`TestStatusLanguagesThatDifferOnlyInCase`）
 - **テストを1つだけ動かすときも`go test`を直接打たない。** `GOFLAGS="-count=1 -run=TestName -v" qsoku unit`で絞れる
+- **期待値の行を丸ごと`filepath.FromSlash`しない。** OSのパスなのは、行の中のパスの部分だけのことがある。fnaze の`status`の行は、先頭のファイルはOSのパス（Windowsでは`\`）だが、メッセージの中のパスはルートからの`/`のまま。e2e の`TestCommandsExamples`が、行全体を変換して`src\a.go`を期待し、CI の Windows でだけ落ちた。変換するのはパスの部分だけにする
 - **OSで分かれる動き（区切りの`\`など）は、手元のLinuxのテストからも確かめる。** `filepath.Separator`のようなOSの値を、パッケージの変数（例：crube の`internal/core`の`osSeparator`）に入れて使い、テストでWindowsの値に差し替える（`t.Cleanup`で戻す。`t.Parallel`にしない）。CIのWindowsまで待たずに、手元で落ちる

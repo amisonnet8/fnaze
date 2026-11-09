@@ -125,7 +125,17 @@ func TestCommandsExamples(t *testing.T) {
 				".fnaze/changes/" + newGroup + ".txt": "# Title\nsrc/\n\ta.go\n",
 				".fnaze/changes/notes.txt":            "",
 			})
-			same(t, "fnaze status", runCLI("", "status", "-C", root), filepath.FromSlash(body))
+			// The file at the start of a line is a path of the OS; the path
+			// in a message is from the root, with "/" on every OS.
+			var want strings.Builder
+			for _, l := range strings.SplitAfter(body, "\n") {
+				i := strings.Index(l, ".txt") + len(".txt")
+				if i < len(".txt") {
+					i = 0
+				}
+				want.WriteString(filepath.FromSlash(l[:i]) + l[i:])
+			}
+			same(t, "fnaze status", runCLI("", "status", "-C", root), want.String())
 		case 5: // show of docs/examples/changes/, the older group in en
 			same(t, "fnaze show "+exampleOld[:21], runCLI("", "show", exampleOld[:21], "-C", exampleRoot(t)), body)
 		case 6: // log of docs/examples/changes/, in TZ=Asia/Tokyo
