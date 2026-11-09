@@ -1,0 +1,7 @@
+# 人間に設定を頼むときは、差分ではなく、コピペで動くコマンドで渡すようにした
+.claude/
+	rules/
+		working-with-human.md	頼むときはいつもコピペで動くコマンド1つにした。JSON の設定は jq で書き換え、2回打っても同じで、渡す前に diff で確かめる
+.mtqg/
+	journal.jsonl	rule 058c5eb137 と、人間の指示の memo d57c472011 を足した
+CLAUDE.md	.claude/settings.json の変更は、差分ではなく jq のコマンドで渡すようにした

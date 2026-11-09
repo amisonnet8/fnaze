@@ -76,7 +76,7 @@ fnaze は、変更のまとまりごとに、変えたファイルそれぞれ�
 - 実行前に確認（ask）：`git reset --hard`、`git clean`、`sudo`、`gh pr create`
 - **Bashコマンドは既定でOSレベルのサンドボックス（Linux bubblewrap）内で実行される。** ファイルシステムの書き込み先とネットワーク接続先は許可リストで絞られている。この範囲内なら`curl`・`wget`・`go get`などは確認なしに実行できる。リストに無い宛先・書き込み先は`sandbox_violations`として拒否される。そのときは、`.claude/rules/working-with-human.md` 2章の形（原因と、`.claude/settings.json` のどこに何を足すか）で**短く頼む**（許可を広げるかは人間が判断する）。落とし穴は`.claude/rules/testing.md`「Bashサンドボックスの落とし穴」参照
 
-確認を求められた場合、無理に実行しようとしない。`.claude/settings.json`を変更したいときは、変更案を差分で示すにとどめること（人間が貼るだけで済む形にする）。
+確認を求められた場合、無理に実行しようとしない。`.claude/settings.json`を変更したいときは、自分では書き換えず、人間がコピペで動かせる書き換えのコマンド（`jq`）を渡すこと（`.claude/rules/working-with-human.md` 2章）。
 
 ビルドの自動フック（`PostToolUse`）が設定されている。`Edit`・`Write`・`MultiEdit`で`.go`・`go.mod`・`go.sum`を変えると`.claude/hooks/build.sh`が`qsoku build`を実行し、失敗すると理由がClaude Codeに返る。複数ファイルにまたがる編集の途中は、まだ書いていないファイルを参照して一時的に失敗することがある。
 

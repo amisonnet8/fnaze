@@ -1,0 +1,7 @@
+# Ask the human for settings with a command to paste, not a diff
+.claude/
+	rules/
+		working-with-human.md	Requests now always give one command to paste; JSON settings are changed with jq, safe to run twice and checked with diff first
+.mtqg/
+	journal.jsonl	Added rule 058c5eb137 and the human's instruction as memo d57c472011
+CLAUDE.md	Changes to .claude/settings.json are now handed over as a jq command instead of a diff
