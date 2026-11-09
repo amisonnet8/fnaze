@@ -250,6 +250,7 @@ func TestUsageAndVersion(t *testing.T) {
 		"commands:",
 		"  init        create .fnaze/changes/",
 		"  new         create a new group, one file for each language",
+		"  title       write the title of a file",
 		"  set         write one entry",
 		"  rm          remove one entry",
 		"  status      check a group",

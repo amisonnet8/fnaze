@@ -94,6 +94,16 @@ func (f *File) Set(path, desc string, detail []string, setDetail bool) (*Entry, 
 	return e, nil
 }
 
+// SetTitle writes the title (fnaze title), without the spaces at its start
+// and end. An empty title is written as "# ".
+func (f *File) SetTitle(title string) error {
+	if strings.ContainsAny(title, "\n\r") {
+		return errors.New("a title cannot have a newline")
+	}
+	f.Title = strings.TrimSpace(title)
+	return nil
+}
+
 func (f *File) add(path string) *Entry {
 	chain := f.chain(path)
 	siblings := &f.Entries

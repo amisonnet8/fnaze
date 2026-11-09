@@ -113,6 +113,41 @@ func TestSetFails(t *testing.T) {
 	}
 }
 
+func TestSetTitle(t *testing.T) {
+	f := parse(t, base)
+	if err := f.SetTitle(" \t新しい  題 \t"); err != nil {
+		t.Fatal(err)
+	}
+	// Only the spaces at the start and the end go; the entries stay.
+	if got, want := string(f.Bytes()), "# 新しい  題\nsrc/\n\tauth/\tx\n\t\ta.go\ty\nconfig/auth.yaml\tz\n"; got != want {
+		t.Errorf("got %q, want %q", got, want)
+	}
+	if f.Title != "新しい  題" {
+		t.Errorf("Title %q", f.Title)
+	}
+	// An empty title is "# ".
+	for _, title := range []string{"", "  "} {
+		if err := f.SetTitle(title); err != nil {
+			t.Fatal(err)
+		}
+		if got := string(f.Bytes()); got != "# \nsrc/\n\tauth/\tx\n\t\ta.go\ty\nconfig/auth.yaml\tz\n" {
+			t.Errorf("title %q: got %q", title, got)
+		}
+	}
+}
+
+func TestSetTitleFails(t *testing.T) {
+	for _, title := range []string{"a\nb", "a\rb", "a\n"} {
+		f := parse(t, base)
+		if err := f.SetTitle(title); err == nil || err.Error() != "a title cannot have a newline" {
+			t.Errorf("title %q: %v", title, err)
+		}
+		if got := string(f.Bytes()); got != base {
+			t.Errorf("title %q changed the file: %q", title, got)
+		}
+	}
+}
+
 func TestFind(t *testing.T) {
 	f := parse(t, base)
 	for _, p := range []string{"src/", "src/auth/", "src/auth/a.go", "config/auth.yaml"} {

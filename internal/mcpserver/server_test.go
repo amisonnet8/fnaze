@@ -115,7 +115,7 @@ func TestTools(t *testing.T) {
 	}
 	o := options(dir)
 	o.AllowWrite = true
-	all := []string{"log", "new_group", "remove_description", "set_description", "show", "status"}
+	all := []string{"log", "new_group", "remove_description", "set_description", "set_title", "show", "status"}
 	if got := toolNames(t, connect(t, o)); !reflect.DeepEqual(got, all) {
 		t.Errorf("with --allow-write: %q, want %q", got, all)
 	}
@@ -145,6 +145,15 @@ func TestWrite(t *testing.T) {
 	if got := ok(t, cs, "set_description", map[string]any{"lang": "ja", "group": group[:21], "path": "src/a.go", "desc": "<延ばす>", "detail": []string{}}); got != want {
 		t.Errorf("set_description\n%s\nwant\n%s", got, want)
 	}
+
+	want = "{\n  \"group\": \"" + group + "\",\n  \"lang\": \"ja\",\n  \"title\": \"期限を延ばす\"\n}\n"
+	if got := ok(t, cs, "set_title", map[string]any{"lang": "ja", "group": group[:21], "title": " 期限を延ばす "}); got != want {
+		t.Errorf("set_title\n%s\nwant\n%s", got, want)
+	}
+	if got, w := readFile(t, dir, fileJa), "# 期限を延ばす\nsrc/\n\ta.go\t<延ばす>\n"; got != w {
+		t.Errorf("after set_title\n%s\nwant\n%s", got, w)
+	}
+	ok(t, cs, "set_title", map[string]any{"title": ""})
 
 	want = "{\n  \"group\": \"" + group + "\",\n  \"lang\": \"ja\",\n  \"path\": \"src/a.go\",\n  \"removed\": 2\n}\n"
 	if got := ok(t, cs, "remove_description", map[string]any{"path": "src/a.go"}); got != want {
@@ -207,6 +216,7 @@ func TestErrors(t *testing.T) {
 		{"show", nil, "there is no group yet: make one with fnaze new"},
 		{"status", map[string]any{"all": true, "group": "x"}, "--all and a group cannot be given together"},
 		{"log", map[string]any{"lang": "j-a"}, `"j-a" is not a language: use ASCII letters and digits`},
+		{"set_title", map[string]any{"title": "t"}, "there is no group yet: make one with fnaze new"},
 		{"set_description", map[string]any{"path": "a.go", "desc": "d"}, "there is no group yet: make one with fnaze new"},
 		{"remove_description", map[string]any{"path": "a.go"}, "there is no group yet: make one with fnaze new"},
 		{"new_group", map[string]any{"langs": []string{"ja", "JA"}}, "ja and JA differ only in case, so they cannot be in one group"},

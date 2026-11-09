@@ -53,7 +53,7 @@ func TestMCPTools(t *testing.T) {
 		want []string
 	}{
 		{nil, []string{"log", "show", "status"}},
-		{[]string{"--allow-write"}, []string{"log", "new_group", "remove_description", "set_description", "show", "status"}},
+		{[]string{"--allow-write"}, []string{"log", "new_group", "remove_description", "set_description", "set_title", "show", "status"}},
 	} {
 		res, err := mcpSession(t, root, "", tt.args...).ListTools(context.Background(), nil)
 		if err != nil {
@@ -93,6 +93,9 @@ func TestMCPSameAsCLI(t *testing.T) {
 			[]string{"set", "src/auth/session.go", "延長を数える", "--detail", "a", "--detail", "b"}},
 		{"set_description", map[string]any{"lang": "en", "group": exampleOld, "path": "lib/x.go", "desc": "X"},
 			[]string{"set", "--lang", "en", "--group", exampleOld, "lib/x.go", "X"}},
+		{"set_title", map[string]any{"title": "  題を変えた  "}, []string{"title", "  題を変えた  "}},
+		{"set_title", map[string]any{"lang": "en", "group": exampleOld[:21], "title": ""}, []string{"title", "--lang", "en", "--group", exampleOld[:21], ""}},
+		{"set_title", map[string]any{"title": "a\nb"}, []string{"title", "a\nb"}},
 		{"status", nil, []string{"status"}},
 		{"status", map[string]any{"group": exampleOld}, []string{"status", exampleOld}},
 		{"remove_description", map[string]any{"lang": "en", "group": exampleOld, "path": "src/"}, []string{"rm", "--lang", "en", "--group", exampleOld, "src/"}},

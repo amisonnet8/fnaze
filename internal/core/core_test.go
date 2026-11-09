@@ -347,6 +347,82 @@ func TestSetFails(t *testing.T) {
 	}
 }
 
+func TestTitle(t *testing.T) {
+	c := newCore(t, "ja", allExamples()...)
+	res, err := c.Title("", "", " ログに出す ")
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := `{"group":"` + ex2 + `","lang":"ja","title":"ログに出す"}`
+	if got := toJSON(t, res); got != want {
+		t.Errorf("got %s", got)
+	}
+	if got := readFile(t, c.Root, ex2+"_ja.txt"); got != "# ログに出す\nsrc/\n\tauth/\n\t\tsession.go\t延長のたびに debug でログを出す\n\t\t\t| 本番で 30m の既定を確かめるため\n" {
+		t.Errorf("file %q", got)
+	}
+	// The other language is not changed.
+	data, _ := os.ReadFile(filepath.Join("..", "..", "docs", "examples", "changes", ex2+".txt"))
+	if got := readFile(t, c.Root, ex2+".txt"); got != string(data) {
+		t.Errorf("en changed: %q", got)
+	}
+
+	// The language and the group; an empty title, which status reports.
+	res, err = c.Title("en", "20261107T00", "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if res.Group != ex1 || res.Lang != "en" || res.Title != "" {
+		t.Errorf("got %+v", res)
+	}
+	if got := readFile(t, c.Root, ex1+".txt"); !strings.HasPrefix(got, "# \nsrc/\n") {
+		t.Errorf("file %q", got)
+	}
+	st, err := c.Status(ex1, false)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(st.Items) != 1 || st.Items[0].Kind != "empty-title" || st.Items[0].File != ".fnaze/changes/"+ex1+".txt" || st.Items[0].Line != 1 {
+		t.Errorf("status %+v", st.Items)
+	}
+}
+
+func TestTitleFails(t *testing.T) {
+	c := newCore(t, "", allExamples()...)
+	broken := "# t\n\t\ta\tx\n"
+	writeFile(t, c.Root, newGroup+".txt", broken)
+	if _, err := c.Title("", "", "x"); err == nil {
+		t.Error("a file with a format error: no error")
+	}
+	if got := readFile(t, c.Root, newGroup+".txt"); got != broken {
+		t.Errorf("the file was changed: %q", got)
+	}
+	for _, tt := range []struct{ lang, group, title string }{
+		{"fr", ex1, "x"},
+		{"zh-hant", ex1, "x"},
+		{"", "nope", "x"},
+		{"", ex1, "a\nb"},
+	} {
+		if _, err := c.Title(tt.lang, tt.group, tt.title); err == nil {
+			t.Errorf("%+v: no error", tt)
+		}
+	}
+	data, _ := os.ReadFile(filepath.Join("..", "..", "docs", "examples", "changes", ex1+".txt"))
+	if got := readFile(t, c.Root, ex1+".txt"); got != string(data) {
+		t.Errorf("a newline changed the file: %q", got)
+	}
+
+	// A failure does not write the file, even one that writing would change
+	// (here, by adding the final newline).
+	c = newCore(t, "")
+	writeFile(t, c.Root, newGroup+".txt", "# t\na.go\td")
+	if _, err := c.Title("", "", "a\nb"); err == nil {
+		t.Error("a newline: no error")
+	}
+	if got := readFile(t, c.Root, newGroup+".txt"); got != "# t\na.go\td" {
+		t.Errorf("a newline wrote the file: %q", got)
+	}
+}
+
 func TestRm(t *testing.T) {
 	c := newCore(t, "", allExamples()...)
 	res, err := c.Rm("", "", "src/auth/session.go")

@@ -65,6 +65,8 @@ func TestMCPSameAsJSON(t *testing.T) {
 		{[]string{"new", "en", "ja"}, "new_group", map[string]any{"langs": []string{"en", "ja"}}},
 		{[]string{"set", "src/a&b.go", "<延ばす>", "--detail", "一つ", "--detail", "二つ"}, "set_description", map[string]any{"path": "src/a&b.go", "desc": "<延ばす>", "detail": []string{"一つ", "二つ"}}},
 		{[]string{"set", "--lang", "ja", "docs/", "文書"}, "set_description", map[string]any{"lang": "ja", "path": "docs/", "desc": "文書"}},
+		{[]string{"title", "--lang", "ja", " <期限> "}, "set_title", map[string]any{"lang": "ja", "title": " <期限> "}},
+		{[]string{"title", "a\nb"}, "set_title", map[string]any{"title": "a\nb"}}, // an error: a newline
 		{[]string{"show", group[:21]}, "show", map[string]any{"group": group[:21]}},
 		{[]string{"status", "--all"}, "status", map[string]any{"all": true}},
 		{[]string{"log", "--lang", "ja"}, "log", map[string]any{"lang": "ja"}},

@@ -29,6 +29,13 @@ type NewFile struct {
 	Path string `json:"path"`
 }
 
+// TitleResult is the result of Title: the title after writing.
+type TitleResult struct {
+	Group string `json:"group"`
+	Lang  string `json:"lang"`
+	Title string `json:"title"`
+}
+
 // SetResult is the result of Set: the entry after writing.
 type SetResult struct {
 	Group  string `json:"group"`
@@ -171,6 +178,34 @@ func (ch *changes) create(file string, data []byte) error {
 
 func (ch *changes) write(file string, data []byte) error {
 	return ch.dir.WriteFile(file, data, 0o644)
+}
+
+// Title writes the title of the file of a group in a language (fnaze title).
+func (c *Core) Title(lng, groupSpec, title string) (*TitleResult, error) {
+	l, err := c.oneLang(lng)
+	if err != nil {
+		return nil, err
+	}
+	ch, err := c.open()
+	if err != nil {
+		return nil, err
+	}
+	defer ch.close()
+	g, err := ch.find(groupSpec)
+	if err != nil {
+		return nil, err
+	}
+	n, f, err := ch.fileOf(g, l)
+	if err != nil {
+		return nil, err
+	}
+	if err := f.SetTitle(title); err != nil {
+		return nil, err
+	}
+	if err := ch.write(n.File(), f.Bytes()); err != nil {
+		return nil, err
+	}
+	return &TitleResult{Group: g.ID, Lang: l, Title: f.Title}, nil
 }
 
 // Set writes one entry to the file of a group in a language (fnaze set).

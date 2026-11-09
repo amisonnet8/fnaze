@@ -37,7 +37,7 @@ type Env struct {
 }
 
 // order is the order of the commands in the usage.
-var order = []string{"init", "new", "set", "rm", "status", "show", "log", "mcp", "completion"}
+var order = []string{"init", "new", "title", "set", "rm", "status", "show", "log", "mcp", "completion"}
 
 // usage is what fnaze --help prints.
 var usage = func() string {
@@ -77,6 +77,12 @@ var commands = map[string]*command{
 		usage: "fnaze new [language...] [-C <dir>] [--json]", summary: "create a new group, one file for each language",
 		options: []string{"-C", "--json"}, args: []string{"language"}, variadic: true,
 		run: (*runner).new,
+	},
+	"title": {
+		usage:   "fnaze title [--lang <language>] [--group <group>] <title> [-C <dir>] [--json]",
+		summary: "write the title of a file",
+		options: []string{"--lang", "--group", "-C", "--json"}, args: []string{"title"}, min: 1,
+		run: (*runner).title,
 	},
 	"set": {
 		usage:   "fnaze set [--lang <language>] [--group <group>] <path> <desc> [--detail <detail>]... [-C <dir>] [--json]",
@@ -280,6 +286,18 @@ func (r *runner) new(p *parsed) (int, error) {
 		return 0, err
 	}
 	return exitOK, r.output(p, res, func(b *strings.Builder) { newText(b, res, r.relFunc(c)) })
+}
+
+func (r *runner) title(p *parsed) (int, error) {
+	c, err := r.open()
+	if err != nil {
+		return 0, err
+	}
+	res, err := c.Title(p.value("--lang"), p.value("--group"), p.args[0])
+	if err != nil {
+		return 0, err
+	}
+	return exitOK, r.output(p, res, nil)
 }
 
 func (r *runner) set(p *parsed) (int, error) {

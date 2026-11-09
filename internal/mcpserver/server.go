@@ -45,6 +45,12 @@ type newIn struct {
 	Langs []string `json:"langs,omitempty" jsonschema:"the languages, one file each; omitted for the languages of the newest group, or else those in FNAZE_LANG, or en"`
 }
 
+type titleIn struct {
+	Lang  string `json:"lang,omitempty" jsonschema:"the language of the file; omitted for the first language in FNAZE_LANG, or en"`
+	Group string `json:"group,omitempty" jsonschema:"the group: its <datetime>_<UUID>, or a start of it that names only one group; omitted for the newest group"`
+	Title string `json:"title" jsonschema:"one line: what this set of changes is"`
+}
+
 type setIn struct {
 	Lang   string   `json:"lang,omitempty" jsonschema:"the language of the file; omitted for the first language in FNAZE_LANG, or en"`
 	Group  string   `json:"group,omitempty" jsonschema:"the group: its <datetime>_<UUID>, or a start of it that names only one group; omitted for the newest group"`
@@ -96,6 +102,14 @@ func New(o Options) *mcp.Server {
 			"in that language without the title, descs and details. Writes only .fnaze/; no project file is touched.",
 	}, func(c *core.Core, in newIn) (any, error) {
 		return c.New(in.Langs)
+	})
+
+	addTool(s, o, &mcp.Tool{
+		Name: "set_title",
+		Description: "Write the title of a description file: one line saying what the set of changes is. " +
+			"Writes only that file in .fnaze/.",
+	}, func(c *core.Core, in titleIn) (any, error) {
+		return c.Title(in.Lang, in.Group, in.Title)
 	})
 
 	addTool(s, o, &mcp.Tool{

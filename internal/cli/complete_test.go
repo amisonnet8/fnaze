@@ -32,8 +32,8 @@ func TestComplete(t *testing.T) {
 		want  string
 	}{
 		{"the commands", "", nil,
-			"init\tcreate .fnaze/changes/\nnew\tcreate a new group, one file for each language\nset\twrite one entry\nrm\tremove one entry\n" +
-				"status\tcheck a group\nshow\tshow a file of a group as a tree\nlog\tlist the groups, newest first\n" +
+			"init\tcreate .fnaze/changes/\nnew\tcreate a new group, one file for each language\ntitle\twrite the title of a file\n" +
+				"set\twrite one entry\nrm\tremove one entry\nstatus\tcheck a group\nshow\tshow a file of a group as a tree\nlog\tlist the groups, newest first\n" +
 				"mcp\trun as an MCP server over standard input and output\ncompletion\tprint a shell completion script\n"},
 		{"the commands that start with the word", "s", nil, "set\twrite one entry\nstatus\tcheck a group\nshow\tshow a file of a group as a tree\n"},
 		{"the options before a command", "-", nil, "--help\n--version\n"},
@@ -54,6 +54,10 @@ func TestComplete(t *testing.T) {
 		{"status --all takes no group", "", []string{"status", "--all", "-C", dir}, ""},
 		{"show takes one group", "", []string{"show", "x", "-C", dir}, ""},
 		{"--group of rm", "", []string{"rm", "-C", dir, "--group"}, group + "\tNew\n" + older + "\tOld\n"},
+		{"--group of title, with the title in --lang", "", []string{"title", "--lang", "ja", "-C", dir, "--group"}, group + "\t新しい\n" + older + "\n"},
+		{"--lang of title", "", []string{"title", "-C", dir, "--lang"}, "en\nja\nfr\n"},
+		{"the options of title", "-", []string{"title", "x"}, "--lang\n--group\n-C\n--json\n--help\n"},
+		{"the title itself is for nobody", "", []string{"title", "-C", dir}, ""},
 
 		{"languages, as the newest group has them first", "", []string{"set", "-C", dir, "--lang"}, "en\nja\nfr\n"},
 		{"languages of new, without those given", "", []string{"new", "-C", dir, "ja"}, "en\nfr\n"},
@@ -96,8 +100,8 @@ func TestCompleteNeverComplains(t *testing.T) {
 		want(t, code, out, errs, 0, "", "")
 	}
 	code, out, errs := run(t, "", "__complete")
-	want(t, code, out, errs, 0, "init\tcreate .fnaze/changes/\nnew\tcreate a new group, one file for each language\nset\twrite one entry\nrm\tremove one entry\n"+
-		"status\tcheck a group\nshow\tshow a file of a group as a tree\nlog\tlist the groups, newest first\n"+
+	want(t, code, out, errs, 0, "init\tcreate .fnaze/changes/\nnew\tcreate a new group, one file for each language\ntitle\twrite the title of a file\n"+
+		"set\twrite one entry\nrm\tremove one entry\nstatus\tcheck a group\nshow\tshow a file of a group as a tree\nlog\tlist the groups, newest first\n"+
 		"mcp\trun as an MCP server over standard input and output\ncompletion\tprint a shell completion script\n", "")
 }
 

@@ -29,6 +29,6 @@
 
 ## コマンド・道具の名前
 
-- CLI：`init`・`new`・`set`・`rm`・`status`・`show`・`log`・`mcp`・`completion`（`docs/reference/commands.md`）
-- MCP：読む道具は CLI と同じ名前（`show`・`status`・`log`）。書く道具だけ`new_group`・`set_description`・`remove_description`（ファイルを作る・消す道具と取り違えられないように）
+- CLI：`init`・`new`・`title`・`set`・`rm`・`status`・`show`・`log`・`mcp`・`completion`（`docs/reference/commands.md`）
+- MCP：読む道具は CLI と同じ名前（`show`・`status`・`log`）。書く道具だけ`new_group`・`set_title`・`set_description`・`remove_description`（ファイルを作る・消す道具と取り違えられないように）
 - 共通のオプション：`-C <dir>`・`--json`

@@ -82,6 +82,8 @@ set: --detail の値の改行で行を分けない | internal/format/edit.go | s
 set のパス: 空白で始まる・終わる部分を許す | internal/format/edit.go | if part != strings.TrimSpace(part) { | if false {
 set のパス: 縦棒だけの部分、縦棒と空白で始まる部分を許す | internal/format/edit.go | if part == "|" || strings.HasPrefix(part, "| ") { | if false {
 set のパス: タブと改行を許す | internal/format/edit.go | if strings.ContainsAny(path, "\t\n\r") { | if false {
+title: 改行を許す | internal/format/edit.go | if strings.ContainsAny(title, "\n\r") { | if false {
+title: 前後の空白を除かない | internal/format/edit.go | f.Title = strings.TrimSpace(title) | f.Title = title
 rm: 子の無くなった骨組みの行を消さない | internal/format/edit.go | for i := len(chain) - 1; i >= 0; i-- { | for i := len(chain) - 1; i >= len(chain)-1; i-- {
 rm: desc のある上のディレクトリも消す | internal/format/edit.go | len(e.Children) > 0 || e.Desc != "" || len(e.Detail) > 0 | len(e.Children) > 0 || len(e.Detail) > 0
 rm: detail のある上のディレクトリも消す | internal/format/edit.go | len(e.Children) > 0 || e.Desc != "" || len(e.Detail) > 0 | len(e.Children) > 0 || e.Desc != ""
@@ -100,6 +102,9 @@ new: 途中で失敗したとき、作ったファイルを消さない | intern
 # 意味が同じなので残す：組の名前は長さが決まっているので、組の名前そのものは、ほかの組の先頭の一部にならない。完全一致を先に見なくても、先頭の一部として1つに決まる
 # 組: 完全一致を優先しない | internal/core/core.go | if g.ID == spec {⏎⇥⇥⇥return g, nil | if false {⏎⇥⇥⇥return g, nil
 組: 2つ以上の組に当たる先頭の一部を許す | internal/core/core.go | case 1:⏎⇥⇥return found[0], nil | default:⏎⇥⇥return found[0], nil
+title: 書いたあとの題でなく、渡された題を返す | internal/core/commands.go | return &TitleResult{Group: g.ID, Lang: l, Title: f.Title}, nil | return &TitleResult{Group: g.ID, Lang: l, Title: title}, nil
+title: ファイルに書かない | internal/core/commands.go | if err := f.SetTitle(title); err != nil {⏎⇥⇥return nil, err⏎⇥}⏎⇥if err := ch.write(n.File(), f.Bytes()); err != nil { | if err := f.SetTitle(title); err != nil {⏎⇥⇥return nil, err⏎⇥}⏎⇥if err := error(nil); err != nil || n.File() == "" {
+title: 改行のときもファイルを書く | internal/core/commands.go | if err := f.SetTitle(title); err != nil {⏎⇥⇥return nil, err | if err := f.SetTitle(title); err != nil {⏎⇥⇥_ = ch.write(n.File(), f.Bytes())⏎⇥⇥return nil, err
 set・rm: 形の誤りのあるファイルにも書く | internal/core/core.go | if p.Kind == format.KindFormat { | if false {
 set・rm: 空の desc のあるファイルに書かない | internal/core/core.go | if p.Kind == format.KindFormat { | if p.Kind == format.KindFormat || p.Kind == format.KindEmptyDesc {
 status: 名前の形に合わないファイルを報告しない | internal/core/commands.go | for _, b := range ch.bad { | for _, b := range ch.bad[:0] {
@@ -125,6 +130,9 @@ CLI: 書き出しの失敗（JSON）を見逃す | internal/cli/cli.go | return 
 CLI: --help で使い方を出さない | internal/cli/cli.go | return say(env, usage) | return say(env, "")
 CLI: --version に fnaze を付けない | internal/cli/cli.go | say(env, "fnaze "+version(env.Version)+"\n") | say(env, version(env.Version)+"\n")
 CLI: 引数が多すぎても許す | internal/cli/cli.go | case len(p.args) > len(cmd.args) && !cmd.variadic: | case false:
+CLI: title の --lang を見ない | internal/cli/cli.go | c.Title(p.value("--lang"), | c.Title("",
+CLI: title の --group を見ない | internal/cli/cli.go | c.Title(p.value("--lang"), p.value("--group"), | c.Title(p.value("--lang"), "",
+CLI: title を --help の一覧で new と set の間に置かない | internal/cli/cli.go | "init", "new", "title", "set", | "init", "new", "set", "title",
 CLI: set の --detail の2つ目から捨てる | internal/cli/cli.go | p.args[1], p.opts["--detail"], | p.args[1], p.opts["--detail"][:min(1, len(p.opts["--detail"]))],
 CLI: set で --detail が無くても detail を消す | internal/cli/cli.go | p.opts["--detail"], p.has("--detail")) | p.opts["--detail"], true)
 CLI: 版：リリースの版より Go の記録を先にする | internal/cli/cli.go | if set != "" {⏎⇥⇥return set | if set == "x" {⏎⇥⇥return set
@@ -157,6 +165,8 @@ MCP: show の言語の引数を無視する | internal/mcpserver/server.go | ret
 MCP: show の組の引数を無視する | internal/mcpserver/server.go | return c.Show(in.Lang, in.Group) | return c.Show(in.Lang, "")
 MCP: status の all を無視する | internal/mcpserver/server.go | return c.Status(in.Group, in.All) | return c.Status(in.Group, false)
 MCP: log の言語の引数を無視する | internal/mcpserver/server.go | return c.Log(in.Lang) | return c.Log("")
+MCP: set_title の言語の引数を無視する | internal/mcpserver/server.go | return c.Title(in.Lang, in.Group, in.Title) | return c.Title("", in.Group, in.Title)
+MCP: set_title の組の引数を無視する | internal/mcpserver/server.go | return c.Title(in.Lang, in.Group, in.Title) | return c.Title(in.Lang, "", in.Title)
 MCP: new_group の言語の引数を無視する | internal/mcpserver/server.go | return c.New(in.Langs) | return c.New(nil)
 MCP: FNAZE_LANG を無視する | internal/mcpserver/server.go | c, err := core.Open(o.Dir, o.EnvLang) | c, err := core.Open(o.Dir, "")
 CLI: mcp に FNAZE_LANG を渡さない | internal/cli/cli.go | EnvLang:    r.env.Getenv(envLang), | EnvLang:    "",

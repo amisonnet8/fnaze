@@ -51,7 +51,7 @@ Example:
 UTF-8 text with LF line endings. The first line is the title. Each following line is an entry or a detail.
 
 - **Reading**: spaces and tabs at the end of a line are removed, and so is a CR (CRLF line endings can be read). Blank lines are ignored. The last line may end with LF or not. A BOM is a format error
-- **Writing** (`new`, `set`, `rm`): LF line endings with a final LF, no blank lines, and no spaces at the end of lines except in the empty title `# `. Alignment and blank lines made by hand are gone once fnaze writes the file
+- **Writing** (`new`, `title`, `set`, `rm`): LF line endings with a final LF, no blank lines, and no spaces at the end of lines except in the empty title `# `. Alignment and blank lines made by hand are gone once fnaze writes the file
 
 ```
 # Extend the session lifetime on access instead of fixing it

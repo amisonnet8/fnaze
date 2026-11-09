@@ -282,6 +282,36 @@ func TestSetAndRm(t *testing.T) {
 	}
 }
 
+func TestTitle(t *testing.T) {
+	dir := newRoot(t)
+	code, out, errs := run(t, "", "title", "t", "-C", dir)
+	want(t, code, out, errs, 2, "", "fnaze: there is no group yet: make one with fnaze new\n")
+	if code, _, errs := run(t, "", "new", "ja", "-C", dir); code != 0 {
+		t.Fatal(errs)
+	}
+	code, out, errs = run(t, "ja", "title", " 期限を延ばす ", "-C", dir)
+	want(t, code, out, errs, 0, "", "")
+	if got := readFile(t, dir, fileJa); got != "# 期限を延ばす\n" {
+		t.Errorf("after title %q", got)
+	}
+	code, out, errs = run(t, "", "title", "--lang", "ja", "--group", group[:21], "<a&b>", "-C", dir, "--json")
+	want(t, code, out, errs, 0, `{
+  "group": "`+group+`",
+  "lang": "ja",
+  "title": "<a&b>"
+}
+`, "")
+	code, out, errs = run(t, "ja", "title", "a\nb", "-C", dir)
+	want(t, code, out, errs, 2, "", "fnaze: a title cannot have a newline\n")
+	code, out, errs = run(t, "", "title", "t", "-C", dir)
+	want(t, code, out, errs, 2, "", "fnaze: group "+group+" has no file in en\n")
+	code, out, errs = run(t, "ja", "title", "-C", dir)
+	want(t, code, out, errs, 2, "", "fnaze: title: missing <title> (usage: fnaze title [--lang <language>] [--group <group>] <title> [-C <dir>] [--json])\n")
+	if got := readFile(t, dir, fileJa); got != "# <a&b>\n" {
+		t.Errorf("after the errors %q", got)
+	}
+}
+
 func TestSetErrors(t *testing.T) {
 	dir := newRoot(t)
 	code, out, errs := run(t, "", "set", "a.go", "d", "-C", dir)
