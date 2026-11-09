@@ -38,7 +38,8 @@
 	journal.jsonl	The records, one JSON line each (written only through mtqg)
 	version	Version of the mtqg data format
 docs/	Documents of the project
-	design/	The design (Japanese only)
+	design/	The design (English is authoritative, *_ja.md are Japanese translations)
+		overview_ja.md	Japanese translation of overview.md
 		overview.md	What fnaze is for, what it does not do, and the design rules with their reasons
 	examples/	Examples for users
 		changes/	Two groups of description files in en and ja, as they would be in .fnaze/changes/
@@ -101,7 +102,7 @@ internal/	Packages used only inside this module
 .mcp.json	MCP servers for Claude Code: mtqg, and crube in English and Japanese
 CLAUDE.md	Rules for Claude Code in this repository, and the rule files to read
 LICENSE	MIT license
-README.md	What fnaze is, and where its documents are
+README.md	What fnaze is, and where its documents are (authoritative; README_ja.md is the Japanese translation)
 go.mod	Go module and its dependencies
 qsokufile	Named commands for build, test and lint (qsoku)
 trivy.yaml	Trivy settings: what counts as a vulnerability or license failure
@@ -128,3 +129,4 @@ e2e/	End-to-end tests: the built fnaze, its MCP server, the completion scripts i
 		*.txt	A description file: <datetime>_<UUID>_ja.txt, made by fnaze new and written by fnaze title, set and rm
 .githooks/	The git hooks of this repository (core.hooksPath, set by .devcontainer/postCreate.sh)
 	pre-commit	docs/examples/pre-commit as it is: stops a commit that adds no description file, or whose newest group fnaze status --require reports
+README_ja.md	Japanese translation of README.md

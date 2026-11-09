@@ -1,0 +1,27 @@
+# docs と README を、英語の正本と日本語版の2本立てにし、各ページに言語の切り替えの行を置いた
+.crube/	crube で説明を付けた（ファイルは直接編集していない）
+	structure.txt	crube mv で overview.md の説明を overview_ja.md に移し、crube set で overview.md・README_ja.md・docs/design/・README.md の英語の説明を直した
+	structure_ja.txt	同じものの日本語の説明を直した
+CLAUDE.md	ドキュメントの言語を、README.md と docs/ はすべて英語が正本で *_ja.md と2本立て、に変えた。設計の場所に overview_ja.md を足した
+	| q 894082dd90 の答え
+.claude/
+	rules/
+		directory-structure.md	docs/ の補足を、design/ も含めてすべて英語が正本、に直した
+		documentation.md	「言語」の章を足した：英語が正本、切り替えの行の形、日本語版の引用、片方を直したらもう片方も直す
+.mtqg/
+	journal.jsonl	todo 47b535e62b（⑩）と中の 6eac86245a を閉じ、memo を足した
+README.md	1行目に言語の切り替えの行を置いた
+README_ja.md	README.md の日本語版を足した
+docs/	言語の切り替え
+	design/
+		overview.md	英語の正本として、日本語の設計を訳して書いた
+		overview_ja.md	今までの日本語の設計を git mv で移し、切り替えの行と「英語版が正本」の引用を足した
+	reference/	4ページとも1行目に切り替えの行を置き、英語版の「This is the authoritative version」の引用は消した
+		| 切り替えの行と重なるため。日本語版の「英語版が正本」の引用は残した
+		commands.md	切り替えの行を置いた
+		commands_ja.md	切り替えの行を置いた
+		file-format.md	切り替えの行を置いた
+		file-format_ja.md	切り替えの行を置いた
+	examples/
+		README.md	切り替えの行を置いた
+		README_ja.md	切り替えの行を置いた

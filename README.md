@@ -1,3 +1,5 @@
+*[日本語](README_ja.md) | **English***
+
 # fnaze
 
 fnaze writes, reads and checks description files: for one set of changes, one line per changed file saying what changed and why. A reviewer reads the list next to the diff.

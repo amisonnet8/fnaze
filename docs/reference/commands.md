@@ -1,6 +1,6 @@
-# Commands
+*[日本語](commands_ja.md) | **English***
 
-> This is the authoritative version. A Japanese translation is in `commands_ja.md`.
+# Commands
 
 The file format is in `file-format.md`. "Group" and "root" in this document have the meanings given there.
 

@@ -6,7 +6,7 @@
 
 fnaze は、変更のまとまりごとに、変えたファイルそれぞれについて「何を、なぜ変えたか」を1行で書いた説明のファイルを作り、読み、検査する CLI。人間は、この一覧と diff を並べて見ればレビューできる。説明のファイル1つが、変更のまとまり1つ（一般的な使い方はコミット1つにつき1つ）。
 
-- 設計：`docs/design/overview.md`
+- 設計：`docs/design/overview.md`（日本語版 `overview_ja.md`）
 - ファイルの形式：`docs/reference/file-format.md`（日本語版 `file-format_ja.md`）
 - コマンド：`docs/reference/commands.md`（日本語版 `commands_ja.md`）
 - 例：`docs/examples/`
@@ -25,9 +25,8 @@ fnaze は、変更のまとまりごとに、変えたファイルそれぞれ�
 
 ## ドキュメントの言語
 
-- `CLAUDE.md`・`.claude/rules/`・`docs/design/`は日本語のみ
-- `docs/reference/`・`docs/examples/` の README は英語が正本で、日本語版`*_ja.md`と2本立て
-- `README.md`は英語のみ
+- `CLAUDE.md`・`.claude/rules/`は日本語のみ
+- `README.md`と`docs/`（`design/`・`reference/`・`examples/` の README）は、英語が正本で、日本語版`*_ja.md`と2本立て。各ページの先頭に、言語の切り替えの行を置く
 - コード・コメント・コミットメッセージ・CLI出力は英語
 - 詳しい書き方は`.claude/rules/documentation.md`
 

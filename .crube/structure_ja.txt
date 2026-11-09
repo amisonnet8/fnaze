@@ -38,8 +38,9 @@
 	journal.jsonl	記録そのもの。1件1行の JSON（mtqg からだけ書く）
 	version	mtqg のデータ形式の版
 docs/	プロジェクトの文書
-	design/	設計（日本語のみ）
-		overview.md	fnaze の目的、しないこと、設計の決まりとその理由
+	design/	設計（英語が正本で、*_ja.md が日本語版）
+		overview_ja.md	overview.md の日本語版
+		overview.md	fnaze の目的、しないこと、設計の決まりとその理由（英語の正本）
 	examples/	使う人のための例
 		changes/	説明のファイルの組を2つ、en と ja で。.fnaze/changes/ に置かれる形のまま
 			*.txt	説明のファイル（en は接尾辞なし、ほかは _<言語の名前>）
@@ -101,7 +102,7 @@ internal/	このモジュールの中だけで使うパッケージ
 .mcp.json	Claude Code に mtqg と、crube（英語・日本語）の MCP サーバーをつなぐ設定
 CLAUDE.md	このリポジトリでの Claude Code のルールと、読むべきルールファイルの案内
 LICENSE	MIT ライセンス
-README.md	fnaze とは何かと、文書の場所（英語）
+README.md	fnaze とは何かと、文書の場所（英語の正本。日本語版は README_ja.md）
 go.mod	Go モジュールと依存
 qsokufile	ビルド・テスト・lint の名前つきコマンド（qsoku）
 trivy.yaml	Trivy の設定：何を脆弱性・ライセンスの失敗とみなすか
@@ -128,3 +129,4 @@ e2e/	端から端までのテスト：ビルドした fnaze、その MCP サー�
 		*.txt	説明のファイル：<日時>_<UUID>_ja.txt。fnaze new で作り、fnaze title・set・rm で書く
 .githooks/	このリポジトリの git のフック（core.hooksPath。.devcontainer/postCreate.sh が設定する）
 	pre-commit	docs/examples/pre-commit そのまま：説明のファイルを足さないコミットと、いちばん新しい組を fnaze status --require が報告するコミットを止める
+README_ja.md	README.md の日本語版

@@ -1,6 +1,6 @@
-# File format
+*[日本語](file-format_ja.md) | **English***
 
-> This is the authoritative version. A Japanese translation is in `file-format_ja.md`.
+# File format
 
 Where fnaze keeps its description files, how they are named, and how they are written.
 

@@ -1,3 +1,5 @@
+*[English](commands.md) | **日本語***
+
 # コマンド
 
 > 英語版が正本（`commands.md`）。この文書はその日本語版。

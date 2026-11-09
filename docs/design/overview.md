@@ -1,65 +1,67 @@
-# fnaze の設計
+*[日本語](overview_ja.md) | **English***
 
-## 何のためのツールか
+# The design of fnaze
 
-AIにコードを書かせると、人間は変更をレビューする必要がある。ただし diff だけでは、なぜそのファイルを変えたのかが分からない。変えたファイルが多いと、どこから見ればよいかも分からない。
+## What it is for
 
-fnaze では、**変更のまとまりごとに、変えたファイルそれぞれについて「何を、なぜ変えたか」を1行で書いたファイル**（説明のファイル）を作る。人間は、この一覧と diff を並べて見ればレビューできる。
+When AI writes code, a human has to review the changes. A diff alone does not say why each file was changed, and when many files were changed, it does not say where to start.
 
-## 目的
+With fnaze, **for each set of changes, you make a file that says in one line, for each changed file, what was changed and why** (a description file). A reviewer reads this list next to the diff.
 
-- 人間が、1つのまとまりの変更を、ファイルごとに1行の理由で一覧できる
-- 人間のレビューは、この一覧と diff を並べて見るだけで済む
-- 書く人（人間またはAI）が手をかけるのは、まとまりの終わりに1回書くことだけ。ファイルの編集の仕方は変えなくてよい
-- 書き忘れ（空の題・desc、言語ごとのずれ）を、ツールで検査できる
+## Goals
 
-## しないこと
+- A human can see the changes of one set, one line of reason per file
+- A review needs only this list next to the diff
+- The writer (a human or an AI) only writes once, at the end of the set. The way files are edited does not change
+- What was left out (an empty title or desc, files of one group that differ between languages) can be checked by a tool
 
-- **git などのバージョン管理と関わること。** fnaze は git を読まず、呼ばない。説明のファイルを作り、読み、検査するだけ
-- 変えたファイルの一覧を求めること。何を書くかは、書く人が決める
-- 変更の種類（追加・変更・削除・名前の変更）を求めること。書くなら desc に言葉で書く
-- diff そのものを持つこと
-- 編集の操作や、実行したコマンドを記録すること
-- 設計の判断や todo を記録すること
-- プロジェクトの今の構成を説明すること（fnaze が説明するのは「変更」だけ）
-- まとまりの区切り方や、検査を強いること。止めたい人には、設定の例を示すだけ（`docs/examples/`）
+## What it does not do
 
-## 設計の決まり
+- **Work with git or any other version control.** fnaze does not read or run git. It only makes, reads and checks description files
+- Find the list of changed files. The writer decides what to write
+- Find the kind of change (added, modified, deleted, renamed). If it matters, say it in words in the desc
+- Keep the diff itself
+- Record edit operations, or the commands that were run
+- Record design decisions or todos
+- Describe the current structure of the project (fnaze describes only "changes")
+- Force how sets are divided, or force checks. For those who want to stop a commit, it only shows an example setup (`docs/examples/`)
 
-### 説明のファイル1つが、まとまり1つ
+## Design rules
 
-それがどの変更を指すか（コミット1つ、いくつかのコミット、作業中の変更）は、fnaze は決めない。使う人が決める。一般的な使い方は、コミット1つにつき説明のファイルを1つ足す形。
+### One description file is one set of changes
 
-### バージョン管理と関わらない
+Which changes it refers to (one commit, several commits, work in progress) is not decided by fnaze. The user decides. The usual way is to add one description file per commit.
 
-fnaze は、説明のファイルのほかは何も読まない。検査（`status`）も、説明のファイルの中だけで閉じる。
+### No version control
 
-- そのため、「変えたのに説明が無いパス」は fnaze には分からない。それを止めたい人は、自分のフック（git の pre-commit など）で、git の変更と説明のファイルを突き合わせる
-- 変更の印（A・M・D・R）も付けない。欄を設けても、正しいかを fnaze は確かめられないため
+fnaze reads nothing but the description files. Its check (`status`) is closed within the description files too.
 
-### ファイル名は「日時_UUID」
+- So fnaze cannot know about "a path that was changed but has no description". Those who want to stop that compare the changes in git with the description files in their own hook (a git pre-commit hook, for example)
+- It does not mark the kind of change (A, M, D, R) either: even with a field for it, fnaze could not check that it is right
 
-`.fnaze/changes/<日時>_<UUID>_<言語の名前>.txt`（`en` だけは接尾辞なし）。
+### File names are "datetime_UUID"
 
-- **日時（UTC）**で、ファイル名だけで順番が分かる。バージョン管理の履歴が無くても読める
-- **UUID**で、別々の場所（ブランチなど）で同じ秒に作っても、名前がぶつからない。通し番号にすると、別々のブランチで同じ番号が付いてぶつかる
-- **言語ごとのファイルの名前は、`fnaze new` が同時に作ってそろえる。** 日時を言語ごとに付けると、作った時刻がずれて名前がそろわない
-- **コミットのハッシュは使わない。** コミットするまで決まらない
+`.fnaze/changes/<datetime>_<UUID>_<language>.txt` (only `en` has no suffix).
 
-### 言語の名前は、ただの文字列
+- With the **datetime (UTC)**, the name alone gives the order. It can be read without the history of version control
+- With the **UUID**, files made in the same second in different places (branches, for example) do not get the same name. Serial numbers would give the same number on different branches
+- **The files of one group, one per language, are made together by `fnaze new` so that their names match.** A datetime taken for each language would differ by the time between them, and the names would not match
+- **Commit hashes are not used.** They are not known until the commit is made
 
-fnaze は、`ja` が日本語であることを知らない。言語の名前は、言語ごとのファイルを分けるための文字列にとどまる。`en` だけは特別で、ファイル名に接尾辞を付けない。
+### A language name is only a string
 
-- `en` も必須ではない。`fnaze new` は、並べた言語（省けば1つ前の組と同じ言語）のファイルだけを作る
-- **言語は、言語を扱うコマンドすべてで、引数で選べる**（`init`・`completion` は言語を扱わない。`mcp` は道具ごとに受け取る。下のとおり）。`new` は組を作るので言語をいくつも、ほかは1つ。省くと、`new` は1つ前の組と同じ言語、ほかは `FNAZE_LANG`、それも無ければ `en`。同じ人が同じ言語で続けて書くことが多いので、ふだんは省ける
-- **`FNAZE_LANG` には、いくつかの言語を書ける**（`ja,en`）。`new` は書いた言語すべてを、ほかのコマンドは最初の言語を使う
-- **コマンドは、言語ごとのファイルのずれを気にしない。** ずれは `status` で分かるので、ほかのコマンドは指定した言語のファイルだけを扱い、単純に保つ
-- **`mcp` は言語を持たない。** 道具ごとに言語を引数で受け取るので、1つのサーバーで、いくつもの言語の説明を書ける
+fnaze does not know that `ja` is Japanese. A language name is only a string that separates the files of each language. Only `en` is special: its file name has no suffix.
 
-### 新しいファイルは、1つ前のファイルの骨組みから作る
+- `en` is not required either. `fnaze new` makes files only for the languages given (when none are given, those of the previous group)
+- **Every command that works on a language takes it as an argument** (`init` and `completion` do not work on languages; `mcp` takes it for each tool, as below). `new` makes a group, so it takes several languages; the others take one. When none is given, `new` uses the languages of the previous group, and the others use `FNAZE_LANG`, or else `en`. One person usually keeps writing in the same language, so it can usually be left out
+- **`FNAZE_LANG` can hold several languages** (`ja,en`). `new` uses all of them, and the other commands use the first one
+- **Commands do not keep the files of the languages in step.** `status` reports where they differ, so the other commands work only on the file of the language given, and stay simple
+- **`mcp` has no language of its own.** Each tool takes the language as an argument, so one server can write descriptions in several languages
 
-`fnaze new` は、同じ言語の1つ前のファイルから、題・desc・detail を除いたもの（パスの行だけ）を作る。続けて同じ場所を変えることが多いため、パスを打ち直さずに済む。要らない行は、書く人が消す。
+### A new file starts from the skeleton of the previous file
 
-### 書き方の形
+`fnaze new` makes each file from the previous file in the same language, without its title, descs and details (only the path lines). The same places are often changed again, so the paths need not be typed again. The writer removes the lines that are not needed.
 
-パスをタブのインデントでツリーにし、パスと desc をタブで区切る。ディレクトリの desc は、その下の変更をまとめて説明する。詳しくは `docs/reference/file-format_ja.md`。
+### How the file is written
+
+The paths form a tree with tab indentation, and a tab separates a path from its desc. The desc of a directory sums up the changes under it. See `docs/reference/file-format.md`.

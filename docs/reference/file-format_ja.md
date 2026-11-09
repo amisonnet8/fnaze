@@ -1,3 +1,5 @@
+*[English](file-format.md) | **日本語***
+
 # ファイルの形式
 
 > 英語版が正本（`file-format.md`）。この文書はその日本語版。
