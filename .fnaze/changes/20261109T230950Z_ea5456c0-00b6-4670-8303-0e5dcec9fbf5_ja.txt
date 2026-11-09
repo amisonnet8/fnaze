@@ -1,0 +1,5 @@
+# Claude Code で fnaze の MCP サーバーを有効にした
+.claude/
+	settings.json	enabledMcpjsonServers に fnaze を足した（人間が jq のコマンドで）。.mcp.json のサーバーが現れるようにするため
+.mtqg/
+	journal.jsonl	設定の変更の memo 9ce199ac9c を足した

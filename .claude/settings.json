@@ -93,6 +93,7 @@
   "enabledMcpjsonServers": [
     "mtqg",
     "crube",
-    "crube-ja"
+    "crube-ja",
+    "fnaze"
   ]
 }

@@ -1,0 +1,5 @@
+# Enable fnaze's MCP server in Claude Code
+.claude/
+	settings.json	Added fnaze to enabledMcpjsonServers (the human ran the jq command), so the server in .mcp.json shows up
+.mtqg/
+	journal.jsonl	Added memo 9ce199ac9c on the settings change
