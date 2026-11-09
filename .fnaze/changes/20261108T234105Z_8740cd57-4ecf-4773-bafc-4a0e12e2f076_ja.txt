@@ -1,0 +1,6 @@
+# コンテナを作り直して変わった lock を入れた
+.devcontainer/
+	devcontainer-lock.json	コンテナの作り直し（人間）で、powershell の feature の版とハッシュが足された
+		| この版の feature で、4つのシェルの補完が動くことを確かめた
+.mtqg/	mtqg で記録した（ファイルは直接編集していない）
+	journal.jsonl	memo 6c1af1ea88 を足し、答えを付けたまま開いていた q 77fdbefb2f・e69b2b759b を閉じた

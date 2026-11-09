@@ -1,0 +1,26 @@
+# fnaze をこのリポジトリで本式に使う：.fnaze/ をコミットし、使い方のルールと pre-commit を入れた
+.gitignore	!/.fnaze/ と !/.githooks/ を足し、説明のファイルとフックを追跡する
+.crube/	crube で説明を付けた（ファイルは直接編集していない）
+	ignore	.gitignore に合わせて !/.fnaze/ と !/.githooks/ を足した（手で編集）
+	structure.txt	crube set で .fnaze/・.fnaze/changes/・*.txt・.githooks/・pre-commit・fnaze-usage.md の英語の説明を付けた
+	structure_ja.txt	同じものの日本語の説明を付けた
+.fnaze/
+	changes/	これまで git の対象外で書いてきた説明のファイルを、そのまま入れた
+		| 初めのものは手書き、20261109T053633Z からは fnaze のコマンドで書いた（q 3d24764a7d）
+.githooks/
+	pre-commit	docs/examples/pre-commit をそのまま写した。説明のファイルを足さないコミットと、status --require が報告するコミットを止める
+.devcontainer/
+	postCreate.sh	git config core.hooksPath .githooks を足し、fnaze をコミットの説明と pre-commit で使うことを書いた
+e2e/
+	docs_test.go	TestOwnPreCommit を足した。.githooks/pre-commit が例と同じ中身であることを確かめる
+CLAUDE.md	参照すべきファイルに fnaze-usage.md を足した
+.claude/
+	rules/
+		fnaze-usage.md	このリポジトリでの fnaze の使い方を新しく書いた：コミットごとの手順、pre-commit、落とし穴
+			| mtqg の rule a4e22b4081 にあった手順を移し、- で始まる desc、書き忘れを見つけないこと、古い fnaze を足した
+		directory-structure.md	構成に .fnaze/changes/ と .githooks/ を足し、.fnaze/ をコミットすることにした
+	skills/
+		mutation-check/
+			spec.txt	このリポジトリの pre-commit が例と違う変異を足した
+.mtqg/
+	journal.jsonl	rule a4e22b4081 を fnaze-usage.md を指す形に変え、todo cfb0750baa（⑨c）と中の3つを足して閉じ、memo を足した

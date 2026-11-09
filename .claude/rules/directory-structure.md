@@ -18,6 +18,8 @@
 ├── trivy.yaml              ← 脆弱性・ライセンス検査の設定
 ├── .mcp.json               ← mtqgとcrube（英語の`crube`・日本語の`crube-ja`）のMCPサーバーの配線
 ├── .crube/                 ← このリポジトリのファイルの説明（crube。`structure.txt`は英語、`structure_ja.txt`は日本語、`ignore`は`.gitignore`に合わせて手で保つ）。**コミットする**
+├── .fnaze/changes/         ← このリポジトリのコミットごとの説明（fnaze 自身で書く。`.claude/rules/fnaze-usage.md`）。**コミットする**
+├── .githooks/              ← git のフック（`pre-commit`は`docs/examples/pre-commit`と同じ中身。`core.hooksPath`は`postCreate.sh`が設定する）
 ├── cmd/fnaze/              ← 実行ファイル fnaze の main（引数を internal/cli に渡すだけ）
 ├── internal/               ← このモジュールの中だけで使うコード（cli がコマンドライン、mcpserver が MCP サーバー、core がすべての判定）
 ├── e2e/                    ← ビルドした fnaze を動かすテストと、docs の例を実際の出力と突き合わせるテスト（`go test ./...`で動く。`.claude/rules/testing.md`「e2e」）
@@ -49,5 +51,6 @@
 - **`.gitignore`のドットファイル**: ルート直下のドットファイル・ドットディレクトリは**許可リスト方式**（`/.*`を無視し、追跡するものだけ`!`で戻す。`.claude/`の中は`/.claude/*`を無視して`settings.json`・`rules/`・`skills/`・`hooks/`だけ戻す）。サンドボックスが作業ディレクトリ直下に出すダミーファイルを`git add -A`で混ぜないため（`.claude/rules/testing.md`）。**追跡するドットファイルを新しく足すときは、`.gitignore`に`!`の行を足すこと**。足さないと`git add`が無視する
 - **配布物（ビルド済みバイナリ）**: リポジトリにコミットしない。`.gitignore`には**ルート直下に限定して**書く（`/名前`）。名前だけを書くと、同名のソースディレクトリまで無視される
 - **`docs/`**: 文書。`design/`（設計。日本語のみ）、`reference/`（仕様。英語が正本で`*_ja.md`が日本語版）、`examples/`（使う人のための例）。言語の決まりは`CLAUDE.md`「ドキュメントの言語」
-- **`.fnaze/`**: コミットごとの説明を、fnaze 自身のコマンド（`new`・`set`・`rm`・`status --require`）で書いて置く（mtqg の rule `a4e22b4081`）。`.gitignore`の`/.*`で git の対象外、crube も`.crube/ignore`の`/.*`で外している
+- **`.fnaze/`**: コミットごとの説明を、fnaze 自身のコマンドで書き、そのコミットに入れる（`.claude/rules/fnaze-usage.md`）。**コミットする**（`.gitignore`と`.crube/ignore`の`!/.fnaze/`）
+- **`.githooks/`**: 追跡する git のフック。`.git/hooks/`は git に乗らないので、ここに置いて`core.hooksPath`で指す（`.devcontainer/postCreate.sh`）。`pre-commit`は`docs/examples/pre-commit`と同じ中身にし、e2e の`TestOwnPreCommit`が同じことを確かめる（例を直したら、こちらも写す）
 - **シェルスクリプト**: 最小限にする。追跡中のものは`qsoku shellcheck`の対象になる（`.claude/rules/testing.md`）

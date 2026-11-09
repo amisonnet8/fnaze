@@ -28,6 +28,8 @@ node_modules/
 !/.devcontainer/
 !/.github/
 !/.mtqg/
+!/.fnaze/
+!/.githooks/
 !/.claude/
 /.claude/*
 !/.claude/settings.json

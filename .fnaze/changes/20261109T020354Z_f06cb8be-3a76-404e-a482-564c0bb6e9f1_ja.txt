@@ -1,0 +1,27 @@
+# ビルドした fnaze を動かす e2e と、docs の例を実際の出力と突き合わせるテストを足した
+e2e/	e2e のテストを足した。go test ./... に入るので、qsoku check と CI の3つの OS で動く
+	helpers_test.go	TestMain で fnaze を1回ビルドし、プログラムとして動かす。docs の new の例のために、時計と乱数を固めてこのプロセスの中でも動かせる
+	commands_test.go	全コマンドを、サブディレクトリから・FNAZE_LANG・-C・--json で動かし、エラーとヘルプも確かめる
+		| 同じ秒に2つの組ができると、名前の順は作った順とは限らないので、2つ目の組を名前の順では探さない
+	docs_test.go	docs/reference/ のコードブロックをすべて、英語と日本語のページで実際の出力と突き合わせる。docs/examples/ の説明のファイルと pre-commit の例（本物の git）も確かめる
+		| 知らないコードブロックがあると落ちるので、例を足せば確かめ方も足すことになる
+	mcp_test.go	ビルドした fnaze mcp を標準入出力でつなぎ、出す道具と、--json と1バイトまで同じ JSON・同じエラーを返すことを確かめる
+	completion_test.go	補完のスクリプトを、本物の bash・zsh・fish・PowerShell で動かす。HOME は一時ディレクトリにする
+internal/
+	cli/
+		cli.go	--help のコマンドの一覧で、説明をいちばん長い名前＋空白2つから始めるようにした
+			| 幅8に固定していたので、completion の名前と説明がくっついていた（bug 44ac0c0ea8、了承は q ebc293801a）
+		cli_test.go	使い方の一覧の init と completion の行を確かめる
+docs/reference/commands*.md	メッセージの中のパスは、どこで動かしてもルートからになることを書いた（英語と日本語）
+	| メッセージはテキスト・JSON・MCP で同じ文言にしているため。了承は q ffc1dae0ff
+.claude/
+	rules/
+		testing.md	e2e の章を足した。e2e が捕まえた core の変異を、残した一覧から外し、fish の意味が同じ変異を足した
+		directory-structure.md	e2e/ を構成に足した
+	skills/mutation-check/spec.txt	使い方の一覧の幅と、e2e が捕まえる変異（補完のスクリプト、docs の例、pre-commit の例）を足した
+.crube/	crube で説明を付けた（ファイルは直接編集していない）
+	structure.txt	crube set で e2e/ とその中のファイルの英語の説明を付けた
+	structure_ja.txt	同じものの日本語の説明を付けた
+.mtqg/	mtqg で記録した（ファイルは直接編集していない）
+	journal.jsonl	bug 44ac0c0ea8 と返事を足して閉じ、q ebc293801a・ffc1dae0ff と答えを足して閉じ、memo を足し、todo f61854d051 を閉じた
+		| ToDo の番号の振り直し（memo beac3bdb56）、⑪〜⑬の todo、q 28e99d616e・894082dd90 の答えも、まだコミットしていなかったのでここに入る

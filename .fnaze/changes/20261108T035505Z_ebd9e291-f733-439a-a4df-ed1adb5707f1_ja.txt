@@ -1,0 +1,4 @@
+# 開発の計画を決め、作業ごとの todo を登録した
+.mtqg/	mtqg で記録した（ファイルは直接編集していない）
+	journal.jsonl	実装の順番と依存（MCP の go-sdk、golang.org/x/text/width）の了承を q 5403c6dccb・8b80489eed に残し、todo ①〜⑨のうち新しい8件（817019a314 など）を登録して、todo dd59d50c09 を閉じた
+		| ④見え方の了承と⑩お試しの rule の切り替えは、既にある todo 4838f9a5f0・a2ad5ad430 を使う

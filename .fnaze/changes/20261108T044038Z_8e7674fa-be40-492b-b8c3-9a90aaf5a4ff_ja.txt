@@ -1,0 +1,18 @@
+# 言語・ファイル名・ルートを扱う3つのパッケージを作った
+internal/
+	lang/	言語の名前の検査と、FNAZE_LANG の読み方
+		lang.go	ASCII の英数字だけを言語とし、1つの組では同じ言語の重なりと、大文字と小文字だけの違いを許さない。1つの言語を取るコマンドの既定（FNAZE_LANG の最初、無ければ en）
+			| 同じ言語を2回並べるのもエラーにした（仕様に無かったので、大文字と小文字の決まりと同じ扱いにした）
+		lang_test.go	検査と言語の決め方を確かめる。英数字の範囲の境目の文字も足した
+	name/	説明のファイルの名前 <日時>_<UUID>[_<言語>].txt
+		name.go	名前を読み・作る。新しい組の日時は UTC、UUID は版4。時計と乱数は呼ぶ側が渡す
+		name_test.go	形に合う名前・合わない名前を確かめる。期待する UUID は Python の uuid、日時は date で求めた
+	project/	ルートの探し方と fnaze init
+		project.go	今のディレクトリから上へ .fnaze/ を探す。init は、そこか上に .fnaze/ があれば失敗し、無ければ .fnaze/changes/ を作る
+		project_test.go	一時ディレクトリで、探し方と init を確かめる
+.claude/
+	rules/datetime.md	TZ を変えても go test がキャッシュを返す落とし穴と、GOFLAGS=-count=1 で流すことを足した
+	skills/mutation-check/spec.txt	言語・ファイル名・ルートと init の約束を壊す変異を23件足した（1件は同じ意味なのでコメント）
+.crube/	crube の CLI で、3つのディレクトリと6つのファイルの説明を足した（英語と日本語）
+.mtqg/	mtqg で記録した（ファイルは直接編集していない）
+	journal.jsonl	todo 904eb21545 を閉じ、決めたことと壊して確かめた結果を memo に残した

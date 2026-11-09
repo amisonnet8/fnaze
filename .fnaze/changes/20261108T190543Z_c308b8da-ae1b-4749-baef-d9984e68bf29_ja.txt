@@ -1,0 +1,25 @@
+# fnaze の MCP サーバー（fnaze mcp）を作った
+internal/
+	cli/
+		cli.go	mcp のコマンドを足した。JSON は core.JSON で書くようにした
+			| MCP に渡すオプションは mcpOptions に分けた。標準入出力のサーバーはテストで呼べないので、渡す値をここで確かめる
+		mcp_test.go	同じ手順を CLI の --json と MCP の道具で動かし、出力・エラー・ファイルがバイトまで同じことを確かめるテストを足した
+	core/
+		json.go	結果の JSON を作る処理を足した。CLI の --json と MCP の道具が同じものを使い、ずれないようにする
+			| SDK に任せると、字下げが無く HTML の文字を逃がした JSON になり、--json と違ってしまう
+	mcpserver/	MCP サーバーを足した。core を呼んで同じ JSON を返すだけの薄い包み
+		server.go	読む道具 show・status・log と、--allow-write のときの書く道具 new_group・set_description・remove_description
+			| ルートは呼ぶたびに探す。出力のスキーマは出さない
+		server_test.go	メモリの中の接続で、道具の一覧・書く・読む・エラーを確かめるテスト
+go.mod	github.com/modelcontextprotocol/go-sdk を足した（go get と go mod tidy で、間接の依存も入った）
+go.sum	go get と go mod tidy で変わった
+docs/reference/commands*.md	MCP の道具の引数を表で書いた（英語と日本語）。detail の扱い、status に require が無いこと、結果とエラーの形
+	| 了承は q 77fdbefb2f
+.claude/
+	rules/directory-structure.md	internal/ の説明に mcpserver を足した
+	skills/mutation-check/spec.txt	JSON と MCP の約束を壊す変異を足した
+.crube/	crube で説明を付けた（ファイルは直接編集していない）
+	structure.txt	crube set で internal/mcpserver/ とその中、internal/core/json.go、internal/cli/mcp_test.go の英語の説明を付けた
+	structure_ja.txt	同じものの日本語の説明を付けた
+.mtqg/	mtqg で記録した（ファイルは直接編集していない）
+	journal.jsonl	CI が通った memo 844f451778、q 77fdbefb2f と答え 3c6cd8db28、memo c34e7d8048 を足し、todo 564e928f3a を閉じた

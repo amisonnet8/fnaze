@@ -1,0 +1,35 @@
+# 題を書くコマンド fnaze title と、MCP の道具 set_title を足した
+.mtqg/
+	journal.jsonl	q 060e92f3a2（見え方の了承）と答え、rule a4e22b4081 の手順(3)を fnaze title に変え、memo を足し、todo 8160f18135 を閉じた
+		| 了承の答えを取り違えて別の質問 8062a4c08b として登録したので、mtqg delete で隠して付け直した。CI が通った memo 91781b2ca3 もここに入る
+docs/	仕様
+	reference/
+		commands.md	title の章を足し、共通・JSON・MCP・補完の一覧に title と set_title を足した
+			| 了承は q 060e92f3a2。成功したときは何も書き出さず、--json は {group, lang, title}。前後の空白は除き、空の題は受け付けて status が報告する
+		commands_ja.md	同じものの日本語版
+		file-format.md	書くコマンドの一覧に title を足した
+		file-format_ja.md	同じものの日本語版
+internal/
+	format/
+		edit.go	File.SetTitle を足した。前後の空白を除き、改行があれば失敗する
+		edit_test.go	SetTitle の空白・空の題・改行のテスト
+	core/
+		commands.go	Title と TitleResult を足した。set と同じく、形の誤りのあるファイルには書かない
+		core_test.go	Title のテスト。言語と組、空の題を status が報告すること、失敗したときにファイルを書き直さないこと
+	cli/
+		cli.go	title のコマンドを足し、--help の一覧で new と set の間に置いた
+		cli_test.go	title の出力・--json・エラーのテスト
+		complete_test.go	補完のコマンドの一覧に title を足し、title の --group・--lang・オプションの候補のテストを足した
+		mcp_test.go	title と set_title が同じ JSON・同じエラーを返すことを確かめる手順を足した
+	mcpserver/
+		server_test.go	道具の一覧に set_title を足し、set_title の書き込みとエラーのテストを足した
+		server.go	--allow-write のときの書く道具 set_title を足した
+e2e/	ビルドした fnaze で確かめる
+	mcp_test.go	道具の一覧に set_title を足し、ビルドした fnaze で title と set_title を比べる手順を足した
+	commands_test.go	--help の一覧に title を足した
+.claude/
+	rules/
+		naming.md	コマンドと MCP の道具の名前に title・set_title を足した
+	skills/
+		mutation-check/
+			spec.txt	title・CLI・MCP の変異を10件足した（すべて killed）

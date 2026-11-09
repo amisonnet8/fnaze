@@ -13,6 +13,7 @@
 		qsoku-usage.md	ビルド・テスト・lint の qsoku の名前と呼び方
 		testing.md	テスト方針と、サンドボックス・OS ごとの CI の落とし穴
 		working-with-human.md	人間への頼み方：小さなつまずき、確認、見え方の了承
+		fnaze-usage.md	このリポジトリでの fnaze の使い方：コミットごとに fnaze で説明を書く手順、pre-commit、落とし穴
 	settings.json	Claude Code の許可・サンドボックス・フック（人間が管理する）
 	skills/	Claude Code のスキル
 		mutation-check/	スキル：実装をわざと壊して、テストが気づくか確かめる
@@ -122,3 +123,8 @@ e2e/	端から端までのテスト：ビルドした fnaze、その MCP サー�
 	docs_test.go	docs/reference/ と docs/examples/ のコードブロックをすべて、fnaze の実際の出力と突き合わせ、pre-commit の例を git で動かす
 	mcp_test.go	ビルドした fnaze mcp を標準入出力でつなぐ：出す道具と、--json と同じ JSON・エラー
 	completion_test.go	補完のスクリプトを、本物の bash・zsh・fish・PowerShell で、ビルドした fnaze を PATH に置いて動かす
+.fnaze/	fnaze 自身のデータ：このリポジトリのコミットごとの説明を fnaze で書いたもの（.claude/rules/fnaze-usage.md）
+	changes/	説明のファイル。コミット1つにつき組1つ（日本語だけ）
+		*.txt	説明のファイル：<日時>_<UUID>_ja.txt。fnaze new で作り、fnaze title・set・rm で書く
+.githooks/	このリポジトリの git のフック（core.hooksPath。.devcontainer/postCreate.sh が設定する）
+	pre-commit	docs/examples/pre-commit そのまま：説明のファイルを足さないコミットと、いちばん新しい組を fnaze status --require が報告するコミットを止める

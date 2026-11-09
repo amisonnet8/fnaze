@@ -300,6 +300,15 @@ func TestPreCommitExample(t *testing.T) {
 	}
 }
 
+// TestOwnPreCommit checks that the pre-commit of this repository
+// (.githooks/pre-commit, core.hooksPath) is the example as it is, so that what
+// this repository runs is what TestPreCommitExample checks.
+func TestOwnPreCommit(t *testing.T) {
+	if own, example := read(t, "..", ".githooks/pre-commit"), read(t, "..", "docs/examples/pre-commit"); own != example {
+		t.Errorf(".githooks/pre-commit differs from docs/examples/pre-commit:\n%s", own)
+	}
+}
+
 // lookPath finds a program, or skips the test.
 func lookPath(t *testing.T, name string) string {
 	t.Helper()

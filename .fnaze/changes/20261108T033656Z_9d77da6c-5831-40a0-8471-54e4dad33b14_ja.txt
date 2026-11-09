@@ -1,0 +1,17 @@
+# 全体の確認で見つけた、仕様の書かれていない点と、文書どうしの食い違いを直した
+docs/
+	design/overview.md	「言語はどのコマンドでも選べる」を、言語を扱うコマンドに限った（init・completion は扱わない）
+	reference/	仕様の書かれていなかった点を決めて足した（英語と日本語の両方）
+		file-format*.md	言語の名前を ASCII の英数字（大文字も可）に限り、大文字と小文字だけ違う言語は同じ組に入れられないとした。空行・CR・BOM は形の誤り、最後の改行は任意。#題 は形の誤り。同じ秒の組は作った順と限らないと明記した
+			| 言語の名前から - と _ を外したので、zh_hant の例を消した
+		commands*.md	終了コード（成功 0、status --require の報告 1、エラー 2）、組が無いときの動き、言語の名前の検査を足した。空の題を # か # だけにそろえ、形の誤りに空行・CR・BOM を足した
+CLAUDE.md	naming.md を「未記入」としていた案内を、中身に合わせた
+.claude/	ルールに残っていたテンプレートの言い回しを、このプロジェクトに合わせた
+	rules/
+		directory-structure.md	cmd/fnaze・docs/ の中身・devcontainer-lock を今の形に直し、お試しの .fnaze/ の扱いを足した
+		qsoku-usage.md	「このテンプレートの qsokufile」を「今の qsokufile」にした
+		distribution.md	「テンプレートに入っている」を「リポジトリにある」にした
+		working-with-human.md	4章に、fnaze で了承の要る見え方と、資料を会話で示すことを足した
+.mtqg/	mtqg で記録した（ファイルは直接編集していない）
+	journal.jsonl	決めたことを q 8件（20972e8186 など）と、まだ決めていない q 2件（b86656cc97・bfd879e334）で残した。glossary に3語を足し、rule 03d605c552 の srwr の例を消し、q c57cad514e の答えを記録者 human で付け直した。todo 3f0b6e3b3c を閉じ、見え方の了承の todo 4838f9a5f0 を立てた。確認の結果の memo d2432a4283 などを足した
+		| 前のコミットのあとの rule a4e22b4081 の書き換えと、todo a2ad5ad430 もここに入っている

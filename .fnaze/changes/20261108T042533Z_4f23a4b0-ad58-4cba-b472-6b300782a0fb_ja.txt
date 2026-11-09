@@ -1,0 +1,6 @@
+# mutation-check の Skill に、spec.txt の区切りの落とし穴を足した
+.claude/
+	skills/mutation-check/SKILL.md	「気をつけること」に、spec.txt に空白で挟んだ縦棒を書かないことを足した
+		| 名前に入れた縦棒が欄の区切りと読まれ、一覧ぜんたいが回らなかったため。区切りは mutants/main.go の " | "
+.mtqg/	mtqg で記録した（ファイルは直接編集していない）
+	journal.jsonl	足したことを memo に残した

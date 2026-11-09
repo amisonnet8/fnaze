@@ -1,0 +1,15 @@
+#!/bin/sh
+# Example git pre-commit hook for using fnaze with one description per commit.
+# fnaze itself does not read git: this hook is where git and fnaze meet.
+# To use it, copy it to .git/hooks/pre-commit and make it executable.
+set -eu
+
+# Require this commit to add a description file.
+if ! git diff --cached --name-only --diff-filter=A -- .fnaze/changes/ | grep -q .; then
+	echo "pre-commit: this commit adds no description in .fnaze/changes/." >&2
+	echo "Run 'fnaze new [languages]', write the title and descs, and stage the files." >&2
+	exit 1
+fi
+
+# Require the newest group to be fully written.
+fnaze status --require

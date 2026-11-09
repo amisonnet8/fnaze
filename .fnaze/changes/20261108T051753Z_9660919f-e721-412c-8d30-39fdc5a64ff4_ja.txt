@@ -1,0 +1,6 @@
+# CI の macOS・Windows でだけ落ちた TestStatus を直した
+internal/core/core_test.go	TestStatus から _JA.txt を外し、大文字と小文字だけ違う言語のファイルは別のテストに分けた。ファイルが2つできないファイルシステムでは飛ばす
+	| macOS・Windows は大文字と小文字を区別しないので、_ja.txt と _JA.txt が1つのファイルになり、期待した報告が出なかった。実装の誤りではない
+.claude/rules/testing.md	CI の落とし穴に、大文字と小文字だけ違う名前のファイルと、テストを1つだけ動かすときの qsoku の使い方を足した
+.mtqg/	mtqg で記録した（ファイルは直接編集していない）
+	journal.jsonl	bug 9b8c016405 を立て、直したことを返信して閉じた

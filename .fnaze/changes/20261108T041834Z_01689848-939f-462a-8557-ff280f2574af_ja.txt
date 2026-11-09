@@ -1,0 +1,15 @@
+# 説明のファイル1つを読み書きするパッケージ internal/format を作った
+internal/
+	format/	説明のファイルを読み、決まった形で書き、そのファイルだけで分かる問題（形の誤り・空の題・空の desc）を返す
+		format.go	Parse・Bytes・Skeleton（fnaze new の骨組み）・PathLines（言語ごとのずれを比べる）
+			| パターンの照合はどのコマンドも使わないので作っていない。問題のメッセージは仮で、見え方の了承で見せる
+		format_test.go	docs の例の読み書きと、仕様の場合分け（形の誤り40件ほど）を確かめる
+	doc.go	消した。実際のパッケージができたので、空のモジュールのためのプレースホルダーは要らない
+.claude/
+	rules/
+		directory-structure.md	消した internal/doc.go の項目を外した
+		testing.md	壊して確かめたときに、同じ意味なので残した変異3件と理由を足した
+	skills/mutation-check/spec.txt	file-format の約束を1つずつ壊す変異を30件足した（1件は同じ意味なのでコメント）
+.crube/	crube の CLI で、internal/format/ と2つのファイルの説明を足し、internal/doc.go の説明を消した（英語と日本語）
+.mtqg/	mtqg で記録した（ファイルは直接編集していない）
+	journal.jsonl	todo 817019a314 を閉じた。設計の判断と、壊して確かめた結果を memo に、todo には人間の指示まで取りかからない rule d3655bbe44 を足した

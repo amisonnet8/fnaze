@@ -1,0 +1,8 @@
+# 説明のファイルの読み方・書き方を crube に合わせた
+docs/
+	reference/	行末の空白・空行・CR・detail・desc の読み方を、crube の file-format に合わせた（英語と日本語の両方）
+		file-format*.md	読むときは行末の空白と CR を取り除き、空行を無視する。書くときは LF・空行なし・行末の空白なし。| だけの行は空の detail 行。desc は最初のタブの後ろすべてで、前後の空白とタブを取る
+			| 前のコミットで空行・CR を形の誤りにしたが、Windows の core.autocrlf で CRLF になると、すべて形の誤りになるため戻した
+		commands*.md	status の形の誤りから、空行と CR を外した（BOM は残した）
+.mtqg/	mtqg で記録した（ファイルは直接編集していない）
+	journal.jsonl	q bfd879e334 に答えて閉じ、q 754b6ff4a1 に見直しの答えを足した（どちらも記録者 human）

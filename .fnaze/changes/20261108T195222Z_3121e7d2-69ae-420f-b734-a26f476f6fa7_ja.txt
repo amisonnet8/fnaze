@@ -1,0 +1,7 @@
+# コンテナで fnaze を入れ、その補完をつなぐようにした（crube に合わせた）
+.devcontainer/
+	postCreate.sh	先頭のコメントを fnaze の場合の説明に書き換え、fnaze を自分のソースから入れ、補完のループに fnaze を足した
+		| ⑦では crube の .devcontainer/ を一部しか参考にしておらず、人間の確認で分かった
+		| 入れた fnaze は人が手で使うためのもの。Claude Code は qsoku で今のソースを使う
+.mtqg/	mtqg で記録した（ファイルは直接編集していない）
+	journal.jsonl	memo e2d73076b5 を足した

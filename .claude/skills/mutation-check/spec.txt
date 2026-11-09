@@ -199,6 +199,7 @@ PowerShell の補完が、パターンを引用符で囲む | internal/cli/compl
 PowerShell の補完が、カーソルより前の語だけを渡す | internal/cli/completions/fnaze.ps1 | -lt $cursorPosition | -le $cursorPosition
 pre-commit の例が、説明のファイルを足さないコミットを止める | docs/examples/pre-commit | --diff-filter=A | --diff-filter=M
 pre-commit の例が、status --require で止める | docs/examples/pre-commit | fnaze status --require | fnaze status
+このリポジトリの pre-commit が、例と違う | .githooks/pre-commit | fnaze status --require | fnaze status
 show の例が、本物の出力と合う | docs/reference/commands.md |     session.go    Extend the lifetime on every access | session.go    Extend the lifetime on every access
 log の例が、本物の出力と合う（日本語版） | docs/reference/commands_ja.md | en,ja  3  Log | en,ja  2  Log
 補完の例が、本物の候補と合う | docs/reference/commands.md | src/auth/*_test.go   Tests | src/auth/*.go   Tests

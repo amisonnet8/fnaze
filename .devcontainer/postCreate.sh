@@ -106,10 +106,17 @@ go install github.com/amisonnet8/mtqg/cmd/mtqg@latest
 go install github.com/amisonnet8/crube/cmd/crube@latest
 
 # fnaze: built from this repository's own source, so a fresh devcontainer has
-# a `fnaze` command and its completion (below) to use interactively. It is a
-# snapshot of the source at creation, for people. Claude Code does not use it:
-# it builds the current source for its checks (qsoku).
+# a `fnaze` command and its completion (below). It is a snapshot of the source
+# at creation. Each commit of this repository is described with it, and the
+# pre-commit hook below runs it (.claude/rules/fnaze-usage.md); after changing
+# fnaze, install it again with go install ./cmd/fnaze. The checks (qsoku)
+# build the current source instead.
 (cd "$(dirname "$0")/.." && go install ./cmd/fnaze)
+
+# The git hooks of this repository are tracked in .githooks/: its pre-commit
+# is docs/examples/pre-commit as it is, and stops a commit that adds no
+# description in .fnaze/changes/ or whose newest group is not fully written.
+git -C "$(dirname "$0")/.." config core.hooksPath .githooks
 
 # goreleaser: builds the release archives (.goreleaser.yaml). Needed here only
 # for `qsoku snapshot`, which makes them without a tag to look at before tagging

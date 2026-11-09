@@ -1,0 +1,31 @@
+# fnaze の仕様の文書と、開発の土台（テンプレート）を最初に入れた
+docs/	fnaze の仕様・設計・例を書いた（実装はまだ）
+	design/overview.md	何のための道具か、しないこと、設計の決まりとその理由を書いた
+	reference/	説明のファイルの形式とコマンドの仕様を書いた（英語が正本、*_ja.md は日本語訳）
+	examples/	説明のファイルの例と、git の pre-commit の例を置いた
+		changes/	2組の説明のファイル（en・ja）。2組目は1組目の骨組みから書いた形
+		pre-commit	コミットごとに説明を求めるフックの例
+			| fnaze は git と関わらないので、止めたい人へ例として示すだけにした
+		README*.md	例の中身の案内（英語と日本語）
+README.md	fnaze が何をするかと、文書の場所を書いた（英語のみ）
+CLAUDE.md	このプロジェクトの説明と、守ること（設計の芯）を書いた
+.claude/	Claude Code のルール・フック・Skill を入れた（テンプレートから）
+	rules/naming.md	製品名、用語の表（英語と CLI・JSON での表記）、コマンドと MCP の道具の名前を決めた
+	settings.json	権限・サンドボックス・フック（人間が管理する）
+.mtqg/	作業の記録を入れた（決まり事・用語・開いている todo）
+	journal.jsonl	fnaze の用語12件と、設計の決まり事を足した
+		| コミットに説明のファイルを付けるお試しの決まり事（a4e22b4081）も入っている
+.crube/	このリポジトリのファイルの説明を、英語と日本語で入れた
+.devcontainer/	開発環境（道具を入れる postCreate.sh、feature の版の lock）
+.github/workflows/	CI（3つの OS、race、ShellCheck、Trivy）と、タグで動くリリース
+tools/licenses/	配布物に同梱する依存のライセンス文を集める道具（テンプレートから）
+internal/doc.go	空のモジュールでも qsoku check が通るようにするプレースホルダー
+go.mod	モジュール github.com/amisonnet8/fnaze（依存なし）
+qsokufile	ビルド・テスト・lint を qsoku の名前で呼ぶ
+.golangci.yaml	lint の設定
+.goreleaser.yaml	配布物の作り方（名前の yourproject はまだ書き換えていない）
+trivy.yaml	脆弱性・ライセンスの検査の設定
+.mcp.json	mtqg と crube（英語・日本語）の MCP サーバーの配線
+.gitignore	ルート直下のドットファイルは許可リスト方式（.fnaze/ も対象外になる）
+.gitattributes	改行を LF にそろえる
+LICENSE	MIT

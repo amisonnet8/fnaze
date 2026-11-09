@@ -1,0 +1,18 @@
+# コマンドの判定を集めた internal/core と、ファイルを書き換える処理を作った
+internal/
+	core/	fnaze の判定のすべて。CLI と MCP はこれを包むだけにする
+		core.go	.fnaze/changes/ を組に分けて読み、組を名前の先頭の一部から見つける。中は os.Root で読み書きし、外に出ない
+		commands.go	new・set・rm・status・show・log と、--json と MCP が返す JSON の型
+			| エラーと報告の文言は仮。見え方の了承（todo 4838f9a5f0）で見せる
+		core_test.go	一時ディレクトリのルートで、docs の例と、固定した時計と乱数を使って確かめる
+	format/
+		edit.go	set がエントリを足す位置（いちばん深い祖先の下・兄弟の末尾・途中は骨組みの行）、--detail の行、rm が子の無くなった骨組みの行も消すこと
+		edit_test.go	足す位置・detail の行・rm が消すもののテスト
+docs/reference/commands*.md	set・rm の決まり（足す位置、--detail、骨組みの行の後始末、形の誤りのあるファイルには書かない）と、removed に数えるものを足した（英語と日本語）
+	| q b86656cc97・b471d9b783・0ec3d92098 で人間が決めたもの
+.claude/
+	rules/testing.md	壊して確かめたときに、同じ意味なので残した変異5種類と理由を足した
+	skills/mutation-check/spec.txt	ファイルの書き換えとコアの約束を壊す変異を37件足した（1件は同じ意味なのでコメント）
+.crube/	crube の CLI で、internal/core/ と5つのファイルの説明を足した（英語と日本語）
+.mtqg/	mtqg で記録した（ファイルは直接編集していない）
+	journal.jsonl	set・rm・--detail の決定を q に残し（b86656cc97 を閉じ、b471d9b783・0ec3d92098 を足した）、todo 028ece5236 を閉じ、決めたことと壊して確かめた結果を memo に残した

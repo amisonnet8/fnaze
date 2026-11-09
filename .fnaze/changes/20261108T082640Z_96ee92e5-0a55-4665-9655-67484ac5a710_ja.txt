@@ -1,0 +1,24 @@
+# fnaze のコマンドライン（CLI）を作った
+cmd/fnaze/main.go	実行ファイル fnaze の main を足した。引数と版を internal/cli に渡すだけ
+internal/
+	cli/	コマンドラインを足した。引数を core の呼び出しに、結果をテキストか JSON にするだけの薄い包み
+		args.go	オプションと引数を読む。オプションは引数の前でも後でもよく、--detail だけ何度も渡せる
+		cli.go	init・new・set・rm・status・show・log、--help・--version・-C・--json、終了コード 0・1・2
+			| mcp と completion は ⑥⑦ で足すので、まだ使い方に出さない
+		text.go	④で了承したテキストの出力。show・log の列は表示幅でそろえ、log の先頭に組の短い名前を出す
+		cli_test.go	一時的なルートで、コマンドラインの出力・JSON・終了コード・エラーの文言を確かめるテスト
+		text_test.go	テキストの出力、表示幅、組の短い名前のテスト。期待値は printf・Python で求めた
+go.mod	golang.org/x/text を足した（表示幅のため。go get と go mod tidy で変わった）
+go.sum	go get で新しくできた
+docs/reference/commands*.md	log の例の、数の前の空白が1つ多かったのを直し、数は右にそろえると書いた（英語と日本語）
+	| 例は ④ で printf の %2s で作っていた。実装はいちばん広い数に右寄せ
+.claude/
+	rules/
+		directory-structure.md	cmd/fnaze/ ができたので「まだ無い」を消し、構成の図に足した
+		testing.md	CLI の変異で、意味が同じなので残したものを足した
+	skills/mutation-check/spec.txt	CLI・引数・テキストの出力の約束を壊す変異を足した
+.crube/	crube で説明を付けた（ファイルは直接編集していない）
+	structure.txt	crube set で cmd/・internal/cli/ とその中のファイル、go.sum の英語の説明を付けた
+	structure_ja.txt	同じものの日本語の説明を付けた
+.mtqg/	mtqg で記録した（ファイルは直接編集していない）
+	journal.jsonl	memo 09428e0146 を足し、todo 4b5b0ba079 を閉じた

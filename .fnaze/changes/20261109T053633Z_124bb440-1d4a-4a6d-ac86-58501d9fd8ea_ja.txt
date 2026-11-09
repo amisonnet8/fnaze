@@ -1,0 +1,6 @@
+# コミットの説明を、手書きをやめて fnaze 自身のコマンドで書く形にした
+.mtqg/	mtqg で記録した（ファイルは直接編集していない）
+	journal.jsonl	rule a4e22b4081 を fnaze のコマンドを使う手順に書き換え、todo 08ab2f4b0c を足して、a2ad5ad430（⑨）と一緒に閉じた。memo 91781b2ca3（CI が3つの OS で通った）と、⑨の memo を足した
+.claude/
+	rules/
+		directory-structure.md	.fnaze/ の補足を、手で書くのではなく fnaze の new・set・rm・status --require で書く、に直した

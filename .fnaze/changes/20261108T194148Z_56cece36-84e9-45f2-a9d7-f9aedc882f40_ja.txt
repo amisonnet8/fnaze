@@ -1,0 +1,27 @@
+# シェルの補完（fnaze completion）を作った
+internal/
+	cli/
+		cli.go	completion のコマンドと、スクリプトが呼ぶ隠しコマンド __complete を足した
+		complete.go	補完の本体を足した。コマンド、オプション、題を添えた組、言語、1段ずつのパスを出す
+			| 候補は core の Log と Show から作る。core に新しい判定は足していない
+			| TAB のたびに呼ばれるので、何がおかしくても何も言わず 0 で終わる
+		complete_test.go	__complete の候補、何も言わずに終わること、説明を60桁で切ること、スクリプトを出すことのテスト
+		completions/	補完のスクリプトを足した（fnaze に埋め込む）。crube のものを fnaze 用に直した
+			fnaze.bash	bash の補完
+			fnaze.zsh	zsh の補完
+			fnaze.fish	fish の補完
+			fnaze.ps1	PowerShell の補完
+docs/reference/commands*.md	補完の候補と説明の細部を書き、全コマンドがそろったので「未実装」の注記を消した（英語と日本語）
+	| 了承は q e69b2b759b
+.devcontainer/	本物の4つのシェルで補完を確かめられるようにした（作り直すまで効かない）
+	devcontainer.json	powershell の feature を足した
+	postCreate.sh	shells を bash だけから bash・zsh・fish・pwsh にした
+.claude/
+	rules/
+		testing.md	補完の変異で、意味が同じなので残したものを足した
+	skills/mutation-check/spec.txt	補完の約束を壊す変異を足した
+.crube/	crube で説明を付けた（ファイルは直接編集していない）
+	structure.txt	crube set で complete.go・complete_test.go・completions/ とその中の英語の説明を付けた
+	structure_ja.txt	同じものの日本語の説明を付けた
+.mtqg/	mtqg で記録した（ファイルは直接編集していない）
+	journal.jsonl	q e69b2b759b と答え a84e227ea6、memo 95441bbc05 を足し、todo 2f1fc4cfb0 を閉じた

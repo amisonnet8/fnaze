@@ -18,6 +18,10 @@
 !/.devcontainer/
 !/.github/
 !/.mtqg/
+# The description of each commit, written with fnaze itself (.claude/rules/fnaze-usage.md).
+!/.fnaze/
+# The git hooks of this repository (core.hooksPath, set by .devcontainer/postCreate.sh).
+!/.githooks/
 # The descriptions of this repository's files (crube, .claude/rules/crube-usage.md).
 !/.crube/
 

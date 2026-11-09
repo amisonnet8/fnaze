@@ -1,0 +1,3 @@
+# fnaze をこのリポジトリで本式に使う方針を決め、todo を立てた
+.mtqg/
+	journal.jsonl	q 3d24764a7d（.fnaze/ のコミット・fnaze-usage.md・pre-commit の3つとも入れる、これまでの説明のファイルも入れる）と答え 4649836e4d を足して閉じ、todo ⑨c cfb0750baa を足した

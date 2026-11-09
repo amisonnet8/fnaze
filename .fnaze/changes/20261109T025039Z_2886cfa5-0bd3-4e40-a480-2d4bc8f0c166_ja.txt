@@ -1,0 +1,9 @@
+# CI の Windows でだけ落ちた e2e の status の例のテストを直した
+e2e/
+	docs_test.go	status の例の期待値で、OS のパスに直すのを、行の先頭のファイルの列だけにした
+		| 行を丸ごと直していたので、メッセージの中の src/a.go まで src\a.go を期待していた。fnaze の出力は正しい（bug 3f20f88ee2）
+.claude/
+	rules/
+		testing.md	CI の落とし穴に、期待値の行を丸ごと filepath.FromSlash しないことを足した
+.mtqg/	mtqg で記録した（ファイルは直接編集していない）
+	journal.jsonl	bug 3f20f88ee2 を足して閉じた
