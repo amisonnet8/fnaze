@@ -1,0 +1,8 @@
+# FNAZE_LANG をやめ、crube の設定と同じ形にした（英語が既定、日本語は --lang ja）
+.claude/
+	rules/
+		fnaze-usage.md	言語の設定の節を書き直した。crube と同じく FNAZE_LANG は置かず、書くときはいつも --lang を明示する
+.mtqg/
+	journal.jsonl	決まりを記録（q 227aaf42c3・回答 d5efa6ddfa）と memo 8648d5bda7
+.devcontainer/
+	devcontainer.json	containerEnv の FNAZE_LANG=ja を外した

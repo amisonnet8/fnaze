@@ -1,0 +1,8 @@
+# Drop FNAZE_LANG and match how crube is set up: English by default, Japanese with --lang ja
+.claude/
+	rules/
+		fnaze-usage.md	Rewrote the language section: FNAZE_LANG is not set, as with crube; always pass --lang when writing
+.mtqg/
+	journal.jsonl	Recorded the decision (q 227aaf42c3, answer d5efa6ddfa) and memo 8648d5bda7
+.devcontainer/
+	devcontainer.json	Removed FNAZE_LANG=ja from containerEnv again

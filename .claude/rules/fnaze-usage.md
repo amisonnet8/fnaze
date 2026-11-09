@@ -4,8 +4,8 @@
 
 ## 言語の設定
 
-- `FNAZE_LANG=ja`：言語を省いたコマンド（`show`・`log`・`status`・`set`など）が`ja`を使う。`.devcontainer/devcontainer.json`の`containerEnv`（人間のターミナル。コンテナを作り直すと効く）と、`.claude/settings.json`の`env`（Claude Code の Bash。人間が管理する）に置く
-- 書くときは、設定に頼らず**いつも`--lang en`・`--lang ja`を明示する**（設定がまだ効いていない環境でも同じ結果になる）
+- crube（`.claude/rules/crube-usage.md`）と同じ形にする。**`FNAZE_LANG`は設定しない**（`.devcontainer/`にも`.claude/settings.json`にも置かない）。言語を省いたコマンドは英語（`en`）を使い、日本語は`--lang ja`で指定する
+- 書くときは、**いつも`--lang en`・`--lang ja`を明示する**（手元の環境に`FNAZE_LANG`があっても、同じ結果になる）
 
 ## コミットのたびに
 
