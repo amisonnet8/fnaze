@@ -143,6 +143,13 @@ func TestBuildVersion(t *testing.T) {
 }
 
 func TestUsageAndVersion(t *testing.T) {
+	// The summaries start two spaces after the longest name, completion (the
+	// whole usage is checked in e2e).
+	for _, line := range []string{"\n  init        create .fnaze/changes/\n", "\n  completion  print a shell completion script\n"} {
+		if !strings.Contains(usage, line) {
+			t.Errorf("the usage has no line %q:\n%s", line, usage)
+		}
+	}
 	code, out, errs := run(t, "")
 	want(t, code, out, errs, 2, "", usage)
 	for _, a := range []string{"--help", "-h", "help"} {

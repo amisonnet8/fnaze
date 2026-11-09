@@ -172,3 +172,24 @@ CLI: mcp に FNAZE_LANG を渡さない | internal/cli/cli.go | EnvLang:    r.en
 補完: パスを --lang・--group でなく既定から出す | internal/cli/complete.go | res, err := c.Show(p.lang, p.group) | res, err := c.Show("", "")
 補完: 説明を60桁より短く切る | internal/cli/complete.go | const candidateWidth = 60 | const candidateWidth = 59
 補完: 候補を出さない | internal/cli/complete.go | _, _ = io.WriteString(env.Stdout, b.String()) | _, _ = io.WriteString(env.Stdout, "")
+CLI: 使い方の一覧で、説明をいちばん長い名前＋空白2つから始める | internal/cli/cli.go | "  %-*s  %s\n" | "  %-*s%s\n"
+CLI: 使い方の一覧の幅を、いちばん長い名前にする | internal/cli/cli.go | 		width = max(width, len(name)) | 		width = max(width, len(name)-2)
+# e2e（本物のシェル・ビルドした fnaze・docs の例）が捕まえるもの。全テスト（go test ./...）で回す
+組の指定で、当たる組が無いときの文言 | internal/core/core.go | 	case 0:⏎		return nil, fmt.Errorf("no group | 	case -1:⏎		return nil, fmt.Errorf("no group
+言語ごとのずれのメッセージが、組の最初のファイルを指す | internal/core/commands.go | changesPath(g.Files[0].File()))}) | changesPath(g.Files[i].File()))})
+bash の補完が、パターンを引用符で囲む | internal/cli/completions/fnaze.bash | value="'${value//\'/\'\\\'\'}'" | value="$value"
+bash の補完が、打った語の引用符を外す | internal/cli/completions/fnaze.bash | _fnaze_unquote "${COMP_WORDS[COMP_CWORD]}"⏎ | REPLY="${COMP_WORDS[COMP_CWORD]}"⏎
+bash の補完が、空の語も --word で渡す | internal/cli/completions/fnaze.bash | "--word=$REPLY" -- | $REPLY --
+zsh の補完が、前の語を渡す | internal/cli/completions/fnaze.zsh | "${(@Q)words[2,CURRENT-1]}" | "${(@Q)words[3,CURRENT-1]}"
+zsh の補完が、説明を : で添える | internal/cli/completions/fnaze.zsh | item+=":${line#*$'\t'}" | item+=" ${line#*$'\t'}"
+fish の補完が、コマンド名を除いて渡す | internal/cli/completions/fnaze.fish |     set -e words[1]⏎    # The word being typed |     ⏎    # The word being typed
+# fish の "--word=$cur" の引用符を外す変異は、意味が同じなので残した（.claude/rules/testing.md「意味が同じなので残した変異」）
+# fish の補完が、空の語も --word で渡す | internal/cli/completions/fnaze.fish | "--word=$cur" -- $words | --word=$cur -- $words
+PowerShell の補完が、パターンを引用符で囲む | internal/cli/completions/fnaze.ps1 | { $text = "'" + ($value -replace "'", "''") + "'" } | { $text = $value }
+PowerShell の補完が、カーソルより前の語だけを渡す | internal/cli/completions/fnaze.ps1 | -lt $cursorPosition | -le $cursorPosition
+pre-commit の例が、説明のファイルを足さないコミットを止める | docs/examples/pre-commit | --diff-filter=A | --diff-filter=M
+pre-commit の例が、status --require で止める | docs/examples/pre-commit | fnaze status --require | fnaze status
+show の例が、本物の出力と合う | docs/reference/commands.md |     session.go    Extend the lifetime on every access | session.go    Extend the lifetime on every access
+log の例が、本物の出力と合う（日本語版） | docs/reference/commands_ja.md | en,ja  3  Log | en,ja  2  Log
+補完の例が、本物の候補と合う | docs/reference/commands.md | src/auth/*_test.go   Tests | src/auth/*.go   Tests
+ファイルの形式の例が、例のファイルと合う | docs/reference/file-format_ja.md | 		*_test.go	延長のテストを足す | 		*_test.go	延長のテストを書く

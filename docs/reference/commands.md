@@ -21,6 +21,7 @@ The file format is in `file-format.md`. "Group" and "root" in this document have
 - **Exit code**: `0` on success, `1` only when `status --require` reports something, and `2` on any error (a wrong command line included)
 - **Text output** (without `--json`): paths are relative to the current directory, so that they can be opened as they are (in JSON they are relative to the root). Nothing is colored. `init`, `set` and `rm` print nothing when they succeed
 - **Errors** go to standard error as `fnaze: <message>`
+- **Messages** (of errors, and of the items of `status`) are the same in the text output, in JSON and in MCP, so a path inside a message is relative to the root, wherever fnaze runs
 - fnaze writes nothing outside `.fnaze/`. It runs no other program (git included)
 
 ## JSON

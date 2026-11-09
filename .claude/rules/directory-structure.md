@@ -20,6 +20,7 @@
 ├── .crube/                 ← このリポジトリのファイルの説明（crube。`structure.txt`は英語、`structure_ja.txt`は日本語、`ignore`は`.gitignore`に合わせて手で保つ）。**コミットする**
 ├── cmd/fnaze/              ← 実行ファイル fnaze の main（引数を internal/cli に渡すだけ）
 ├── internal/               ← このモジュールの中だけで使うコード（cli がコマンドライン、mcpserver が MCP サーバー、core がすべての判定）
+├── e2e/                    ← ビルドした fnaze を動かすテストと、docs の例を実際の出力と突き合わせるテスト（`go test ./...`で動く。`.claude/rules/testing.md`「e2e」）
 ├── tools/licenses/         ← 配布物に入れる依存のライセンス文を集める道具（goreleaser が`go run`で動かす。実行ファイルには組み込まれない）
 ├── docs/                   ← 文書
 ├── .devcontainer/          ← 開発環境（devcontainer.json、postCreate.sh）

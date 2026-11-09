@@ -115,3 +115,10 @@ cmd/	Executables
 	fnaze/	The fnaze command
 		main.go	main: passes the arguments and the version to internal/cli
 go.sum	Checksums of the dependencies
+e2e/	End-to-end tests: the built fnaze, its MCP server, the completion scripts in real shells, and the examples of docs/
+	| Runs with go test ./... (qsoku check). TestMain builds fnaze once; a shell or git that is not installed is skipped
+	helpers_test.go	Builds fnaze once (TestMain) and runs it as a program, or in this process with a fixed clock and randomness
+	commands_test.go	Every command of the built fnaze, as a user runs them: a subdirectory, FNAZE_LANG, -C, --json, errors, help
+	docs_test.go	Checks every code block of docs/reference/ and docs/examples/ against what fnaze prints, and runs the pre-commit example in git
+	mcp_test.go	The built fnaze mcp over standard input and output: the tools offered, and the same JSON and errors as --json
+	completion_test.go	The completion scripts in real bash, zsh, fish and PowerShell, with the built fnaze on the PATH

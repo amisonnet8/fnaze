@@ -43,8 +43,13 @@ var order = []string{"init", "new", "set", "rm", "status", "show", "log", "mcp",
 var usage = func() string {
 	var b strings.Builder
 	b.WriteString("usage: fnaze <command> [arguments]\n\ncommands:\n")
+	// The summaries start two spaces after the longest name.
+	width := 0
 	for _, name := range order {
-		fmt.Fprintf(&b, "  %-8s%s\n", name, commands[name].summary)
+		width = max(width, len(name))
+	}
+	for _, name := range order {
+		fmt.Fprintf(&b, "  %-*s  %s\n", width, name, commands[name].summary)
 	}
 	b.WriteString("\ncommon options: -C <dir>  --json\n")
 	b.WriteString("see fnaze <command> --help, and fnaze --version\n")

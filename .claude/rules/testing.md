@@ -42,11 +42,21 @@
   - `internal/format`の`chain`の`len(e.Path) > len(next.Path)`→`>=`：長さが同じ祖先が2つあるのは、同じパスが2つあるとき（形の誤り）だけで、そのファイルには`set`・`rm`が書かない
   - `internal/format`の`Remove`がエラーと一緒に返す`0`：エラーのときに添える値
   - `internal/core`の`ReadDir(-1)`→`-2`・`0`：0以下は、どれも全部を読む
-  - `internal/core`の組の指定の`case 0:`と、言語ごとのずれのメッセージの`g.Files[0]`：変わるのはメッセージだけ。文言は見え方の了承（todo `4838f9a5f0`）で決め、e2e（todo `f61854d051`）で確かめる
   - `internal/cli`のコマンドの`return 0, err`の`0`：エラーのとき、終了コードは`Run`が`fail`で決める
   - `internal/cli`の`pad`の`max(…, 0)`→`-1`、`showText`の`col := 0`と`logText`の列の幅の初期値→`1`・`-1`：パス・言語・短い名前は1桁より狭くならず、列はいちばん広いものより狭くならない
   - `internal/cli`の`nextLevel`が返す`false`→`true`：パスの候補は、最後に語の先頭で絞り直すので、語で始まらないもの（空の値）は残らない
   - `internal/cli`の`shortNames`の`n < len(id)`→`<=`：組の名前全体がほかの組の先頭になるのは、同じ名前が2つあるとき（ありえない）だけ
+  - `internal/cli/completions/fnaze.fish`の`"--word=$cur"`の引用符を外す：語が空のとき、`--word=`ごと消えるが、`__complete`は`--word`が無いときも空の語として扱う
+
+## e2e
+
+`e2e/`（パッケージ`e2e`）は、利用者が出会う形の fnaze を確かめる。`go test ./...`に入るので、`qsoku check`と CI の3つの OS で動く。
+
+- **ビルドした fnaze をプログラムとして動かす**：`TestMain`が`go build`で1回だけ作る（版は`v0.1.0`）。全コマンド（サブディレクトリから、`FNAZE_LANG`、`-C`、`--json`、エラー、ヘルプ）、`fnaze mcp`を標準入出力でつないだ道具（`--json`と1バイトまで同じか）、補完のスクリプトを本物のシェルで（「シェル向けのもの」）
+- **docs の例を、実際の出力と突き合わせる**：`docs/reference/`のコードブロックは、ページの中の順番で見分け、知らないブロックがあると落ちる（例を足したら、確かめ方も足す）。英語と日本語の両方のページを見る。`new`の例のように日時と UUID が決まっている例は、このプロセスの中で`cli.Run`を動かす（時計と乱数を固める）。`log`の例は`time.Local`を`Asia/Tokyo`にする（`time/tzdata`を読み込むので、どの OS でも動く）
+- `docs/examples/pre-commit`は、本物の git のリポジトリのフックにして動かす（`HOME`・`GIT_CONFIG_GLOBAL`を一時ディレクトリに向ける）。git か`sh`が無ければ飛ばす
+- **同じ秒に2つの組を作ると、名前の順は作った順とは限らない**（UUID の順）。2つ目の組を名前の順で探さない
+- 子のプロセスには`PWD`を渡さない（別のディレクトリを指すことがある）。出力のパスと比べる一時ディレクトリは、`filepath.EvalSymlinks`で解決する（「GitHub Actions CIの落とし穴」）
 
 ## Trivy：既知の脆弱性とライセンス
 
