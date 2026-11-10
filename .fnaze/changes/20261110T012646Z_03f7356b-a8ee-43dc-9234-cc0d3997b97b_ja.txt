@@ -1,0 +1,3 @@
+# todo ⑫を閉じた。README と topics の確認が OK になった
+.mtqg/
+	journal.jsonl	q 67b79ce9e2（topics、回答 30c6858bdc）と q fd9ba7ee97（README の見た目、回答 34a4c960b5）に答えを記録し、todo a6de97d05f を閉じた
