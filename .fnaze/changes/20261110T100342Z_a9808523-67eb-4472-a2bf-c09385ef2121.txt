@@ -1,0 +1,3 @@
+# Record the routine checks after rebuilding the container
+.mtqg/
+	journal.jsonl	Added memo 579f6d9b72: every routine check passed after the rebuild
