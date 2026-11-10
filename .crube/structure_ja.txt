@@ -52,6 +52,12 @@ docs/	プロジェクトの文書
 		commands_ja.md	commands.md の日本語版
 		file-format.md	説明のファイルの置き場所・名前・書き方（英語）
 		file-format_ja.md	file-format.md の日本語版
+	assets/	README の画像
+		header.svg	README の先頭のヘッダーの画像。手で描いたもの
+		demo.svg	ターミナルで動く fnaze。README.md の先頭に置く
+			| TestDemoSVG（e2e/demo_test.go）が fnaze の出力から作る。作り直すときは qsoku demo。
+		demo_ja.svg	FNAZE_LANG=ja で動く fnaze。README_ja.md の先頭に置く
+			| demo.svg と一緒に TestDemoSVG が作る。作り直すときは qsoku demo。
 internal/	このモジュールの中だけで使うパッケージ
 	format/	説明のファイル1つを読み書きし、そのファイルだけで分かる問題を見つける
 		| 題・エントリ・detail。形の誤り・空の題・空の desc。読み方と書き方は crube の structure.txt に合わせた
@@ -102,7 +108,7 @@ internal/	このモジュールの中だけで使うパッケージ
 .mcp.json	Claude Code に mtqg と、crube（英語・日本語）と、fnaze 自身（1つ）の MCP サーバーをつなぐ設定
 CLAUDE.md	このリポジトリでの Claude Code のルールと、読むべきルールファイルの案内
 LICENSE	MIT ライセンス
-README.md	fnaze とは何かと、文書の場所（英語の正本。日本語版は README_ja.md）
+README.md	fnaze とは何か、入れ方と使い方、文書の場所（英語の正本。日本語版は README_ja.md）
 go.mod	Go モジュールと依存
 qsokufile	ビルド・テスト・lint の名前つきコマンド（qsoku）
 trivy.yaml	Trivy の設定：何を脆弱性・ライセンスの失敗とみなすか
@@ -121,9 +127,10 @@ e2e/	端から端までのテスト：ビルドした fnaze、その MCP サー�
 	| go test ./...（qsoku check）で動く。TestMain が fnaze を1回ビルドする。入っていないシェルや git は飛ばす
 	helpers_test.go	fnaze を1回ビルドし（TestMain）、プログラムとして動かす。時計と乱数を固めて、このプロセスの中で動かすこともできる
 	commands_test.go	ビルドした fnaze の全コマンドを、使う人と同じように動かす：サブディレクトリ、FNAZE_LANG、-C、--json、エラー、ヘルプ
-	docs_test.go	docs/reference/ と docs/examples/ のコードブロックをすべて、fnaze の実際の出力と突き合わせ、pre-commit の例を git で動かす
+	docs_test.go	docs/reference/・docs/examples/・README のコードブロックをすべて、fnaze の実際の出力と突き合わせ、pre-commit の例を git で動かす
 	mcp_test.go	ビルドした fnaze mcp を標準入出力でつなぐ：出す道具と、--json と同じ JSON・エラー
 	completion_test.go	補完のスクリプトを、本物の bash・zsh・fish・PowerShell で、ビルドした fnaze を PATH に置いて動かす
+	demo_test.go	fnaze の出力から docs/assets/demo.svg と demo_ja.svg を描き、今の出力と合っているかを確かめる
 .fnaze/	fnaze 自身のデータ：このリポジトリのコミットごとの説明を fnaze で書いたもの（.claude/rules/fnaze-usage.md）
 	changes/	説明のファイル。コミット1つにつき組1つ（英語と日本語。初めのころは日本語だけ）
 		*.txt	説明のファイル：<日時>_<UUID>_ja.txt。fnaze new で作り、fnaze title・set・rm で書く

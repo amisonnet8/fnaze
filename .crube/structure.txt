@@ -52,6 +52,12 @@ docs/	Documents of the project
 		commands_ja.md	Japanese translation of commands.md
 		file-format.md	Where the description files are, their names, and how they are written
 		file-format_ja.md	Japanese translation of file-format.md
+	assets/	Images of the README
+		header.svg	The header image at the top of the README, drawn by hand
+		demo.svg	fnaze in a terminal, at the top of README.md
+			| Made by TestDemoSVG (e2e/demo_test.go) from what fnaze prints; run qsoku demo to make it again.
+		demo_ja.svg	fnaze in a terminal with FNAZE_LANG=ja, at the top of README_ja.md
+			| Made by TestDemoSVG with demo.svg; run qsoku demo to make it again.
 internal/	Packages used only inside this module
 	format/	Reads and writes one description file, and finds the problems of that file alone
 		| Title, entries, details; format errors, empty title and empty descs. Reading and writing follow crube's structure.txt
@@ -102,7 +108,7 @@ internal/	Packages used only inside this module
 .mcp.json	MCP servers for Claude Code: mtqg, crube in English and Japanese, and fnaze itself (one server)
 CLAUDE.md	Rules for Claude Code in this repository, and the rule files to read
 LICENSE	MIT license
-README.md	What fnaze is, and where its documents are (authoritative; README_ja.md is the Japanese translation)
+README.md	What fnaze is, how to install and use it, and where its documents are (authoritative; README_ja.md is the Japanese translation)
 go.mod	Go module and its dependencies
 qsokufile	Named commands for build, test and lint (qsoku)
 trivy.yaml	Trivy settings: what counts as a vulnerability or license failure
@@ -121,9 +127,10 @@ e2e/	End-to-end tests: the built fnaze, its MCP server, the completion scripts i
 	| Runs with go test ./... (qsoku check). TestMain builds fnaze once; a shell or git that is not installed is skipped
 	helpers_test.go	Builds fnaze once (TestMain) and runs it as a program, or in this process with a fixed clock and randomness
 	commands_test.go	Every command of the built fnaze, as a user runs them: a subdirectory, FNAZE_LANG, -C, --json, errors, help
-	docs_test.go	Checks every code block of docs/reference/ and docs/examples/ against what fnaze prints, and runs the pre-commit example in git
+	docs_test.go	Checks every code block of docs/reference/, docs/examples/ and the READMEs against what fnaze prints, and runs the pre-commit example in git
 	mcp_test.go	The built fnaze mcp over standard input and output: the tools offered, and the same JSON and errors as --json
 	completion_test.go	The completion scripts in real bash, zsh, fish and PowerShell, with the built fnaze on the PATH
+	demo_test.go	Draws docs/assets/demo.svg and demo_ja.svg from what fnaze prints, and checks they are up to date
 .fnaze/	fnaze's own data: the description of each commit of this repository, written with fnaze (.claude/rules/fnaze-usage.md)
 	changes/	The description files, one group per commit (English and Japanese; earlier ones Japanese only)
 		*.txt	A description file: <datetime>_<UUID>_ja.txt, made by fnaze new and written by fnaze title, set and rm

@@ -50,7 +50,7 @@
 - **`.gitattributes`**: `* text=auto eol=lf`。Windowsランナーでの改行コード変換による誤検知を防ぐ（`.claude/rules/testing.md`）。`.mtqg/`の中の`.gitattributes`は`mtqg init`が置くもので、別物
 - **`.gitignore`のドットファイル**: ルート直下のドットファイル・ドットディレクトリは**許可リスト方式**（`/.*`を無視し、追跡するものだけ`!`で戻す。`.claude/`の中は`/.claude/*`を無視して`settings.json`・`rules/`・`skills/`・`hooks/`だけ戻す）。サンドボックスが作業ディレクトリ直下に出すダミーファイルを`git add -A`で混ぜないため（`.claude/rules/testing.md`）。**追跡するドットファイルを新しく足すときは、`.gitignore`に`!`の行を足すこと**。足さないと`git add`が無視する
 - **配布物（ビルド済みバイナリ）**: リポジトリにコミットしない。`.gitignore`には**ルート直下に限定して**書く（`/名前`）。名前だけを書くと、同名のソースディレクトリまで無視される
-- **`docs/`**: 文書。`design/`（設計）、`reference/`（仕様）、`examples/`（使う人のための例）。どれも英語が正本で、`*_ja.md`が日本語版（`README.md`と`README_ja.md`も同じ）。言語の決まりは`CLAUDE.md`「ドキュメントの言語」
+- **`docs/`**: 文書。`design/`（設計）、`reference/`（仕様）、`examples/`（使う人のための例）、`assets/`（READMEの画像。`header.svg`は手で描き、`demo.svg`・`demo_ja.svg`は`qsoku demo`が作る。`.claude/rules/testing.md`「e2e」）。どれも英語が正本で、`*_ja.md`が日本語版（`README.md`と`README_ja.md`も同じ）。言語の決まりは`CLAUDE.md`「ドキュメントの言語」
 - **`.fnaze/`**: コミットごとの説明を、fnaze 自身のコマンドで書き、そのコミットに入れる（`.claude/rules/fnaze-usage.md`）。**コミットする**（`.gitignore`と`.crube/ignore`の`!/.fnaze/`）
 - **`.githooks/`**: 追跡する git のフック。`.git/hooks/`は git に乗らないので、ここに置いて`core.hooksPath`で指す（`.devcontainer/postCreate.sh`）。`pre-commit`は`docs/examples/pre-commit`と同じ中身にし、e2e の`TestOwnPreCommit`が同じことを確かめる（例を直したら、こちらも写す）
 - **シェルスクリプト**: 最小限にする。追跡中のものは`qsoku shellcheck`の対象になる（`.claude/rules/testing.md`）

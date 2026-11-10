@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="236" viewBox="0 0 1040 236" role="img" aria-label="fnaze in a terminal: new, title, set, status, show and log">
+<!-- Made by TestDemoSVG (e2e/demo_test.go) from what fnaze prints; run qsoku demo to make it again. -->
+<style>
+text{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"DejaVu Sans Mono","Noto Sans Mono CJK JP",monospace;font-size:14px;fill:#c9d1d9;white-space:pre}
+.prompt{fill:#3fb950;font-weight:bold}.cmd{fill:#f0f6fc;font-weight:bold}.title{fill:#f0f6fc;font-weight:bold}.path{fill:#79c0ff}.detail{fill:#8b949e}.warn{fill:#d29922}.dim{fill:#8b949e}
+.cover{fill:#0d1117;transform-box:fill-box;transform-origin:right}
+.c0-0{animation:c0-0 18.08s linear infinite}
+@keyframes c0-0{0%,3.32%{opacity:0}3.33%,100%{opacity:1}}
+.o0-0{animation:o0-0 18.08s linear infinite}
+@keyframes o0-0{0%,7.25%{opacity:0}7.26%,100%{opacity:1}}
+.c0-1{animation:c0-1 18.08s linear infinite}
+@keyframes c0-1{0%,11.67%{opacity:0}11.68%,100%{opacity:1}}
+.c0-2{animation:c0-2 18.08s linear infinite}
+@keyframes c0-2{0%,29.09%{opacity:0}29.10%,100%{opacity:1}}
+.c0-3{animation:c0-3 18.08s linear infinite}
+@keyframes c0-3{0%,44.75%{opacity:0}44.76%,100%{opacity:1}}
+.o0-3{animation:o0-3 18.08s linear infinite}
+@keyframes o0-3{0%,49.34%{opacity:0}49.35%,100%{opacity:1}}
+.s0{animation:s0 18.08s linear infinite}
+@keyframes s0{0%,3.32%{opacity:0}3.33%,60.40%{opacity:1}60.41%,100%{opacity:0}}
+.c1-0{animation:c1-0 18.08s linear infinite}
+@keyframes c1-0{0%,60.40%{opacity:0}60.41%,100%{opacity:1}}
+.o1-0{animation:o1-0 18.08s linear infinite}
+@keyframes o1-0{0%,64.55%{opacity:0}64.56%,100%{opacity:1}}
+.s1{animation:s1 18.08s linear infinite}
+@keyframes s1{0%,60.40%{opacity:0}60.41%,76.71%{opacity:1}76.72%,100%{opacity:0}}
+.c2-0{animation:c2-0 18.08s linear infinite}
+@keyframes c2-0{0%,76.71%{opacity:0}76.72%,100%{opacity:1}}
+.o2-0{animation:o2-0 18.08s linear infinite}
+@keyframes o2-0{0%,80.64%{opacity:0}80.65%,100%{opacity:1}}
+.s2{animation:s2 18.08s linear infinite}
+@keyframes s2{0%,76.71%{opacity:0}76.72%,91.70%{opacity:1}91.71%,100%{opacity:0}}
+.k0-0{animation:k0-0 18.08s infinite}
+@keyframes k0-0{0%,3.32%{transform:scaleX(1);animation-timing-function:steps(9,end)}5.31%,100%{transform:scaleX(0)}}
+.k0-1{animation:k0-1 18.08s infinite}
+@keyframes k0-1{0%,11.67%{transform:scaleX(1);animation-timing-function:steps(70,end)}27.16%,100%{transform:scaleX(0)}}
+.k0-2{animation:k0-2 18.08s infinite}
+@keyframes k0-2{0%,29.09%{transform:scaleX(1);animation-timing-function:steps(62,end)}42.81%,100%{transform:scaleX(0)}}
+.k0-3{animation:k0-3 18.08s infinite}
+@keyframes k0-3{0%,44.75%{transform:scaleX(1);animation-timing-function:steps(12,end)}47.40%,100%{transform:scaleX(0)}}
+.k1-0{animation:k1-0 18.08s infinite}
+@keyframes k1-0{0%,60.40%{transform:scaleX(1);animation-timing-function:steps(10,end)}62.61%,100%{transform:scaleX(0)}}
+.k2-0{animation:k2-0 18.08s infinite}
+@keyframes k2-0{0%,76.71%{transform:scaleX(1);animation-timing-function:steps(9,end)}78.71%,100%{transform:scaleX(0)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<rect x="0.5" y="0.5" width="1039" height="235" rx="10" fill="#0d1117" stroke="#30363d"/>
+<path d="M0.5 36.0H1039.1" stroke="#30363d"/>
+<circle cx="20" cy="18" r="6" fill="#ff5f56"/><circle cx="40" cy="18" r="6" fill="#ffbd2e"/><circle cx="60" cy="18" r="6" fill="#27c93f"/>
+<text x="519.8" y="23" text-anchor="middle" class="dim" style="font-size:12px">fnaze</text>
+<g class="s0">
+<g class="c0-0">
+<text y="71.0"><tspan x="20.0" class="prompt">$</tspan><tspan x="36.8 45.2 53.6 62.0 70.4 87.2 95.6 104.0" class="cmd">fnazenew</tspan></text>
+<rect class="k0-0 cover" x="36.8" y="56.0" width="77.6" height="20.0"/>
+</g>
+<g class="o0-0">
+<text y="91.0"><tspan x="20.0 28.4 36.8 45.2 53.6 62.0 70.4 78.8 87.2 95.6 104.0 112.4 120.8 129.2 137.6 146.0 154.4 162.8 171.2 179.6 188.0 196.4 204.8 213.2 221.6 230.0 238.4 246.8 255.2 263.6 272.0 280.4 288.8 297.2 305.6 314.0 322.4 330.8 339.2 347.6 356.0 364.4 372.8 381.2 389.6 398.0 406.4 414.8 423.2 431.6 440.0 448.4 456.8 465.2 473.6 482.0 490.4 498.8 507.2 515.6 524.0 532.4 540.8 549.2 557.6 566.0 574.4 582.8 591.2 599.6 608.0 616.4" class="path">.fnaze/changes/20261108T010203Z_00010203-0405-4607-8809-0a0b0c0d0e0f.txt</tspan></text>
+<text y="111.0"><tspan x="20.0 28.4 36.8 45.2 53.6 62.0 70.4 78.8 87.2 95.6 104.0 112.4 120.8 129.2 137.6 146.0 154.4 162.8 171.2 179.6 188.0 196.4 204.8 213.2 221.6 230.0 238.4 246.8 255.2 263.6 272.0 280.4 288.8 297.2 305.6 314.0 322.4 330.8 339.2 347.6 356.0 364.4 372.8 381.2 389.6 398.0 406.4 414.8 423.2 431.6 440.0 448.4 456.8 465.2 473.6 482.0 490.4 498.8 507.2 515.6 524.0 532.4 540.8 549.2 557.6 566.0 574.4 582.8 591.2 599.6 608.0 616.4 624.8 633.2 641.6" class="path">.fnaze/changes/20261108T010203Z_00010203-0405-4607-8809-0a0b0c0d0e0f_ja.txt</tspan></text>
+</g>
+<g class="c0-1">
+<text y="131.0"><tspan x="20.0" class="prompt">$</tspan><tspan x="36.8 45.2 53.6 62.0 70.4 87.2 95.6 104.0 112.4 120.8 137.6 154.4 171.2 188.0 204.8 221.6 238.4 255.2 272.0 288.8 305.6 322.4 339.2 356.0 372.8 389.6 406.4 423.2 440.0 456.8 473.6 490.4 507.2 524.0 540.8 557.6 574.4 591.2 608.0" class="cmd">fnazetitleセッションの期限を、クライアントごとに設定できるようにした</tspan></text>
+<rect class="k0-1 cover" x="36.8" y="116.0" width="590.0" height="20.0"/>
+</g>
+<g class="c0-2">
+<text y="151.0"><tspan x="20.0" class="prompt">$</tspan><tspan x="36.8 45.2 53.6 62.0 70.4 87.2 95.6 104.0 120.8 129.2 137.6 146.0 154.4 162.8 171.2 179.6 188.0 196.4 204.8 213.2 221.6 230.0 238.4 246.8 255.2 263.6 272.0 288.8 305.6 322.4 339.2 356.0 372.8 389.6 406.4 423.2 440.0 456.8 473.6 490.4 507.2 524.0 540.8" class="cmd">fnazesetsrc/auth/session.go期限をクライアントの設定から読む</tspan></text>
+<rect class="k0-2 cover" x="36.8" y="136.0" width="522.8" height="20.0"/>
+</g>
+<g class="c0-3">
+<text y="171.0"><tspan x="20.0" class="prompt">$</tspan><tspan x="36.8 45.2 53.6 62.0 70.4 87.2 95.6 104.0 112.4 120.8 129.2" class="cmd">fnazestatus</tspan></text>
+<rect class="k0-3 cover" x="36.8" y="156.0" width="102.8" height="20.0"/>
+</g>
+<g class="o0-3">
+<text y="191.0"><tspan x="20.0 28.4 36.8 45.2 53.6 62.0 70.4 78.8 87.2 95.6 104.0 112.4 120.8 129.2 137.6 146.0 154.4 162.8 171.2 179.6 188.0 196.4 204.8 213.2 221.6 230.0 238.4 246.8 255.2 263.6 272.0 280.4 288.8 297.2 305.6 314.0 322.4 330.8 339.2 347.6 356.0 364.4 372.8 381.2 389.6 398.0 406.4 414.8 423.2 431.6 440.0 448.4 456.8 465.2 473.6 482.0 490.4 498.8 507.2 515.6 524.0 532.4 540.8 549.2 557.6 566.0 574.4 582.8 591.2 599.6 608.0 616.4 624.8 633.2 641.6" class="dim">.fnaze/changes/20261108T010203Z_00010203-0405-4607-8809-0a0b0c0d0e0f.txt:1:</tspan><tspan x="658.4 666.8 675.2 683.6 692.0 700.4 708.8 717.2 725.6 734.0 742.4" class="warn">empty-title</tspan><tspan x="750.8 767.6 776.0 784.4 801.2 809.6 818.0 826.4 834.8 851.6 860.0 876.8 885.2 893.6 902.0 910.4">:thetitleisempty</tspan></text>
+<text y="211.0"><tspan x="20.0 28.4 36.8 45.2 53.6 62.0 70.4 78.8 87.2 95.6 104.0 112.4 120.8 129.2 137.6 146.0 154.4 162.8 171.2 179.6 188.0 196.4 204.8 213.2 221.6 230.0 238.4 246.8 255.2 263.6 272.0 280.4 288.8 297.2 305.6 314.0 322.4 330.8 339.2 347.6 356.0 364.4 372.8 381.2 389.6 398.0 406.4 414.8 423.2 431.6 440.0 448.4 456.8 465.2 473.6 482.0 490.4 498.8 507.2 515.6 524.0 532.4 540.8 549.2 557.6 566.0 574.4 582.8 591.2 599.6 608.0 616.4 624.8 633.2 641.6" class="dim">.fnaze/changes/20261108T010203Z_00010203-0405-4607-8809-0a0b0c0d0e0f.txt:4:</tspan><tspan x="658.4 666.8 675.2 683.6 692.0 700.4 708.8 717.2 725.6 734.0" class="warn">empty-desc</tspan><tspan x="742.4 759.2 767.6 776.0 784.4 792.8 801.2 809.6 818.0 826.4 834.8 843.2 851.6 860.0 868.4 876.8 885.2 893.6 902.0 910.4 927.2 935.6 944.0 960.8 969.2 986.0 994.4 1002.8 1011.2">:src/auth/session.gohasnodesc</tspan></text>
+</g>
+</g>
+<g class="s1">
+<g class="c1-0">
+<text y="71.0"><tspan x="20.0" class="prompt">$</tspan><tspan x="36.8 45.2 53.6 62.0 70.4 87.2 95.6 104.0 112.4" class="cmd">fnazeshow</tspan></text>
+<rect class="k1-0 cover" x="36.8" y="56.0" width="86.0" height="20.0"/>
+</g>
+<g class="o1-0">
+<text y="91.0"><tspan x="20.0 36.8 53.6 70.4 87.2 104.0 120.8 137.6 154.4 171.2 188.0 204.8 221.6 238.4 255.2 272.0 288.8 305.6 322.4 339.2 356.0 372.8 389.6 406.4 423.2 440.0 456.8 473.6 490.4 507.2" class="title">#セッションの期限を、クライアントごとに設定できるようにした</tspan></text>
+<text y="111.0"></text>
+<text y="131.0"><tspan x="20.0 28.4 36.8 45.2" class="path">src/</tspan></text>
+<text y="151.0"><tspan x="36.8 45.2 53.6 62.0 70.4" class="path">auth/</tspan></text>
+<text y="171.0"><tspan x="53.6 62.0 70.4 78.8 87.2 95.6 104.0 112.4 120.8 129.2" class="path">session.go</tspan><tspan x="154.4 171.2 188.0 204.8 221.6 238.4 255.2 272.0 288.8 305.6 322.4 339.2 356.0 372.8 389.6 406.4">期限をクライアントの設定から読む</tspan></text>
+</g>
+</g>
+<g class="s2">
+<g class="c2-0">
+<text y="71.0"><tspan x="20.0" class="prompt">$</tspan><tspan x="36.8 45.2 53.6 62.0 70.4 87.2 95.6 104.0" class="cmd">fnazelog</tspan></text>
+<rect class="k2-0 cover" x="36.8" y="56.0" width="77.6" height="20.0"/>
+</g>
+<g class="o2-0">
+<text y="91.0"><tspan x="20.0 28.4 36.8 45.2 53.6 62.0 70.4 78.8 87.2 95.6 104.0 112.4 120.8 129.2 137.6 146.0 154.4 162.8 171.2 179.6 188.0" class="path">20261108T010203Z_0001</tspan><tspan x="213.2 221.6 230.0 238.4 246.8 255.2 263.6 272.0 280.4 288.8 305.6 314.0 322.4 330.8 339.2 364.4 372.8 381.2 389.6 398.0 423.2 448.4 465.2 482.0 498.8 515.6 532.4 549.2 566.0 582.8 599.6 616.4 633.2 650.0 666.8 683.6 700.4 717.2 734.0 750.8 767.6 784.4 801.2 818.0 834.8 851.6 868.4 885.2 902.0 918.8">2026-11-0801:02en,ja3セッションの期限を、クライアントごとに設定できるようにした</tspan></text>
+<text y="111.0"><tspan x="20.0 28.4 36.8 45.2 53.6 62.0 70.4 78.8 87.2 95.6 104.0 112.4 120.8 129.2 137.6 146.0 154.4 162.8 171.2 179.6 188.0" class="path">20261107T021530Z_2c4c</tspan><tspan x="213.2 221.6 230.0 238.4 246.8 255.2 263.6 272.0 280.4 288.8 305.6 314.0 322.4 330.8 339.2 364.4 372.8 381.2 389.6 398.0 423.2 448.4 465.2 482.0 498.8 515.6 532.4 549.2 566.0 582.8 599.6 616.4 633.2 650.0 666.8">2026-11-0702:15en,ja3セッションの延長をログに出す</tspan></text>
+<text y="131.0"><tspan x="20.0 28.4 36.8 45.2 53.6 62.0 70.4 78.8 87.2 95.6 104.0 112.4 120.8 129.2 137.6 146.0 154.4 162.8 171.2 179.6 188.0" class="path">20261107T003426Z_8980</tspan><tspan x="213.2 221.6 230.0 238.4 246.8 255.2 263.6 272.0 280.4 288.8 305.6 314.0 322.4 330.8 339.2 364.4 372.8 381.2 389.6 398.0 423.2 448.4 465.2 482.0 498.8 515.6 532.4 549.2 566.0 582.8 599.6 616.4 633.2 650.0 666.8 683.6 700.4 717.2 734.0 750.8 767.6 784.4 801.2 818.0">2026-11-0700:34en,ja6認証のセッションの期限を、固定から延長に変えた</tspan></text>
+</g>
+</g>
+</svg>

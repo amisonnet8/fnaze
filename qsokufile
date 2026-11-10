@@ -33,3 +33,4 @@ shellcheck: (cd //; git ls-files '*.sh' '*.bash' | xargs -r shellcheck)
 # The release archives of .goreleaser.yaml, made without a tag into dist/, to
 # look at before tagging (needs goreleaser: .claude/rules/distribution.md).
 snapshot: (cd //; goreleaser check && goreleaser release --snapshot --clean)
+demo: (cd //; UPDATE_DEMO=1 go test -count=1 -run TestDemoSVG ./e2e/)

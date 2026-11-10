@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-label="fnaze: file by file, what changed and why. One line each, next to the diff.">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="0.6" stop-color="#161b22"/>
+      <stop offset="1" stop-color="#2a1f3d"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#a371f7"/>
+      <stop offset="1" stop-color="#79c0ff"/>
+    </linearGradient>
+  </defs>
+  <style>
+    .sans { font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, "Hiragino Sans", "Noto Sans JP", sans-serif; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "DejaVu Sans Mono", monospace; font-size: 14px; }
+  </style>
+
+  <rect width="1280" height="360" rx="16" fill="url(#bg)"/>
+
+  <!-- The diff: one block of changed lines per file -->
+  <rect x="56" y="56" width="248" height="248" rx="10" fill="#0d1117" stroke="#30363d"/>
+  <text x="76" y="84" class="mono" fill="#8b949e">diff</text>
+  <g>
+    <rect x="76" y="100" width="150" height="10" rx="3" fill="#f85149" opacity="0.75"/>
+    <rect x="76" y="116" width="184" height="10" rx="3" fill="#3fb950" opacity="0.8"/>
+    <rect x="76" y="132" width="120" height="10" rx="3" fill="#3fb950" opacity="0.8"/>
+  </g>
+  <g>
+    <rect x="76" y="168" width="200" height="10" rx="3" fill="#3fb950" opacity="0.8"/>
+    <rect x="76" y="184" width="140" height="10" rx="3" fill="#3fb950" opacity="0.8"/>
+  </g>
+  <g>
+    <rect x="76" y="220" width="96" height="10" rx="3" fill="#f85149" opacity="0.75"/>
+    <rect x="76" y="236" width="160" height="10" rx="3" fill="#3fb950" opacity="0.8"/>
+  </g>
+  <g>
+    <rect x="76" y="272" width="176" height="10" rx="3" fill="#f85149" opacity="0.75"/>
+  </g>
+
+  <!-- The description file beside it: one line per file -->
+  <rect x="324" y="56" width="300" height="248" rx="10" fill="#0d1117" stroke="url(#accent)" stroke-width="2"/>
+  <text x="344" y="84" class="mono" fill="#f0f6fc" font-weight="bold"># what and why</text>
+  <g class="mono">
+    <text x="344" y="122"><tspan fill="#79c0ff">session.go</tspan></text>
+    <rect x="452" y="112" width="152" height="10" rx="3" fill="#c9d1d9" opacity="0.55"/>
+    <text x="344" y="182"><tspan fill="#79c0ff">*_test.go</tspan></text>
+    <rect x="452" y="172" width="120" height="10" rx="3" fill="#c9d1d9" opacity="0.55"/>
+    <text x="344" y="234"><tspan fill="#79c0ff">auth.yaml</tspan></text>
+    <rect x="452" y="224" width="140" height="10" rx="3" fill="#c9d1d9" opacity="0.55"/>
+    <text x="344" y="278"><tspan fill="#79c0ff">old.md</tspan></text>
+    <rect x="452" y="268" width="100" height="10" rx="3" fill="#c9d1d9" opacity="0.55"/>
+  </g>
+  <!-- The links between a file's changes and its line -->
+  <g stroke="#a371f7" stroke-width="2" stroke-dasharray="4 4" opacity="0.7">
+    <path d="M304 117 H324"/>
+    <path d="M304 177 H324"/>
+    <path d="M304 229 H324"/>
+    <path d="M304 273 H324"/>
+  </g>
+
+  <!-- Name and catch copy -->
+  <text x="688" y="160" class="sans" font-size="104" font-weight="700" fill="#f0f6fc">fnaze</text>
+  <rect x="692" y="182" width="300" height="5" rx="2.5" fill="url(#accent)"/>
+  <text x="690" y="236" class="sans" font-size="30" fill="#e6edf3">File by file: what changed, and why.</text>
+  <text x="690" y="276" class="sans" font-size="22" fill="#8b949e">One line each, next to the diff.</text>
+</svg>

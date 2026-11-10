@@ -53,7 +53,8 @@
 `e2e/`（パッケージ`e2e`）は、利用者が出会う形の fnaze を確かめる。`go test ./...`に入るので、`qsoku check`と CI の3つの OS で動く。
 
 - **ビルドした fnaze をプログラムとして動かす**：`TestMain`が`go build`で1回だけ作る（版は`v0.1.0`）。全コマンド（サブディレクトリから、`FNAZE_LANG`、`-C`、`--json`、エラー、ヘルプ）、`fnaze mcp`を標準入出力でつないだ道具（`--json`と1バイトまで同じか）、補完のスクリプトを本物のシェルで（「シェル向けのもの」）
-- **docs の例を、実際の出力と突き合わせる**：`docs/reference/`のコードブロックは、ページの中の順番で見分け、知らないブロックがあると落ちる（例を足したら、確かめ方も足す）。英語と日本語の両方のページを見る。`new`の例のように日時と UUID が決まっている例は、このプロセスの中で`cli.Run`を動かす（時計と乱数を固める）。`log`の例は`time.Local`を`Asia/Tokyo`にする（`time/tzdata`を読み込むので、どの OS でも動く）
+- **docs の例を、実際の出力と突き合わせる**：`docs/reference/`のコードブロックは、ページの中の順番で見分け、知らないブロックがあると落ちる（例を足したら、確かめ方も足す）。英語と日本語の両方のページを見る。`new`の例のように日時と UUID が決まっている例は、このプロセスの中で`cli.Run`を動かす（時計と乱数を固める）。`log`の例は`time.Local`を`Asia/Tokyo`にする（`time/tzdata`を読み込むので、どの OS でも動く）。`README.md`・`README_ja.md`のコードブロックも同じ形で確かめる（`TestReadmeExamples`。すぐに試すの手順は、`fnaze`の行を新しいディレクトリで順に動かす）
+- **READMEの動いている様子（`docs/assets/demo.svg`・`demo_ja.svg`）は、fnaze の出力から作る**：`TestDemoSVG`が`demoSession`を`runCLI`で動かして描き、ファイルと比べる。出力が変わって落ちたら`qsoku demo`で作り直し、画像を見てからコミットする。`header.svg`は手で描いたもの
 - `docs/examples/pre-commit`は、本物の git のリポジトリのフックにして動かす（`HOME`・`GIT_CONFIG_GLOBAL`を一時ディレクトリに向ける）。git か`sh`が無ければ飛ばす
 - **同じ秒に2つの組を作ると、名前の順は作った順とは限らない**（UUID の順）。2つ目の組を名前の順で探さない
 - 子のプロセスには`PWD`を渡さない（別のディレクトリを指すことがある）。出力のパスと比べる一時ディレクトリは、`filepath.EvalSymlinks`で解決する（「GitHub Actions CIの落とし穴」）

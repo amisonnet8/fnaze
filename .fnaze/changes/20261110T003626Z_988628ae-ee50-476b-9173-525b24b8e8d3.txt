@@ -1,0 +1,17 @@
+# Write the README in English and Japanese, with a header, a demo made from real output, and tests for its examples
+.claude/
+	rules/
+		directory-structure.md	Added docs/assets/ to the docs note
+		qsoku-usage.md	Added qsoku demo to the table
+		testing.md	Added how the README examples and the demo images are checked
+.mtqg/
+	journal.jsonl	Recorded the Description (q fdc679b379, answer 030ffc1fdf) and memo ba053333cf
+.crube/	Described docs/assets/ and its images and e2e/demo_test.go, and updated README.md and e2e/docs_test.go, in both languages (crube set)
+README.md	Rewrote it: the Description as the lead, badges, demo, features, install, quick start, usage, git and AI agents, docs; removed "Not implemented yet"
+README_ja.md	The Japanese translation of the new README.md
+docs/
+	assets/	New: header.svg drawn by hand, and demo.svg and demo_ja.svg made by qsoku demo
+e2e/
+	demo_test.go	New: TestDemoSVG draws the demo images from what fnaze prints (new, title, set, status, show, log), as crube does
+	docs_test.go	Added TestReadmeExamples: checks every code block of both READMEs, and runs the quick start
+qsokufile	Added demo, which makes the demo images again (UPDATE_DEMO=1)

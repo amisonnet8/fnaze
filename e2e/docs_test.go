@@ -1,6 +1,7 @@
 package e2e
 
 import (
+	"encoding/json"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -223,6 +224,107 @@ func TestFileFormatExamples(t *testing.T) {
 		}
 		return true
 	})
+}
+
+// TestReadmeExamples checks the examples of README.md and README_ja.md.
+func TestReadmeExamples(t *testing.T) {
+	ja := func(page string) bool { return strings.HasSuffix(page, "_ja.md") }
+	checkBlocks(t, docPages("README"), 7, func(t *testing.T, page string, i int, body string) bool {
+		switch i {
+		case 0: // go install, of the module of go.mod
+			mod := strings.Fields(strings.SplitN(read(t, "..", "go.mod"), "\n", 2)[0])[1]
+			if want := "go install " + mod + "/cmd/fnaze@latest\n"; body != want {
+				t.Errorf("the README says:\n%s\nwant:\n%s", body, want)
+			}
+		case 1: // the quick start: every fnaze line runs in a new directory
+			dir, err := filepath.EvalSymlinks(t.TempDir())
+			if err != nil {
+				t.Fatal(err)
+			}
+			for _, line := range strings.Split(strings.ReplaceAll(body, "\\\n", ""), "\n") {
+				args := shellWords(line)
+				if len(args) == 0 || args[0] != "fnaze" {
+					continue
+				}
+				if r := runCLI("", append(args[1:], "-C", dir)...); r.code != 0 || r.stderr != "" {
+					t.Errorf("%s:\n%s", line, r)
+				}
+			}
+		case 2: // a file: the older example, in the language of the page
+			name := exampleOld + ".txt"
+			if ja(page) {
+				name = exampleOld + "_ja.txt"
+			}
+			if want := read(t, "..", "docs/examples/changes/"+name); body != want {
+				t.Errorf("the README shows:\n%s\ndocs/examples/changes/%s is:\n%s", body, name, want)
+			}
+		case 3, 4: // show and log of docs/examples/changes/, in TZ=Asia/Tokyo
+			tokyo, err := time.LoadLocation("Asia/Tokyo")
+			if err != nil {
+				t.Fatal(err)
+			}
+			defer func(l *time.Location) { time.Local = l }(time.Local)
+			time.Local = tokyo
+			cmd, want, _ := strings.Cut(body, "\n")
+			args := strings.Fields(strings.TrimPrefix(cmd, "$ fnaze "))
+			same(t, cmd, runCLI("", append(args, "-C", exampleRoot(t))...), want)
+		case 5: // the MCP server, as in .mcp.json of this repository
+			var readme, own struct {
+				MCPServers map[string]struct {
+					Command string   `json:"command"`
+					Args    []string `json:"args"`
+				} `json:"mcpServers"`
+			}
+			if err := json.Unmarshal([]byte(body), &readme); err != nil {
+				t.Fatal(err)
+			}
+			if err := json.Unmarshal([]byte(read(t, "..", ".mcp.json")), &own); err != nil {
+				t.Fatal(err)
+			}
+			got, want := readme.MCPServers["fnaze"], own.MCPServers["fnaze"]
+			if len(readme.MCPServers) != 1 || got.Command != want.Command || !slices.Equal(got.Args, want.Args) {
+				t.Errorf("the README registers %+v, .mcp.json has %+v", readme.MCPServers, want)
+			}
+		case 6: // instructions for agents: the commands they name
+			for _, c := range []string{"fnaze new", "fnaze title", "fnaze set <path> <desc>", "fnaze rm <path>", "fnaze status --require"} {
+				if !strings.Contains(body, c) {
+					t.Errorf("the instructions do not name %s", c)
+				}
+			}
+		default:
+			return false
+		}
+		return true
+	})
+}
+
+// shellWords splits a line of the quick start as sh would: words separated by
+// spaces, double quotes around a word with spaces, and a comment from #.
+func shellWords(line string) []string {
+	var words []string
+	var cur strings.Builder
+	in, quoted := false, false
+	for _, r := range line {
+		switch {
+		case r == '"':
+			quoted, in = !quoted, true
+		case r == '#' && !quoted && !in:
+			return words
+		case r == ' ' && !quoted:
+			if in {
+				words = append(words, cur.String())
+				cur.Reset()
+				in = false
+			}
+		default:
+			cur.WriteRune(r)
+			in = true
+		}
+	}
+	if in {
+		words = append(words, cur.String())
+	}
+	return words
 }
 
 // TestExampleChanges checks that fnaze reads docs/examples/changes/ without

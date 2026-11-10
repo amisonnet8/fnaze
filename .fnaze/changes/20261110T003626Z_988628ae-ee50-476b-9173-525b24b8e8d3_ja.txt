@@ -1,0 +1,17 @@
+# README を英語と日本語で書き直した。ヘッダー、実際の出力から作るデモ、例を確かめるテストつき
+.claude/
+	rules/
+		directory-structure.md	docs の補足に docs/assets/ を足した
+		qsoku-usage.md	表に qsoku demo を足した
+		testing.md	README の例とデモの画像の確かめ方を足した
+.mtqg/
+	journal.jsonl	Description の決定（q fdc679b379・回答 030ffc1fdf）と memo ba053333cf を記録した
+.crube/	docs/assets/ とその画像、e2e/demo_test.go の説明を足し、README.md と e2e/docs_test.go の説明を直した。英語と日本語（crube set）
+README.md	書き直した。Description を先頭の一言に、バッジ、デモ、特長、インストール、すぐに試す、使い方、git と AI エージェント、文書。「Not implemented yet」を消した
+README_ja.md	新しい README.md の日本語版
+docs/
+	assets/	新しく足した。header.svg は手で描き、demo.svg と demo_ja.svg は qsoku demo で作った
+e2e/
+	demo_test.go	新しく足した。TestDemoSVG が fnaze の出力（new・title・set・status・show・log）からデモの画像を描く。crube と同じやり方
+	docs_test.go	TestReadmeExamples を足した。両方の README のコードブロックを確かめ、すぐに試すの手順を動かす
+qsokufile	デモの画像を作り直す demo を足した（UPDATE_DEMO=1）
