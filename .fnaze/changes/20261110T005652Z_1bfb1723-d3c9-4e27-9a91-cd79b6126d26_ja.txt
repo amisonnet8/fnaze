@@ -1,0 +1,15 @@
+# fnaze を「diff と並べて読むもの」として示すのをやめた。それは使い方の1つにすぎない
+.mtqg/
+	journal.jsonl	回答（q 5c193ee244・回答 be3e324a27）と memo e1774685ea を記録した
+README.md	先頭の一言（新しい Description）、導入、特長の👀、手順4から diff を外した
+README_ja.md	同じ変更の日本語版
+docs/
+	assets/
+		header.svg	diff の図と、その一言を消した。説明のファイルのカードに、本物の desc の文字を入れた
+	design/
+		overview.md	目的と目標を diff 抜きで書き直した。しないことの Keep the diff itself は残した
+		overview_ja.md	同じ変更の日本語版
+CLAUDE.md	プロジェクトの紹介を diff 抜きで書き直し、MCP サーバーも挙げた
+internal/
+	mcpserver/
+		server.go	show の道具の説明から「diff と一緒に読む」の文を消した

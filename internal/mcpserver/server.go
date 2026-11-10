@@ -72,7 +72,7 @@ func New(o Options) *mcp.Server {
 	addTool(s, o, &mcp.Tool{
 		Name: "show",
 		Description: "Show the description file of a group in a language as a tree: the title, and for each changed file " +
-			"what was changed and why (desc) and more (detail). Read it with the diff to review the set of changes.",
+			"what was changed and why (desc) and more (detail).",
 	}, func(c *core.Core, in showIn) (any, error) {
 		return c.Show(in.Lang, in.Group)
 	})

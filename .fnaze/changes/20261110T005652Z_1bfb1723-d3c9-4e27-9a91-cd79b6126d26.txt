@@ -1,0 +1,15 @@
+# Stop presenting fnaze as read next to the diff: that is one way to use it
+.mtqg/
+	journal.jsonl	Recorded the answer (q 5c193ee244, answer be3e324a27) and memo e1774685ea
+README.md	Dropped the diff from the lead (the new Description), the intro, the 👀 feature and step 4 of the workflow
+README_ja.md	The same changes in Japanese
+docs/
+	assets/
+		header.svg	Removed the diff panel and its line of copy; the description file card now shows real descs
+	design/
+		overview.md	Rewrote the purpose and goals without the diff; kept "Keep the diff itself" in what it does not do
+		overview_ja.md	The same changes in Japanese
+CLAUDE.md	Rewrote the project summary without the diff, and named the MCP server too
+internal/
+	mcpserver/
+		server.go	Removed "Read it with the diff" from the description of the show tool

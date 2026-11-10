@@ -4,14 +4,14 @@
 
 ## What it is for
 
-When AI writes code, a human has to review the changes. A diff alone does not say why each file was changed, and when many files were changed, it does not say where to start.
+When AI writes code, a human has to review the changes. The changes themselves do not say why each file was changed, and a commit message speaks for the whole set at once. When many files were changed, nothing says where to start.
 
-With fnaze, **for each set of changes, you make a file that says in one line, for each changed file, what was changed and why** (a description file). A reviewer reads this list next to the diff.
+With fnaze, **for each set of changes, you make a file that says in one line, for each changed file, what was changed and why** (a description file). A reviewer reads this list to see, file by file, what was changed and why.
 
 ## Goals
 
 - A human can see the changes of one set, one line of reason per file
-- A review needs only this list next to the diff
+- Reading this list is enough to know where to look and why each file was changed
 - The writer (a human or an AI) only writes once, at the end of the set. The way files are edited does not change
 - What was left out (an empty title or desc, files of one group that differ between languages) can be checked by a tool
 

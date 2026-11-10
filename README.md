@@ -6,7 +6,7 @@
 
 <img src="docs/assets/header.svg" alt="fnaze — file by file, what changed and why" width="100%">
 
-**Describe each set of changes file by file — what changed and why, one line each —<br>and review it next to the diff. A CLI and MCP server.**
+**Describe each set of changes file by file — what changed and why, one line each.<br>A CLI and MCP server.**
 
 [![CI](https://github.com/amisonnet8/fnaze/actions/workflows/ci.yml/badge.svg)](https://github.com/amisonnet8/fnaze/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/amisonnet8/fnaze?include_prereleases&sort=semver)](https://github.com/amisonnet8/fnaze/releases)
@@ -20,7 +20,7 @@
 
 ---
 
-A diff shows what changed, line by line. It does not say why, and a commit message says it for the whole change at once. fnaze keeps, for one set of changes, a description file with one line per changed file saying what changed there and why. A reviewer reads that list next to the diff.
+A commit message speaks for the whole set of changes at once; why each file was changed is left out. fnaze keeps, for one set of changes, a description file with one line per changed file saying what changed there and why. A reviewer reads that list to see where to look, and why.
 
 <a id="demo"></a>
 
@@ -37,7 +37,7 @@ A diff shows what changed, line by line. It does not say why, and a commit messa
 ## ✨ Features
 
 - 📝 **One line per file**: for each changed file, what changed and why. A detail line can follow for the longer story
-- 👀 **Made to read next to the diff**: the paths are the paths of the diff, written as a tree, so the two can be read side by side
+- 👀 **Made to be read**: `show` prints the file as a tree, with the descs in one column
 - 🗂️ **Less to write for big changes**: a desc on a directory covers everything under it, and a pattern (`*_test.go`) covers the files it matches
 - 🌐 **Several languages, kept in step**: one file per language in a group. `status` reports the files of a group whose paths differ
 - 🩺 **Checks for hooks and CI**: `status --require` fails on an empty title, a file without a desc, a broken file or a language mismatch
@@ -146,7 +146,7 @@ fnaze does not decide what one set of changes is, and does not read git. A commo
 1. Stage the changes, and look at `git diff --cached --name-only`
 2. `fnaze new`, then `fnaze title` and `fnaze set` for each changed file (an AI agent can do this through the MCP tools)
 3. `fnaze status --require`, then commit the description files with the changes
-4. The reviewer reads `fnaze show` (or the file in the pull request) next to the diff
+4. The reviewer reads `fnaze show` (or the file in the pull request)
 
 <details>
 <summary><b>A git pre-commit hook</b></summary>

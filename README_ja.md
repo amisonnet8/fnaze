@@ -6,7 +6,7 @@
 
 <img src="docs/assets/header.svg" alt="fnaze — ファイルごとに、何を、なぜ変えたか" width="100%">
 
-**変更のまとまりを、ファイルごとに説明する ——「何を、なぜ変えたか」を1行ずつ。<br>diff と並べてレビューできる。CLI と MCP サーバー。**
+**変更のまとまりを、ファイルごとに説明する ——「何を、なぜ変えたか」を1行ずつ。<br>CLI と MCP サーバー。**
 
 [![CI](https://github.com/amisonnet8/fnaze/actions/workflows/ci.yml/badge.svg)](https://github.com/amisonnet8/fnaze/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/amisonnet8/fnaze?include_prereleases&sort=semver)](https://github.com/amisonnet8/fnaze/releases)
@@ -22,7 +22,7 @@
 
 ---
 
-diff は、何が変わったかを行ごとに見せる。なぜ変えたかは見せず、コミットメッセージは変更全体についてまとめて言う。fnaze は、変更のまとまり1つについて、説明のファイルを持つ。変えたファイルごとに、そこで何を、なぜ変えたかを1行で書く。レビューする人は、この一覧を diff と並べて読む。
+コミットメッセージは、変更のまとまり全体についてまとめて言うだけで、ファイルごとになぜ変えたかは残らない。fnaze は、変更のまとまり1つについて、説明のファイルを持つ。変えたファイルごとに、そこで何を、なぜ変えたかを1行で書く。レビューする人は、この一覧を読んで、どこを見ればよいか、なぜ変えたかを知る。
 
 <a id="demo"></a>
 
@@ -39,7 +39,7 @@ diff は、何が変わったかを行ごとに見せる。なぜ変えたかは
 ## ✨ 特長
 
 - 📝 **ファイルごとに1行**：変えたファイルそれぞれについて、何を、なぜ変えたか。長いいきさつは、detail の行で続けられる
-- 👀 **diff と並べて読むための形**：パスは diff のパスで、木の形に書く。2つを横に並べて読める
+- 👀 **読むための形**：`show` は、ファイルを木の形で、desc の列をそろえて見せる
 - 🗂️ **大きな変更でも書くことが少ない**：ディレクトリの desc は、その下をまとめて説明する。パターン（`*_test.go`）は、当たるファイルをまとめて説明する
 - 🌐 **いくつもの言語を、そろえて持つ**：組の中に、言語ごとにファイル1つ。パスが食い違う組は、`status` が知らせる
 - 🩺 **フックと CI のための検査**：`status --require` は、空の題、desc の無いファイル、形の誤り、言語ごとのずれで失敗する
@@ -148,7 +148,7 @@ $ fnaze log --lang ja
 1. 変更をステージし、`git diff --cached --name-only` を見る
 2. `fnaze new` のあと、`fnaze title` と、変えたファイルごとに `fnaze set` を打つ（AI エージェントは MCP の道具でもできる）
 3. `fnaze status --require` を通し、説明のファイルを変更と一緒にコミットする
-4. レビューする人は、`fnaze show`（またはプルリクエストの中のファイル）を diff と並べて読む
+4. レビューする人は、`fnaze show`（またはプルリクエストの中のファイル）を読む
 
 <details>
 <summary><b>git の pre-commit フック</b></summary>
