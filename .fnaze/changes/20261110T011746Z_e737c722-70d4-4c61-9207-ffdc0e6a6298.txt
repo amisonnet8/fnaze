@@ -1,0 +1,5 @@
+# Add the interactive guide (Gemini Notebook) to the READMEs
+.mtqg/
+	journal.jsonl	Added memo 2289a99b77
+README.md	Added the interactive guide as the first row of Docs, as in crube's README
+README_ja.md	The same row in Japanese

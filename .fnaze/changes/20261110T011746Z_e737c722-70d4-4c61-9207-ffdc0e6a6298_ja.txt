@@ -1,0 +1,5 @@
+# README に対話形式のガイド（Gemini Notebook）を足した
+.mtqg/
+	journal.jsonl	memo 2289a99b77 を足した
+README.md	Docs の表の先頭に、対話形式のガイドを足した。crube の README と同じ形
+README_ja.md	同じ行の日本語版

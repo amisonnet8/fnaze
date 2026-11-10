@@ -196,6 +196,7 @@ $ fnaze log --lang ja
 
 | | |
 | --- | --- |
+| 💬 [対話形式のガイド](https://notebook.google.com/notebook/636aefcf-6a5b-42ab-a316-b1452c3709e1) | 質問しながら fnaze を調べられる（Gemini Notebook 製） |
 | 🏛️ [docs/design/overview_ja.md](docs/design/overview_ja.md) | 設計：fnaze が何のためにあり、何をしないか |
 | 📐 [docs/reference/file-format_ja.md](docs/reference/file-format_ja.md) | ファイルの置き場所、名前、書き方 |
 | 📐 [docs/reference/commands_ja.md](docs/reference/commands_ja.md) | コマンド、JSON、MCP の道具、補完 |

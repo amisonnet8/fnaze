@@ -194,6 +194,7 @@ The reading tools are `show`, `status` and `log`. With `--allow-write`, the writ
 
 | | |
 | --- | --- |
+| 💬 [Interactive guide](https://notebook.google.com/notebook/636aefcf-6a5b-42ab-a316-b1452c3709e1) | Ask questions to learn about fnaze (made with Gemini Notebook) |
 | 🏛️ [docs/design/overview.md](docs/design/overview.md) | Design: what fnaze is for, and what it leaves out |
 | 📐 [docs/reference/file-format.md](docs/reference/file-format.md) | Where the files are, their names, and how they are written |
 | 📐 [docs/reference/commands.md](docs/reference/commands.md) | The commands, the JSON, the MCP tools and completion |
