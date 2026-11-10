@@ -1,0 +1,3 @@
+# v0.1.0 のリリースを記録し、todo ⑬を閉じた
+.mtqg/
+	journal.jsonl	memo 4d601c875e（公開された Release で確かめたこと）を足し、todo 90ace190fd を閉じた

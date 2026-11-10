@@ -1,0 +1,3 @@
+# Record the v0.1.0 release and close todo ⑬
+.mtqg/
+	journal.jsonl	Added memo 4d601c875e (what was checked on the published Release) and closed todo 90ace190fd
