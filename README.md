@@ -40,7 +40,7 @@ A commit message speaks for the whole set of changes at once; why each file was 
 - 👀 **Made to be read**: `show` prints the file as a tree, with the descs in one column
 - 🗂️ **Less to write for big changes**: a desc on a directory covers everything under it, and a pattern (`*_test.go`) covers the files it matches
 - 🌐 **Several languages, kept in step**: one file per language in a group. `status` reports the files of a group whose paths differ
-- 🩺 **Checks for hooks and CI**: `status --require` fails on an empty title, a file without a desc, a broken file or a language mismatch
+- 🩺 **Checks for hooks and CI**: `status --require` fails on an empty title, an entry without a desc, a broken file or a language mismatch
 - 🔌 **A built-in MCP server**: with `fnaze mcp`, AI agents get the same features, with the same JSON as `--json`
 - 🔒 **No git, nothing outside `.fnaze/`**: fnaze does not read or run git, or any other program. What one set of changes is (usually one commit) is up to you
 - 📦 **A single binary**: written in Go, for Linux, macOS and Windows
@@ -86,7 +86,7 @@ For several languages, start the group with `fnaze new en ja`, and write each on
 
 ## 🧭 Usage
 
-A description file is plain text in `.fnaze/changes/<datetime>_<UUID>[_<language>].txt`: the title, then one entry per line, indented with tabs. A directory's paths are joined to the paths under it.
+A description file is plain text in `.fnaze/changes/<datetime>_<UUID>[_<language>].txt`: the title, then one entry per line, indented with tabs. An indented path is joined to the path of the directory entry above it.
 
 ```
 # Extend the session lifetime on access instead of fixing it
@@ -135,7 +135,7 @@ $ fnaze log
 | `fnaze mcp [--allow-write]` | Runs as an MCP server |
 | `fnaze completion <shell>` | Prints a completion script |
 
-The commands that work on a language take `--lang <language>` (or `FNAZE_LANG`; `en` when neither is given). Every command but `completion` takes `-C <dir>`, and the reading and writing commands print JSON with `--json`. See [Commands](docs/reference/commands.md) and [File format](docs/reference/file-format.md) for more.
+The commands that work on a language take `--lang <language>` (`new` takes them as arguments), or else use `FNAZE_LANG`, or else `en`. Every command but `completion` takes `-C <dir>`, and the reading and writing commands print JSON with `--json`. See [Commands](docs/reference/commands.md) and [File format](docs/reference/file-format.md) for more.
 
 <a id="workflow"></a>
 

@@ -10,8 +10,7 @@ With fnaze, **for each set of changes, you make a file that says in one line, fo
 
 ## Goals
 
-- A human can see the changes of one set, one line of reason per file
-- Reading this list is enough to know where to look and why each file was changed
+- A human can see the changes of one set, one line of reason per file: reading this list is enough to know where to look and why each file was changed
 - The writer (a human or an AI) only writes once, at the end of the set. The way files are edited does not change
 - What was left out (an empty title or desc, files of one group that differ between languages) can be checked by a tool
 

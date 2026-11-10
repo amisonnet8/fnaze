@@ -1,0 +1,25 @@
+# Fix what the review before the release found in the docs, the help and the archive
+.mtqg/
+	journal.jsonl	Recorded the answers (q dff4c60a75, q 29214b76d2), memo , and closed todo 972951f64d
+.claude/
+	rules/
+		directory-structure.md	Removed the empty heading with the template's TODO
+		distribution.md	The archive holds README_ja.md too
+		documentation.md	Removed the template's TODO comment
+.goreleaser.yaml	Put README_ja.md in the archives
+README.md	Fixed the 🩺 feature (an entry without a desc), the sentence on how indented paths are joined, and the one on --lang (new takes arguments)
+README_ja.md	The same fixes in Japanese
+docs/
+	design/
+		overview.md	Merged the first two goals, which said nearly the same
+		overview_ja.md	The same change in Japanese
+	reference/
+		commands.md	rm: added that the group's files in other languages are not changed, as for title and set
+		commands_ja.md	The same addition in Japanese
+e2e/
+	commands_test.go	The new help line
+internal/
+	cli/
+		cli.go	The help's common options line says not every command takes them (approved, q 29214b76d2)
+	mcpserver/
+		server.go	The detail argument of set_description says [] removes the detail too

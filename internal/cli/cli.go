@@ -51,7 +51,7 @@ var usage = func() string {
 	for _, name := range order {
 		fmt.Fprintf(&b, "  %-*s  %s\n", width, name, commands[name].summary)
 	}
-	b.WriteString("\ncommon options: -C <dir>  --json\n")
+	b.WriteString("\ncommon options: -C <dir>  --json (not every command takes them)\n")
 	b.WriteString("see fnaze <command> --help, and fnaze --version\n")
 	return b.String()
 }()

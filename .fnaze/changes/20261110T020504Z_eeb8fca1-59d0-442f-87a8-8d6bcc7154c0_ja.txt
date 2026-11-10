@@ -1,0 +1,25 @@
+# リリース前の見直しで見つけた、docs・ヘルプ・配布物の直すところを直した
+.mtqg/
+	journal.jsonl	回答（q dff4c60a75・q 29214b76d2）と memo  を記録し、todo 972951f64d を閉じた
+.claude/
+	rules/
+		directory-structure.md	テンプレートの TODO だけの空の見出しを消した
+		distribution.md	アーカイブに README_ja.md も入れることにした
+		documentation.md	テンプレートの TODO のコメントを消した
+.goreleaser.yaml	アーカイブに README_ja.md を入れた
+README.md	特長🩺（desc の無いエントリ）、インデントしたパスのつなげ方の文、--lang の文（new は引数）を直した
+README_ja.md	同じ直しの日本語版
+docs/
+	design/
+		overview.md	ほぼ同じことを言っていた目的の1つ目と2つ目をまとめた
+		overview_ja.md	同じ変更の日本語版
+	reference/
+		commands.md	rm に、title・set と同じく、ほかの言語のファイルは変えないことを足した
+		commands_ja.md	同じ追加の日本語版
+e2e/
+	commands_test.go	新しいヘルプの行に合わせた
+internal/
+	cli/
+		cli.go	ヘルプの common options の行に、すべてのコマンドが受けるわけではないと添えた（了承 q 29214b76d2）
+	mcpserver/
+		server.go	set_description の detail の引数の説明に、[] でも消せることを足した

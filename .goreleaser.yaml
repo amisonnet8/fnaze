@@ -35,6 +35,7 @@ archives:
     files:
       - LICENSE
       - README.md
+      - README_ja.md
       # The directory itself, not a glob: with a glob that matches one file
       # only (a project with no dependencies has just go/LICENSE), goreleaser
       # drops the parent directories and the archive gets licenses/LICENSE.

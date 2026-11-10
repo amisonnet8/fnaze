@@ -56,7 +56,7 @@ type setIn struct {
 	Group  string   `json:"group,omitempty" jsonschema:"the group: its <datetime>_<UUID>, or a start of it that names only one group; omitted for the newest group"`
 	Path   string   `json:"path" jsonschema:"the path of the changed file, from the root, with /; a directory ends with / (src/auth/)"`
 	Desc   string   `json:"desc" jsonschema:"one line: what was changed and why"`
-	Detail []string `json:"detail,omitempty" jsonschema:"more lines, one per item (a newline starts another line); omitted keeps the detail, and only empty lines remove it"`
+	Detail []string `json:"detail,omitempty" jsonschema:"more lines, one per item (a newline starts another line); omitted keeps the detail, and [] or only empty lines remove it"`
 }
 
 type removeIn struct {

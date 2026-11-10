@@ -119,6 +119,7 @@ Removes one entry, with its children and details, from the target group's file i
 - Directory entries above it that are left with no children and have neither a desc nor a detail (skeleton lines) are removed too
 - Fails if the group has no file in that language, the file has a format error, or the file has no entry for the path
 - The file is written again in the canonical form
+- The group's files in other languages are not changed (`status` reports the path lines that no longer match)
 
 ## `fnaze status [--require] [--all | group]`
 

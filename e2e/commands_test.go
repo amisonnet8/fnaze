@@ -259,7 +259,7 @@ func TestUsageAndVersion(t *testing.T) {
 		"  mcp         run as an MCP server over standard input and output",
 		"  completion  print a shell completion script",
 		"",
-		"common options: -C <dir>  --json",
+		"common options: -C <dir>  --json (not every command takes them)",
 		"see fnaze <command> --help, and fnaze --version",
 	), "")
 	expect(t, fnaze(t, dir, nil, "set", "--help"), 0,

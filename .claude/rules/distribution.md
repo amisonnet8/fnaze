@@ -8,7 +8,7 @@
 
 - **始めるとき**：`cmd/<名前>/`に実行ファイルを置いたら、`.goreleaser.yaml`の`yourproject`（`project_name`・`main`・`binary`と、`tools/licenses`に渡す main パッケージ）を書き換え、`tools/licenses`の`TestRun`を、その実行ファイルのライセンスを集めるテストに書き換える（テストのコメント）。それまでは`qsoku snapshot`とリリースは、作るものが無く失敗する（`goreleaser check`は、GitHub の remote があるリポジトリなら通る）
 - **cgo を使わない**（`CGO_ENABLED=0`）。どの OS でも、ほかのライブラリなしに動く
-- 配布物は linux・darwin・windows の amd64・arm64。linux・darwin は`.tar.gz`、windows は`.zip`。名前は`<名前>_<版>_<OS>_<アーキテクチャ>`（版は`v`なし）。`checksums.txt`を添える。アーカイブには、実行ファイル・`LICENSE`・`README.md`・`licenses/`（依存のライセンス文）を入れる
+- 配布物は linux・darwin・windows の amd64・arm64。linux・darwin は`.tar.gz`、windows は`.zip`。名前は`<名前>_<版>_<OS>_<アーキテクチャ>`（版は`v`なし）。`checksums.txt`を添える。アーカイブには、実行ファイル・`LICENSE`・`README.md`（ほかの言語の README があれば、それも。fnaze は`README_ja.md`）・`licenses/`（依存のライセンス文）を入れる
 - **版**：goreleaser が`-X main.version=<タグ>`（`v0.1.0`の形）を埋める。`main`パッケージに`var version string`を置き、空のとき（`go install`で入れたもの）は`runtime/debug.ReadBuildInfo`のモジュールの版を出すと、どちらでも同じ`v0.1.0`になる（crube の`cli.BuildVersion`）
 - **依存のライセンス文**を配布物に同梱する。`tools/licenses`が、3つの OS で実行ファイルに組み込まれるモジュールを`go list -deps`で求め、そのライセンスのファイルと Go の標準ライブラリの`LICENSE`を`bin/licenses/<モジュールのパス>/`に写す（goreleaser の`before`の手順）。ライセンスのファイルが無いモジュールがあれば失敗し、リリースが止まる
   - 依存を足す・外すと、`tools/licenses`の`TestRun`の一覧が落ちる（書き換えたあと）。新しいモジュールのライセンスを確かめてから一覧を直す（Trivy の`qsoku trivy`も通す）
