@@ -1,0 +1,21 @@
+# crube の MCP を1つにして言語を明示し、fnaze にはいつも -- を付け、git のフックも ShellCheck にかける
+.mtqg/
+	journal.jsonl	ルールの変更を確かめ、ほかに直すものが無かったことを記録した（mtqg m add 1111dbdf73）
+CLAUDE.md	crube の MCP を1つ（言語は lang）と書き、コミットに fnaze の説明を入れる決まりを足した
+.claude/
+	hooks/
+		crube-untracked.sh	CRUBE_LANG ではなく --lang で crube に聞き、言語を明示する
+	rules/
+		crube-usage.md	MCP は1つで lang を渡す、言語はいつも明示する、エントリのパス・status のパス・set の -- の落とし穴
+		directory-structure.md	.mcp.json の説明を、crube のサーバー1つに合わせた
+		fnaze-usage.md	title・set・rm はいつも -- を付け、オプションはその前に置く。ルートはエントリにできない。.fnaze/ は入れ子にできない
+		qsoku-usage.md	qsoku shellcheck が .githooks/ のフックも見ることを書いた
+		testing.md	フックは拡張子が無いので、ShellCheck の対象に .githooks/* を足したと書いた
+	settings.json	crube-ja のサーバーを外し、fnaze の MCP の道具を許可した
+.crube/
+	structure.txt	postCreate.sh と .mcp.json の説明を直した（crube set）
+	structure_ja.txt	postCreate.sh と .mcp.json の日本語の説明を直した（crube set）
+.devcontainer/
+	postCreate.sh	コメントの crube の MCP サーバーを1つに直した
+.mcp.json	crube-ja のサーバーを外した。crube は言語を引数 lang で受ける
+qsokufile	shellcheck が .githooks/ の追跡中のファイルも見る

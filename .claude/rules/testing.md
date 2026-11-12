@@ -69,7 +69,7 @@
 ## ShellCheck：シェルスクリプト
 
 - シェルスクリプトは最小限にする。込み入った処理はGoで書く
-- `qsoku shellcheck`は`git ls-files '*.sh' '*.bash'`で追跡中のものを列挙してShellCheckにかける
+- `qsoku shellcheck`は`git ls-files '*.sh' '*.bash' '.githooks/*'`で追跡中のものを列挙してShellCheckにかける。git のフック（`.githooks/pre-commit`）は拡張子が無いので、ディレクトリで拾う
 - シェルスクリプト中のコメントを、行頭が小文字の`# shellcheck`で始まる文にしてはいけない（ShellCheckがインラインディレクティブとして誤解釈し、SC1072/SC1073でパースエラーになる）。「ShellCheck」のように大文字を混ぜて書く
 - **`postCreate.sh`の中で`. /etc/os-release`をsourceしない。** ShellCheckのSC1091（追えない形で指定されたファイル）が情報の水準で報告され、終了コードが0でなくなる。ディストリビューションの版は`lsb_release -rs`で取る
 - `# shellcheck disable=…`は、`case`の枝の前には置けない（SC1124 のパースエラー）。`case`の文の前に置くと、全部の枝に効く

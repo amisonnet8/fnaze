@@ -26,7 +26,7 @@
 .devcontainer/	開発用のコンテナ
 	devcontainer-lock.json	コンテナを作ったときの feature の版
 	devcontainer.json	コンテナの定義と VS Code の設定
-	postCreate.sh	コンテナを作ったあとに道具（qsoku・mtqg・crube・goreleaser・golangci-lint・Trivy）を入れ、挙げたシェル（初めは bash だけ）を配線する
+	postCreate.sh	コンテナを作ったあとに道具（qsoku・mtqg・crube・goreleaser・golangci-lint・Trivy）と、このソースから fnaze を入れ、git のフックを .githooks/ に向け、挙げた4つのシェルを配線する
 .github/	GitHub の設定
 	workflows/	GitHub Actions のワークフロー
 		ci.yml	CI：Linux・macOS・Windows での qsoku check、race、ShellCheck、Trivy
@@ -105,7 +105,7 @@ internal/	このモジュールの中だけで使うパッケージ
 .gitattributes	改行（すべて LF）
 .gitignore	git に入れないもの。ルート直下のドットで始まる名前は許可リスト方式
 .golangci.yaml	golangci-lint の設定
-.mcp.json	Claude Code に mtqg と、crube（英語・日本語）と、fnaze 自身（1つ）の MCP サーバーをつなぐ設定
+.mcp.json	Claude Code に mtqg・crube（サーバーは1つで、言語は引数 lang）・fnaze 自身（1つ）の MCP サーバーをつなぐ設定
 CLAUDE.md	このリポジトリでの Claude Code のルールと、読むべきルールファイルの案内
 LICENSE	MIT ライセンス
 README.md	fnaze とは何か、入れ方と使い方、文書の場所（英語の正本。日本語版は README_ja.md）

@@ -26,7 +26,7 @@
 .devcontainer/	Development container
 	devcontainer-lock.json	Versions of the features the container was built with
 	devcontainer.json	Container definition and VS Code settings
-	postCreate.sh	Installs the tools (qsoku, mtqg, crube, goreleaser, golangci-lint, Trivy) after the container is made, and wires up the shells it lists (bash by default)
+	postCreate.sh	Installs the tools (qsoku, mtqg, crube, goreleaser, golangci-lint, Trivy) and fnaze from this source after the container is made, points git at .githooks/, and wires up the four shells it lists
 .github/	GitHub settings
 	workflows/	GitHub Actions workflows
 		ci.yml	CI: qsoku check on Linux, macOS and Windows, the race detector, ShellCheck and Trivy
@@ -105,7 +105,7 @@ internal/	Packages used only inside this module
 .gitattributes	Line endings (LF everywhere)
 .gitignore	Files kept out of git; dot entries in the root are an allowlist
 .golangci.yaml	golangci-lint settings
-.mcp.json	MCP servers for Claude Code: mtqg, crube in English and Japanese, and fnaze itself (one server)
+.mcp.json	MCP servers for Claude Code: mtqg, crube (one server, the language passed as lang) and fnaze itself (one server)
 CLAUDE.md	Rules for Claude Code in this repository, and the rule files to read
 LICENSE	MIT license
 README.md	What fnaze is, how to install and use it, and where its documents are (authoritative; README_ja.md is the Japanese translation)

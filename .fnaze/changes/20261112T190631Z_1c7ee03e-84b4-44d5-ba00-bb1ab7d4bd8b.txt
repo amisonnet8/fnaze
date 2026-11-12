@@ -1,0 +1,21 @@
+# Use one crube MCP server with an explicit language, always pass -- to fnaze, and shellcheck the git hooks
+.mtqg/
+	journal.jsonl	Record that the rule changes were checked and nothing else needed fixing (mtqg m add 1111dbdf73)
+CLAUDE.md	Describe the single crube MCP server with lang, and require the fnaze description in every commit
+.claude/
+	hooks/
+		crube-untracked.sh	Ask crube with --lang instead of CRUBE_LANG, so the language is explicit
+	rules/
+		crube-usage.md	One MCP server with lang, always pass the language, and the pitfalls of entry paths, status paths and -- with set
+		directory-structure.md	Describe .mcp.json with the single crube server
+		fnaze-usage.md	Always pass -- to title, set and rm with options before it; the root is not an entry; .fnaze/ cannot be nested
+		qsoku-usage.md	qsoku shellcheck now also checks the hooks in .githooks/
+		testing.md	List .githooks/* in the files ShellCheck checks, since hooks have no extension
+	settings.json	Drop the crube-ja server and allow the fnaze MCP tools
+.crube/
+	structure.txt	Update the descriptions of postCreate.sh and .mcp.json (crube set)
+	structure_ja.txt	Update the Japanese descriptions of postCreate.sh and .mcp.json (crube set)
+.devcontainer/
+	postCreate.sh	Name the single crube MCP server in the comment
+.mcp.json	Remove the crube-ja server: crube takes the language as the lang argument
+qsokufile	shellcheck also checks the tracked files in .githooks/

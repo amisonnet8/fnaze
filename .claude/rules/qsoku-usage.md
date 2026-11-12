@@ -14,7 +14,7 @@
 | `qsoku check` | `vet`・`lint`・`unit`をまとめて実行 | **作業の区切りで必ず通す**（`.claude/rules/testing.md`） |
 | `qsoku race` | `CGO_ENABLED=1 go test -race` | 並行性・排他に関わる変更 |
 | `qsoku trivy` | 既知の脆弱性・ライセンスの検査 | 依存を足したとき |
-| `qsoku shellcheck` | 追跡中の`*.sh`・`*.bash`をShellCheckにかける | シェルスクリプトを足したとき |
+| `qsoku shellcheck` | 追跡中の`*.sh`・`*.bash`と`.githooks/`のフックをShellCheckにかける | シェルスクリプトを足したとき |
 | `qsoku demo` | READMEの動いている様子`docs/assets/demo.svg`・`demo_ja.svg`を、fnaze の今の出力から作り直す（e2e の`TestDemoSVG`に`UPDATE_DEMO=1`） | 出力の形や`demoSession`を変えて、`TestDemoSVG`が落ちたとき。作り直した画像を見てからコミットする |
 | `qsoku snapshot` | `goreleaser check`のあと、タグなしで配布物を`dist/`に作る（`.goreleaser.yaml`。goreleaser が要る） | タグを打つ前、`.goreleaser.yaml`や`tools/licenses`を変えたとき。中身を見てからタグを打つ（`.claude/rules/distribution.md`） |
 

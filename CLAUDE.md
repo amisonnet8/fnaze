@@ -36,7 +36,7 @@ fnaze は、変更のまとまりごとに、変えたファイルそれぞれ�
 
 - **`.claude/rules/mtqg-usage.md`** — mtqgの使い方（記録者、種類の使い分け、こまめに記録する）
 - **`.claude/rules/qsoku-usage.md`** — qsokuの使い方（`qsokufile`の名前の一覧、呼び方、書式、`//`、シェル連携）。**ビルド・テスト・lintは`go`などを直接打たず、ここの名前で実行する**
-- **`.claude/rules/crube-usage.md`** — crubeの使い方（MCPの`crube`・`crube-ja`とCLI、場所の探し方、英語と日本語の説明の保ち方）。**場所を探す前、ファイルを足す・動かす・消す前に読む**
+- **`.claude/rules/crube-usage.md`** — crubeの使い方（MCPの`crube`とCLI、言語の渡し方、場所の探し方、英語と日本語の説明の保ち方）。**場所を探す前、ファイルを足す・動かす・消す前に読む**
 - **`.claude/rules/fnaze-usage.md`** — このリポジトリでの fnaze の使い方（コミットごとに fnaze 自身で説明を書き、一緒にコミットする手順、pre-commit、落とし穴）。**コミットする前に読む**
 - **`.claude/rules/testing.md`** — テスト方針（開発環境の前提、動作確認の粒度、期待値の決め方、壊して確かめる（Skill`mutation-check`）、Trivy、ShellCheck、`-race`、Bashサンドボックス・CIの落とし穴）
 - **`.claude/rules/directory-structure.md`** — ディレクトリ構成と、ファイルの置き場所の判断基準。**新しいファイルを追加するときに読む**
@@ -65,6 +65,7 @@ fnaze は、変更のまとまりごとに、変えたファイルそれぞれ�
 
 - **pushは人間が行う。** Claude Codeはコミットまでで止めること。`git push`は`.claude/settings.json`で拒否（deny）されている
 - 作業の区切りでこまめにコミットしてよい（消してしまったときに戻せるように）
+- **コミットには、そのコミットの説明（fnaze）を入れる。** 説明の無いコミットは、pre-commit（`.githooks/pre-commit`）が止める。`--no-verify`で飛ばさない（`.claude/rules/fnaze-usage.md`）
 - `git reset --hard`・`git clean`は、コミットしていない作業を消すので、使う前に必ず理由を説明すること
 - **コミットの前に`git config user.email`／`user.name`を確かめる。** 正しい値は`65074207+amisonnet8@users.noreply.github.com`／`amisonnet8`（GitHubのプライバシー用noreplyアドレス）。違う値なら、`.git/config`の`[user]`（ローカルの上書き）を疑う。ローカルに設定が無いと、コンテナのglobalの設定（noreplyでないことがある）が使われる
 
@@ -80,7 +81,7 @@ fnaze は、変更のまとまりごとに、変えたファイルそれぞれ�
 
 ビルドの自動フック（`PostToolUse`）が設定されている。`Edit`・`Write`・`MultiEdit`で`.go`・`go.mod`・`go.sum`を変えると`.claude/hooks/build.sh`が`qsoku build`を実行し、失敗すると理由がClaude Codeに返る。複数ファイルにまたがる編集の途中は、まだ書いていないファイルを参照して一時的に失敗することがある。
 
-**crubeの配線**：`.mcp.json`に、crubeのMCPサーバーが2つある（`crube`は英語、`crube-ja`は日本語。`crube mcp --allow-write`）。`Write`のあとには`.claude/hooks/crube-untracked.sh`が、説明の無いパスを言語ごとに知らせる（止めはしない）。詳細は`.claude/rules/crube-usage.md`。
+**crubeの配線**：`.mcp.json`に、crubeのMCPサーバーが1つある（`crube`。`crube mcp --allow-write`）。言語は、道具の引数`lang`（CLIは`--lang`）でいつも明示する。`Write`のあとには`.claude/hooks/crube-untracked.sh`が、説明の無いパスを言語ごとに知らせる（止めはしない）。詳細は`.claude/rules/crube-usage.md`。
 
 **fnazeの配線**：`.mcp.json`に、fnaze 自身のMCPサーバーが1つある（`fnaze mcp --allow-write`）。fnaze の道具は言語を引数で受けるので、crube のように言語ごとに分けない。詳細は`.claude/rules/fnaze-usage.md`。
 
